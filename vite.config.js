@@ -11,6 +11,13 @@ export default defineConfig({
       resolvers: [
         AntDesignVueResolver(),
       ],
-    }),
-  ]
+    })
+  ],
+  css:{
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+      },
+    }
+  }
 })

@@ -4,92 +4,95 @@
       <a-col :span="8">
         <a-select
             ref="select"
-            v-model="sectionSelectValue"
-            :options="options"
+            v-model:value="selectForm.sectionUid"
+            :options="sectionList"
             style="width: 100%;"
-            :placeholder="options[0].label"
+            placeholder="分类"
+            @change="selectChangeHandle"
             @focus="focus"
-            @change="handleChange"
         ></a-select>
       </a-col>
       <a-col :span="8">
         <a-select
             ref="select"
-            v-model="sectionSelectValue"
-            :options="options1"
+            v-model:value="selectForm.tagUid"
+            :options="tagList"
             style="width: 100%"
-            :placeholder="options1[0].label"
+            :placeholder=' tagList.length === 0 ? "标签" : tagList[0].label '
+            mode="combobox"
+            @change="selectChangeHandle"
             @focus="focus"
-            @change="handleChange"
         ></a-select>
       </a-col>
       <a-col :span="8">
         <a-select
             ref="select"
-            v-model="sectionSelectValue"
-            :options="options3"
+            v-model="selectOption"
+            :options="selectOptions"
             style="width: 100%"
-            :placeholder="options3[0].label"
-            @focus="focus"
-            @change="handleChange"
+            :placeholder="selectOptions[0].label"
         ></a-select>
       </a-col>
     </a-row>
   </div>
+  <a-divider></a-divider>
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {onMounted, reactive, ref} from "vue";
+import {getSectionList} from "../api/sectionapi";
+import {getTagBySection} from "../api/tagApi";
 
 
-//板块选择的值
-let sectionSelectValue = ref();
+let sectionList = ref([])
+let tagList = ref([])
+let selectOption = ref();
 
-//标签选择的值
-let tagSelectValue = ref();
+const selectForm = reactive({
+  tagUid: null,
+  sectionUid: null
+})
 
-//板块选择框内容
-const options = ref([
-  {
-    value: '1W255',
-    label: '编程交流',
-  }, {
-    value: 'WD4WS',
-    label: '闲聊时刻',
-  }
+const selectOptions = ref([
+  {label: "最新", value: 0},
+  {label: "最火", value: 1}
 ])
 
-const options1 = ref([
-  {
-    value: '1W255',
-    label: 'Java',
-  }, {
-    value: 'WD4WS',
-    label: 'Python',
-  }, {
-    value: '26W51',
-    label: 'Rust',
-  }, {
-    value: '26S85',
-    label: 'C++',
-  },
-])
+let tagSelectStatus = ref(false);
 
-const options3 = ref([
-  {
-    value: '1W255',
-    label: '热门',
-  }, {
-    value: 'WD4WS',
-    label: '最新',
-  }
-])
+const emit = defineEmits(["selectChange"])
 
-const handleChange = (value) => {
-  console.log('板块uid=', value);
+const selectChangeHandle = () => {
+  tagSelectStatus.value = true;
+  getTagBySection(selectForm.sectionUid).then(resp=>{
+    if (resp.data.code === 0) {
+      tagList.value = resp.data.data
+    }
+  })
+  emit("selectChange", selectForm)
 }
+
+onMounted(() => {
+  getSectionList().then(resp => {
+    if (resp.data.code === 0) {
+      for (let item of resp.data.data) {
+        const sectionItem = {
+          "label": item.name,
+          "value": item.uid
+        }
+        sectionList.value.push(sectionItem);
+      }
+    }
+  })
+})
+
 
 </script>
 
 <style scoped>
+
+.filter-bar-container {
+  padding-bottom: 30px;
+}
+
 </style>

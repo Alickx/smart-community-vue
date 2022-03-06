@@ -6,10 +6,10 @@
           <a id="logo" href="http://localhost:3000/">Smart Community</a>
           <div class="search-input">
             <a-input-search
-              v-model="searchValue"
-              placeholder="搜索文章,用户..."
-              enter-button="搜索"
-              size="large"
+                v-model="searchValue"
+                placeholder="搜索文章,用户..."
+                enter-button="搜索"
+                size="large"
             />
           </div>
         </div>
@@ -26,9 +26,39 @@
         </div>
       </a-col>
       <a-col :span="4">
-        <div class="login-group">
-          <a-button type="primary">登录</a-button>
-          <a-button>注册</a-button>
+        <div v-if="!userStore.getters.getIsLogin" class="login-group">
+          <a-button type="primary">
+            <router-link to="login">登录</router-link>
+          </a-button>
+          <a-button>
+            <router-link to="register">注册</router-link>
+          </a-button>
+        </div>
+        <div v-else class="user-menu">
+          <a target="_blank">
+            <a-avatar
+                :src="store.getters.getUserInfo.avatar"
+                @click="test"
+                size="48">
+              <template #icon>
+                <UserOutlined/>
+              </template>
+            </a-avatar>
+          </a>
+          <router-link :to="{ name: 'postEdit' }">
+            <img class="menu-item"
+                 src="https://songtiancloud-1300061766.cos.ap-guangzhou.myqcloud.com/img/编辑.png" alt="">
+          </router-link>
+          <a target="_blank">
+            <img class="menu-item"
+                 src="https://songtiancloud-1300061766.cos.ap-guangzhou.myqcloud.com/img/文章.png" alt="">
+          </a>
+          <a-badge count="5">
+            <a target="_blank">
+              <img class="menu-item"
+                   src="https://songtiancloud-1300061766.cos.ap-guangzhou.myqcloud.com/img/通知.png" alt="">
+            </a>
+          </a-badge>
         </div>
       </a-col>
     </a-row>
@@ -37,19 +67,26 @@
 
 <script setup>
 
-import { ref } from "vue";
+import {ref} from "vue";
+import userStore from "../store/userStore";
+import {UserOutlined} from '@ant-design/icons-vue'
+
+const store = userStore;
 
 //搜索框value
 let searchValue = ref();
 
 const link = [
-  { "name": "首页", "url": "/" },
-  { "name": "道具城", "url": "1" },
-  { "name": "活动", "url": "2" },
-  { "name": "资讯", "url": "3" },
-  { "name": "关于我们", "url": "4" }
+  {"name": "首页", "url": "/"},
+  {"name": "道具城", "url": "1"},
+  {"name": "活动", "url": "2"},
+  {"name": "资讯", "url": "3"},
+  {"name": "关于我们", "url": "4"}
 ]
 
+const test = () => {
+  console.log("Hello,World!")
+}
 
 </script>
 
@@ -79,8 +116,8 @@ header {
   font-size: 20px;
   font-weight: 600;
   font-family: Avenir, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji", sans-serif;
+  Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji",
+  "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji", sans-serif;
   line-height: 64px;
   white-space: nowrap;
   text-decoration: none;
@@ -130,5 +167,20 @@ header {
   align-items: center;
   flex-wrap: nowrap;
   overflow: hidden;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.menu-item {
+  width: 21px;
+  height: 21px;
+}
+
+.menu-item {
+  margin-left: 25px;
 }
 </style>
