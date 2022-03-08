@@ -1,12 +1,9 @@
 import myAxios from "./axios";
 
 
-export function sendCaptcha(emailAddress){
+export function logout(){
     return myAxios({
-        url: 'api/v1/thirdpart/captcha/sendEmailCaptcha',
+        url: 'api/v1/member/member/logout',
         method: 'get',
-        params:{
-            emailAddress: emailAddress
-        }
     })
 }

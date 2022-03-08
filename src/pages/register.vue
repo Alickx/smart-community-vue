@@ -37,7 +37,7 @@
               v-model:value="loginForm.captcha"
               placeholder="请填写验证码"
               size="default"
-              @search="sendCaptch"
+              @search="sendCaptchaHandler"
             >
               <template #enterButton>
                 <a-button>
@@ -64,10 +64,9 @@ import {
   UserOutlined,
   KeyOutlined
 } from '@ant-design/icons-vue';
-import { sendCaptcha } from '../api/memberapi';
 import { message } from 'ant-design-vue';
 import 'ant-design-vue/es/message/style/index'
-import {memberReg} from "../api/loginapi";
+import {memberReg, sendCaptcha} from "../api/loginapi";
 import router from "../router";
 
 
@@ -78,7 +77,11 @@ let loginForm = reactive({
 });
 
 
-const sendCaptch = ()=>{
+const sendCaptchaHandler = ()=>{
+  if (loginForm.username === "") {
+    message.error("请填写邮箱!");
+    return;
+  }
   sendCaptcha(loginForm.username).then(res=>{
     if (res.data.code === 0) {
       message.success("发送验证码成功！")

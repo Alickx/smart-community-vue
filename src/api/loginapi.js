@@ -18,3 +18,13 @@ export function memberReg(regForm) {
     error_message_show: true,
   })
 }
+
+export function sendCaptcha(emailAddress){
+  return myAxios({
+    url: 'register/captcha',
+    method: 'get',
+    params:{
+      emailAddress: emailAddress
+    }
+  })
+}

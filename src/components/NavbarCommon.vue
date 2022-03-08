@@ -49,7 +49,7 @@
             <img class="menu-item"
                  src="https://songtiancloud-1300061766.cos.ap-guangzhou.myqcloud.com/img/编辑.png" alt="">
           </router-link>
-          <a target="_blank">
+          <a target="_blank" @click="logOutHandler">
             <img class="menu-item"
                  src="https://songtiancloud-1300061766.cos.ap-guangzhou.myqcloud.com/img/文章.png" alt="">
           </a>
@@ -70,6 +70,7 @@
 import {ref} from "vue";
 import userStore from "../store/userStore";
 import {UserOutlined} from '@ant-design/icons-vue'
+import {logout} from "../api/memberapi";
 
 const store = userStore;
 
@@ -78,15 +79,20 @@ let searchValue = ref();
 
 const link = [
   {"name": "首页", "url": "/"},
-  {"name": "道具城", "url": "1"},
-  {"name": "活动", "url": "2"},
-  {"name": "资讯", "url": "3"},
-  {"name": "关于我们", "url": "4"}
+  {"name": "道具城", "url": "/shop"},
 ]
 
-const test = () => {
-  console.log("Hello,World!")
+
+const logOutHandler = ()=>{
+  logout().then(resp=>{
+    if (resp.data.code === 0) {
+      store.commit('logout');
+      window.location.reload();
+    }
+  })
 }
+
+
 
 </script>
 

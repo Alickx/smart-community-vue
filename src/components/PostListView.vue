@@ -57,7 +57,7 @@ import {
 } from '@ant-design/icons-vue';
 import dayjs from "dayjs";
 import {thumbCancel, thumbSave} from "../api/postapi";
-import {reactive, toRef, toRefs} from "vue";
+import {onDeactivated, onMounted, reactive, toRef, toRefs} from "vue";
 
 const props = defineProps({
   postItemList: {
@@ -96,6 +96,28 @@ const thumbCancelHandle = (value, index) => {
 const timeFormat = (value) => {
   return dayjs(value).format("YYYY-MM-DD HH:mm:ss");
 }
+
+const test = ()=>{
+  console.log("开始test")
+  let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  let clientHeight = document.documentElement.clientHeight;
+  let scrollHeight = document.documentElement.scrollHeight;
+  if (scrollTop + clientHeight >= scrollHeight) { // 滚动到底部，逻辑代码
+    //事件处理
+    console.log("滚动到底部，触发")
+    //TODO 节流 加载下一页
+  }
+}
+
+//页面挂在
+onMounted(()=>{
+  window.addEventListener('scroll',test);
+})
+
+//页面销毁
+onDeactivated(()=>{
+  window.removeEventListener('scroll',test);
+})
 
 
 </script>

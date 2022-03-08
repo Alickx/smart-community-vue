@@ -124,7 +124,8 @@ let postForm = reactive({
   headImg: '',
   summary: '',
   content: '',
-  isPublish: false
+  isPublish: false,
+  contentHtml:''
 })
 
 const sectionList = ref([])
@@ -147,8 +148,9 @@ const postSubmit = () => {
   })
 }
 
-const textSyn = (text) => {
-  postForm.content = text;
+const textSyn = (postContent) => {
+  postForm.content = postContent.text;
+  postForm.contentHtml = postContent.html;
 }
 
 

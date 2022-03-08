@@ -20,7 +20,7 @@
             style="width: 100%"
             :placeholder=' tagList.length === 0 ? "标签" : tagList[0].label '
             mode="combobox"
-            @change="selectChangeHandle"
+            @change="tagChangeHandle"
             @focus="focus"
         ></a-select>
       </a-col>
@@ -67,9 +67,16 @@ const selectChangeHandle = () => {
   getTagBySection(selectForm.sectionUid).then(resp=>{
     if (resp.data.code === 0) {
       tagList.value = resp.data.data
+      if (tagList.value !== []) {
+        selectForm.tagUid = null;
+        emit("selectChange", selectForm);
+      }
     }
   })
-  emit("selectChange", selectForm)
+}
+
+const tagChangeHandle = ()=>{
+  emit("selectChange", selectForm);
 }
 
 onMounted(() => {

@@ -41,6 +41,11 @@ const router = createRouter({
       path: '/post/:id(\\d+)',
       name: 'post',
       component: ()=> import('../pages/post.vue')
+    },
+    {
+      path: '/shop',
+      name:'shop',
+      component: ()=> import('../pages/shop.vue')
     }
   ]
 })

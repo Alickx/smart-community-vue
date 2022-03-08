@@ -1,6 +1,6 @@
 <template>
   <v-md-editor
-      v-model="text"
+      v-model="postContent.text"
       @change="changeHandle"
       height="600px">
   </v-md-editor>
@@ -8,17 +8,19 @@
 
 <script setup>
 
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 
 
-
-let text = ref('')
+const postContent = reactive({
+  text: '',
+  html: ''
+})
 
 let emit = defineEmits(["textChange"])
 
 const changeHandle = (text,html)=>{
-  console.log(text)
-  emit("textChange",text);
+  postContent.html = html;
+  emit("textChange",postContent);
 }
 
 
