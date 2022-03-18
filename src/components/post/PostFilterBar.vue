@@ -40,8 +40,8 @@
 
 <script setup>
 import {onMounted, reactive, ref} from "vue";
-import {getSectionList} from "../api/sectionapi";
-import {getTagBySection} from "../api/tagApi";
+import {getSectionList} from "../../api/sectionapi";
+import {getTagBySection} from "../../api/tagApi";
 
 
 let sectionList = ref([])

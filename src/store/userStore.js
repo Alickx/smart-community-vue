@@ -21,7 +21,8 @@ export default createStore({
     access_token: '',
     permission_list: [],
     role_list: [],
-    is_login: false
+    is_login: false,
+    searchKeyword: ''
   },
   getters: {
     getUserInfo(state) {
@@ -38,6 +39,9 @@ export default createStore({
     },
     getIsLogin(state){
       return state.is_login
+    },
+    getSearchKeyword(state){
+      return state.searchKeyword
     }
   },
   mutations: {
@@ -55,6 +59,17 @@ export default createStore({
     },
     setIsLogin(state){
       state.is_login = true;
+    },
+    setSearchKeyword(state,value){
+      state.searchKeyword = value
+    },
+    uploadMemberSetting(state,data){
+      const { avatar,birthday,gender,intro,nickName } = data;
+      state.user_info.avatar = avatar
+      state.user_info.birthday = birthday
+      state.user_info.gender = gender
+      state.user_info.intro = intro
+      state.user_info.nickName = nickName
     },
     logout(state){
       window.localStorage.removeItem("userInfo");

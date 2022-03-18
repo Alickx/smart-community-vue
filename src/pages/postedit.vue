@@ -62,7 +62,7 @@
                             class="summary-input"
                             maxlength="50"/>
               </a-form-item>
-              <a-form-item label="私密发布" name="isPublish">
+              <a-form-item label="是否公开" name="isPublish">
                 <a-checkbox v-model:checked="postForm.isPublish"></a-checkbox>
               </a-form-item>
               <div id="post-submit-button">
@@ -79,8 +79,8 @@
 
 <script setup>
 import {useRouter} from "vue-router";
-import PostEditor from "../components/PostEditor.vue";
-import {onMounted, onServerPrefetch, reactive, ref} from "vue";
+import PostEditor from "../components/post/PostEditor.vue";
+import {onMounted, reactive, ref} from "vue";
 import {UploadOutlined} from '@ant-design/icons-vue'
 import {savePost} from "../api/postapi";
 import {notification} from "ant-design-vue";
@@ -124,7 +124,7 @@ let postForm = reactive({
   headImg: '',
   summary: '',
   content: '',
-  isPublish: false,
+  isPublish: true,
   contentHtml:''
 })
 

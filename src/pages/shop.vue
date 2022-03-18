@@ -7,8 +7,8 @@
 
 <script setup>
 
-import NavbarCommon from "../components/NavbarCommon.vue";
-import ProductList from "../components/ProductList.vue";
+import NavbarCommon from "../components/common/NavbarCommon.vue";
+import ProductList from "../components/product/ProductList.vue";
 </script>
 
 <style scoped>

@@ -6,15 +6,16 @@
           <a id="logo" href="http://localhost:3000/">Smart Community</a>
           <div class="search-input">
             <a-input-search
-                v-model="searchValue"
-                placeholder="搜索文章,用户..."
-                enter-button="搜索"
-                size="large"
+              v-model:value="searchText"
+              placeholder="搜索文章,用户..."
+              enter-button="搜索"
+              @search="searchHandler"
+              size="large"
             />
           </div>
         </div>
       </a-col>
-      <a-col :span="8">
+      <a-col :span="6">
         <div class="nav-links">
           <div class="item" v-for="(data, index) in link" :key="index">
             <router-link :to="data.url" custom v-slot="{ href, isActive }">
@@ -25,7 +26,7 @@
           </div>
         </div>
       </a-col>
-      <a-col :span="4">
+      <a-col :span="6">
         <div v-if="!userStore.getters.getIsLogin" class="login-group">
           <a-button type="primary">
             <router-link to="login">登录</router-link>
@@ -35,28 +36,33 @@
           </a-button>
         </div>
         <div v-else class="user-menu">
-          <a target="_blank">
-            <a-avatar
-                :src="store.getters.getUserInfo.avatar"
-                @click="test"
-                size="48">
+          <div style="margin-right: 25px">
+            <a-button type="primary">文章中心<pie-chart-outlined /></a-button>
+          </div>
+          <a-popover placement="bottom" trigger="click">
+            <template #content>
+              <UserNavBarPanel></UserNavBarPanel>
+            </template>
+            <a-avatar :src="store.getters.getUserInfo.avatar" style="cursor: pointer;" size="48">
               <template #icon>
-                <UserOutlined/>
+                <UserOutlined />
               </template>
             </a-avatar>
-          </a>
+          </a-popover>
           <router-link :to="{ name: 'postEdit' }">
-            <img class="menu-item"
-                 src="https://songtiancloud-1300061766.cos.ap-guangzhou.myqcloud.com/img/编辑.png" alt="">
+            <img
+              class="menu-item"
+              src="https://songtiancloud-1300061766.cos.ap-guangzhou.myqcloud.com/img/编辑.png"
+              alt
+            />
           </router-link>
-          <a target="_blank" @click="logOutHandler">
-            <img class="menu-item"
-                 src="https://songtiancloud-1300061766.cos.ap-guangzhou.myqcloud.com/img/文章.png" alt="">
-          </a>
-          <a-badge count="5">
+          <a-badge count="0">
             <a target="_blank">
-              <img class="menu-item"
-                   src="https://songtiancloud-1300061766.cos.ap-guangzhou.myqcloud.com/img/通知.png" alt="">
+              <img
+                class="menu-item"
+                src="https://songtiancloud-1300061766.cos.ap-guangzhou.myqcloud.com/img/通知.png"
+                alt
+              />
             </a>
           </a-badge>
         </div>
@@ -67,31 +73,41 @@
 
 <script setup>
 
-import {ref} from "vue";
-import userStore from "../store/userStore";
-import {UserOutlined} from '@ant-design/icons-vue'
-import {logout} from "../api/memberapi";
+import { onMounted, provide, ref } from "vue";
+import userStore from "../../store/userStore";
+import { UserOutlined } from '@ant-design/icons-vue'
+import { logout } from "../../api/memberapi";
+import UserNavBarPanel from "./UserNavBarPanel.vue";
+import router from "../../router";
+import { useRoute } from "vue-router";
+import { PieChartOutlined } from '@ant-design/icons-vue'
 
 const store = userStore;
 
 //搜索框value
-let searchValue = ref();
+let searchText = ref('');
 
+const route = useRoute();
 const link = [
-  {"name": "首页", "url": "/"},
-  {"name": "道具城", "url": "/shop"},
+  { "name": "首页", "url": "/" },
+  { "name": "道具城", "url": "/shop" },
 ]
 
-
-const logOutHandler = ()=>{
-  logout().then(resp=>{
-    if (resp.data.code === 0) {
-      store.commit('logout');
-      window.location.reload();
-    }
-  })
+const searchHandler = () => {
+  if (route.name !== 'search') {
+    let routerJump = router.resolve({ name: 'search', query: { query: searchText.value, type: '0', sort: '0' } })
+    window.open(routerJump.href, '_blank')
+  } else {
+    store.commit('setSearchKeyword', searchText.value);
+    router.push({ name: 'search', query: { query: searchText.value, type: '0', sort: '0' } })
+  }
 }
 
+onMounted(() => {
+  if (route.query.query !== null) {
+    searchText.value = route.query.query
+  }
+})
 
 
 </script>
@@ -122,8 +138,8 @@ header {
   font-size: 20px;
   font-weight: 600;
   font-family: Avenir, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-  Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji",
-  "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji", sans-serif;
+    Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji", sans-serif;
   line-height: 64px;
   white-space: nowrap;
   text-decoration: none;
@@ -157,7 +173,6 @@ header {
 }
 
 .nav-link:hover {
-  border-bottom: 3px solid #40a9ff;
   transition: 0.2s all linear;
   transition-delay: 0.1s;
 }
@@ -187,6 +202,10 @@ header {
 }
 
 .menu-item {
-  margin-left: 25px;
+  margin-left: 35px;
+}
+
+.panel {
+  position: absolute;
 }
 </style>

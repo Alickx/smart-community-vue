@@ -23,12 +23,20 @@
         </span>
       </template>
       <template #author>
-        <a>
-          {{ commentItem.fromMember.nickName }}
-        </a>
-        <a v-if="commentItem.toMember.uid !== authorUid">
-          回复 {{ commentItem.toMember.nickName }}
-        </a>
+        <router-link
+            v-slot="{ href }"
+            custom
+            :to="{ name:'user',param:{ id: commentItem.fromMember.uid } }">
+          <a :href="href">{{ commentItem.fromMember.nickName }}</a>
+        </router-link>
+        <router-link
+            v-if="commentItem.toMember.uid !== commentItem.fromMember.uid"
+            v-slot="{ href }"
+            custom
+            :to="{ name:'user',param:{ id: commentItem.toMemberUid } }">
+          回复
+          <a :href="href">{{ commentItem.toMember.nickName }}</a>
+        </router-link>
       </template>
       <template #avatar>
         <a-avatar
@@ -43,21 +51,23 @@
       </template>
       <template #datetime>
         <a-tooltip :title="nowTimeFormat">
-          <span>{{ timeFormat(commentItem.createdTime) }}</span>
+          <span>{{ formatTime(commentItem.createdTime) }}</span>
         </a-tooltip>
       </template>
       <div class="reply-list">
-        <custom-comment
-            :first-comment-uid="firstCommentUid"
+        <custom-reply
+            @sendReplySuccess="replySuccessHandler"
+            :first-comment-uid="commentItem.uid"
             :comment-item="data"
             v-for="(data) in commentItem.replyInfo">
-        </custom-comment>
+        </custom-reply>
       </div>
     </a-comment>
     <div class="reply-input" v-if="replyInputStatus">
       <post-send-comment
+          @replySuccess="replySuccessHandler"
           :input-row="4"
-          :to-member-uid="commentItem.fromMember.uid"
+          :to-member-info="commentItem.fromMember"
           :first-comment-uid="firstCommentUid"
           :type="0"
           :show-avatar="false">
@@ -69,30 +79,33 @@
 import dayjs from "_dayjs@1.10.8@dayjs";
 import {LikeFilled, LikeOutlined} from "@ant-design/icons-vue"
 import PostSendComment from "./PostSendComment.vue";
-import {inject, onMounted, reactive, ref, toRefs} from "vue";
+import {reactive, ref, toRefs} from "vue";
 import {useRoute} from "vue-router";
-import {thumbCancel, thumbSave} from "../api/postapi";
+import {thumbCancel, thumbSave} from "../../api/postapi";
+import userStore from "../../store/userStore";
+import CustomReply from "./CustomReply.vue";
 
 const props = defineProps({
   commentItem: {
     type: Object
   },
-  firstCommentUid:{
-    type: String
-  },
-  authorUid:{
+  firstCommentUid: {
     type: String
   }
 })
 
+const store = userStore;
 const route = useRoute();
+const emit = defineEmits([
+  "sendReplySuccess"
+])
+
 let postId = ref('');
 postId.value = route.params.id
 
 
 let replyInputStatus = ref(false);
-
-const { commentItem } = toRefs(props);
+const {commentItem} = toRefs(props);
 
 const openReplyInput = () => {
   replyInputStatus.value = true;
@@ -102,20 +115,37 @@ const closeReplyInput = () => {
   replyInputStatus.value = false;
 }
 
-const nowTimeFormat = () => {
-  return dayjs().format('YYYY-MM-DD HH:mm:ss');
-}
-
-const timeFormat = (value) => {
-  return dayjs(value).format("YYYY-MM-DD HH:mm:ss");
+const formatTime = (time) => {
+  return dayjs(time).toNow();
 }
 
 const params = reactive({
   toUid: props.commentItem.uid
 })
 
-const thumbClickHandle = ()=>{
-  thumbSave(params).then(resp=>{
+/**
+ * 回复
+ * @param param
+ * @param firstCommentUid 第一条回复的uid
+ */
+const replySuccessHandler = (param, firstCommentUid) => {
+  const {userContent, memberInfo, uid} = param
+  const reply = {
+    content: userContent,
+    createdTime: new Date(),
+    fromMember: store.getters.getUserInfo,
+    isLike: false,
+    replyInfo: null,
+    thumbCount: 0,
+    toMember: memberInfo,
+    uid: uid
+  }
+  emit('sendReplySuccess', reply, firstCommentUid)
+  replyInputStatus.value = false;
+}
+
+const thumbClickHandle = () => {
+  thumbSave(params).then(resp => {
     if (resp.data.code === 0) {
       console.log(commentItem)
       commentItem.value.isLike = true;
@@ -124,8 +154,8 @@ const thumbClickHandle = ()=>{
   })
 }
 
-const thumbCancelHandle = ()=>{
-  thumbCancel(params).then(resp=>{
+const thumbCancelHandle = () => {
+  thumbCancel(params).then(resp => {
     if (resp.data.code === 0) {
       commentItem.value.isLike = false;
       commentItem.value.thumbCount--;
@@ -143,13 +173,13 @@ const thumbCancelHandle = ()=>{
   flex-direction: column;
 }
 
-.reply-list{
+.reply-list {
   width: 80%;
   padding: 0 60px 0 10px;
   background-color: #f9fafb;
 }
 
-.main-container{
+.main-container {
   width: 100%;
 }
 

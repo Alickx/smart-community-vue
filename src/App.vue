@@ -1,91 +1,43 @@
 <template>
-  <router-view></router-view>
+  <div class="container">
+    <router-view></router-view>
+  </div>
 </template>
-
 
 
 <script setup>
 
 
-
-
 </script>
 <style>
-a {
-  color: #000000;
-  text-decoration: none;
-}
-body,
-div,
-dl,
-dt,
-dd,
-ul,
-ol,
-li,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-pre,
-form,
-fieldset,
-input,
-textarea,
-p,
-blockquote,
-th,
-td {
-  padding: 0;
+
+
+
+/*!* 把我们所有标签的内外边距清零 *!*/
+* {
   margin: 0;
-}
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-img {
-  display: block;
-  border: 0;
-}
-address,
-caption,
-cite,
-code,
-dfn,
-th,
-var {
-  font-weight: normal;
-  font-style: normal;
-}
-ol,
-ul {
-  list-style: none;
-}
-caption,
-th {
-  text-align: left;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: normal;
-  font-size: 100%;
+  padding: 0;
 }
 
-body {
-  background-color: #f4f5f5 !important;
-  margin: 0;
-  padding: 0;
-  height: 100%;
+li {
+  list-style: none;
+}
+
+a:hover {
+  color: #007fff !important;
 }
 
 html {
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+.container {
+  background-color: #f4f5f5;
+}
+
+body {
+  background-color: #f4f5f5 !important;
+  height: auto!important;
 }
 </style>

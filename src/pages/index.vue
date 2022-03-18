@@ -10,9 +10,8 @@
 <script setup>
 
 
-import PostFilterBar from "../components/PostFilterBar.vue";
-import PostStream from "../components/PostStream.vue";
-import NavbarCommon from "../components/NavbarCommon.vue";
+import PostStream from "../components/post/PostStream.vue";
+import NavbarCommon from "../components/common/NavbarCommon.vue";
 </script>
 
 <style scoped>
@@ -26,7 +25,7 @@ import NavbarCommon from "../components/NavbarCommon.vue";
   padding: 25px;
   display: flex;
   flex-direction: column;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 
 

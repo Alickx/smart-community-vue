@@ -5,17 +5,20 @@
         v-if="isShowPostContent"
         :post-info=postInfo>
     </post-view>
-    <send-comment
+    <post-send-comment
+        @commentSuccess="commentSuccessHandler"
         v-if="isShowPostContent"
         :type="0"
         :input-row="5"
         :show-avatar="true"
-        :to-member-uid="postInfo.authorInfo.uid"
+        :to-member-info="postInfo.authorInfo"
+        :first-comment-uid="null"
         :post-uid="postId">
-    </send-comment>
+    </post-send-comment>
     <post-comment-list
+        :new-comment="newComment"
         v-if="isShowPostContent"
-        :author-uid="postInfo.authorInfo.uid">
+        :author-info="postInfo.authorInfo">
     </post-comment-list>
   </div>
 </template>
@@ -25,10 +28,10 @@
 import {useRoute} from "vue-router";
 import {onMounted, provide, ref} from "vue";
 import {getPostByUid} from "../api/postapi";
-import NavbarCommon from "../components/NavbarCommon.vue";
-import PostView from "../components/PostView.vue";
-import SendComment from "../components/PostSendComment.vue";
-import PostCommentList from "../components/PostCommentList.vue";
+import NavbarCommon from "../components/common/NavbarCommon.vue";
+import PostCommentList from "../components/post/PostCommentList.vue";
+import PostSendComment from "../components/post/PostSendComment.vue";
+import PostView from "../components/post/PostView.vue";
 
 const route = useRoute();
 
@@ -37,6 +40,11 @@ let isShowPostContent = ref(false)
 let postId = ref('');
 postId.value = route.params.id;
 
+let newComment = ref(null)
+
+const commentSuccessHandler = (comment)=>{
+  newComment.value = comment;
+}
 
 onMounted(() => {
   getPostByUid(route.params.id).then(resp => {

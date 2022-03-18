@@ -4,6 +4,13 @@
       <a-typography-title :level="3">
         {{ postInfo.title }}
       </a-typography-title>
+      <a-tag v-if="postInfo.status === 3" color="#f50">该文章存在违禁内容，现已屏蔽</a-tag>
+      <a-tag v-else-if="postInfo.status === 2" color="processing">
+        <template #icon>
+          <sync-outlined :spin="true" />
+        </template>
+        文章正在审核中
+      </a-tag>
     </div>
     <div class="user-info">
       <a-row align="middle">
@@ -36,6 +43,7 @@
 </template>
 
 <script setup>
+import {SyncOutlined} from '@ant-design/icons-vue'
 
 import dayjs from "_dayjs@1.10.8@dayjs";
 
