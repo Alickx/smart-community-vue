@@ -3,7 +3,7 @@
     <ul class="nav-menu user-dropdown-list">
       <div class="nav-menu-item-group">
         <li class="nav-menu-item">
-          <router-link :to="{ name: 'postEdit' }">
+          <router-link :to="{ name: 'postEdit' , params: {id: 'new'}}">
             <edit-outlined/>
             <span>写文章</span>
           </router-link>
@@ -12,19 +12,19 @@
       <div class="nav-menu-item-group">
         <li class="nav-menu-item">
           <router-link :to="{ path: `/user/${userId}` }">
-            <user-outlined />
+            <user-outlined/>
             <span>我的主页</span>
           </router-link>
         </li>
         <li class="nav-menu-item">
-          <router-link :to="{ path: `/user/${userId}/like` }">
-            <like-outlined />
+          <router-link :to="{ path: `/user/${userId}/thumb` }">
+            <like-outlined/>
             <span>我赞过的</span>
           </router-link>
         </li>
         <li class="nav-menu-item">
-          <router-link :to="{ path: `/user/${userId}/collections` }">
-            <star-outlined />
+          <router-link :to="{ path: `/user/${userId}/collect` }">
+            <star-outlined/>
             <span>我的收藏</span>
           </router-link>
         </li>
@@ -32,7 +32,7 @@
       <div class="nav-menu-item-group">
         <li class="nav-menu-item" @click.stop="ClickLogout">
           <a>
-            <logout-outlined />
+            <logout-outlined/>
             <span>登出账号</span>
           </a>
         </li>
@@ -43,12 +43,13 @@
 
 <script setup>
 import {onMounted, ref} from "vue";
-import {logout} from '../../api/memberapi';
-import userStore from "../../store/userStore";
-import {EditOutlined,UserOutlined,LikeOutlined,StarOutlined,LogoutOutlined} from '@ant-design/icons-vue'
+import {EditOutlined, UserOutlined, LikeOutlined, StarOutlined, LogoutOutlined} from '@ant-design/icons-vue'
+import router from "../../router";
+import {useStore} from "vuex";
+import {memberLogout} from "../../api/loginapi";
 
 
-const store = userStore;
+const store = useStore();
 
 const userId = ref('');
 
@@ -58,21 +59,16 @@ onMounted(() => {
   }
 })
 
-// if (store.getters.getUser) {
-//   userId.value = store.getters.getUser.userId;
-// } else {
-//   alert("用户未登录，请重新登录!")
-//   router.push('/')
-// }
-
 
 const ClickLogout = () => {
-  logout(userId.value).then(() => {
-    setTimeout(()=>{
+  let r = confirm('确定要登出账号吗？');
+  if (r) {
+    memberLogout().then(() => {
       store.commit('logout');
+      // 刷新
       location.reload();
-    },1500);
-  })
+    })
+  }
 }
 
 </script>
@@ -101,7 +97,7 @@ const ClickLogout = () => {
 .nav-menu .nav-menu-item > a {
   display: flex;
   align-items: center;
-  padding: 8px 8px ;
+  padding: 8px 8px;
 }
 
 .nav-menu-item > a {
@@ -118,8 +114,8 @@ const ClickLogout = () => {
   border-bottom: 1px solid rgba(0, 0, 0, 0.04);
 }
 
-.nav-menu .nav-menu-item-group[data-v-59824fc4] {
-  padding: 1rem 0;
+.nav-menu .nav-menu-item-group {
+  padding: 5px 0;
 }
 
 .nav-menu.user-dropdown-list {

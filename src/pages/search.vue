@@ -62,7 +62,7 @@ import { onDeactivated, onMounted, reactive, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import SearchPostList from "../components/search/SearchPostList.vue";
 import { searchPost } from "../api/search";
-import userStore from "../store/userStore";
+import {useStore} from "vuex";
 
 const route = useRoute();
 
@@ -77,7 +77,7 @@ const searchChoose = ref([
   { label: '最新优先', sort: '1' }
 ])
 
-const store = userStore;
+const store = useStore();
 
 let queryText = ref('')
 let queryType = ref('')
@@ -96,12 +96,10 @@ const data = reactive({
  * 加载下一页
  */
 const loadNextPage = () => {
-  console.log("加载")
   let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
   let clientHeight = document.documentElement.clientHeight;
   let scrollHeight = document.documentElement.scrollHeight;
   if (scrollTop + clientHeight + 1>= scrollHeight) { // 滚动到底部，逻辑代码
-    console.log("next")
     if (data.curPage < totalPage.value) {
       data.curPage++;
       searchPost(data).then(resp => {
@@ -132,7 +130,6 @@ const postRequest = (keyWord, sortType) => {
 watch(() => {
   store.getters.getSearchKeyword
 }, () => {
-  console.log("新的搜索")
   isShowSearchResult.value = false;
   const data = {
     curPage: 1,

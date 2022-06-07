@@ -1,5 +1,5 @@
 <template>
-  <a-avatar :src="targetUserInfo.avatar" :size="{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }">
+  <a-avatar :src="targetUserInfo.avatar" :size="64">
   </a-avatar>
   <div class="info-box">
     <div class="top">
@@ -7,10 +7,10 @@
         {{ targetUserInfo.nickName }}
       </span>
       <div style="color: blue;margin-left: 5px" v-if="store.getters.getUserInfo.gender === '0'">
-        <man-outlined />
+        <man-outlined/>
       </div>
       <div style="color: red;margin-left: 5px" v-else-if="store.getters.getUserInfo.gender === '1'">
-        <woman-outlined />
+        <woman-outlined/>
       </div>
     </div>
     <div class="show">
@@ -20,16 +20,18 @@
     </div>
   </div>
   <div class="action-box">
-    <a-button type="primary" v-if="isMyHome" @click.stop="()=>router.push({name:'userSetting'})">编辑个人信息</a-button>
-    <a-button v-else>关注</a-button>
+    <a-button type="primary" v-if="isMyHome" @click.stop="()=>router.push({name:'userProfile'})">编辑个人信息</a-button>
+    <button v-if="!isFollow && !isMyHome" class="follow-button" @click.stop="followClickHandler">关注</button>
+    <button v-if="isFollow && !isMyHome" class="have-follow-button">已关注</button>
   </div>
 </template>
 
 <script setup>
 import {onMounted, reactive, ref} from "vue";
-import userStore from "../../store/userStore";
-import {useRouter} from "vue-router";
-import {ManOutlined,WomanOutlined} from '@ant-design/icons-vue'
+import {useRoute, useRouter} from "vue-router";
+import {ManOutlined, WomanOutlined} from '@ant-design/icons-vue'
+import {followQuery, followSave} from "../../api/memberapi";
+import {useStore} from "vuex";
 
 const props = defineProps({
   targetUserInfo: {
@@ -37,14 +39,30 @@ const props = defineProps({
   }
 })
 
-const store = userStore;
-
+const store = useStore();
+const route = useRoute();
 const router = useRouter();
+
 let isLogin = ref(store.getters.getIsLogin)
 let userInfo = reactive(store.getters.getUserInfo)
-let isMyHome = ref(false)
+let isMyHome = ref(false);
+let isFollow = ref(false);
+
+
+const followClickHandler = () => {
+  let targetUserId = route.params.id
+  followSave(targetUserId).then(res => {
+    if (res.data.code === 0) {
+      isFollow.value = true
+    }
+  })
+}
+
 
 onMounted(() => {
+  followQuery(route.params.id).then(res => {
+    isFollow.value = res.data.data
+  })
   if (isLogin.value === false) {
     isMyHome.value = false;
   } else {
@@ -126,6 +144,32 @@ onMounted(() => {
   flex-direction: column;
   justify-content: center;
   margin-left: 20px;
+}
+
+.follow-button {
+  border-radius: 5px;
+  border: 1px solid #89ca6a;
+  width: 100px;
+  height: 40px;
+  color: #89ca6a;
+  background-color: #ffffff;
+  font-size: 18px;
+  font-weight: 450;
+  cursor: pointer;
+  font-family: helvetica, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+.have-follow-button {
+  border-radius: 5px;
+  border: 1px solid #89ca6a;
+  width: 100px;
+  height: 40px;
+  color: #ffffff;
+  background-color: #89ca6a;
+  font-size: 18px;
+  font-weight: 450;
+  cursor: pointer;
+  font-family: helvetica, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
 
 

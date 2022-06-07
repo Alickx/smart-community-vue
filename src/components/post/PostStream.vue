@@ -1,7 +1,7 @@
 <template>
-  <div class="post-filter-bar">
-    <PostFilterBar @selectChange="changePostStream"></PostFilterBar>
-  </div>
+<!--  <div class="post-filter-bar">-->
+<!--    <PostFilterBar @selectChange="changePostStream"></PostFilterBar>-->
+<!--  </div>-->
   <div class="post-view-list">
     <div v-if="!isShowPost" class="loading-skeleton">
       <a-skeleton active />
@@ -10,7 +10,6 @@
       <a-skeleton active />
     </div>
     <post-view
-      @loadNextPage="loadNextPageHandler"
       v-else-if="postItemList.length !== 0"
       :post-item-list="postItemList"
     ></post-view>
@@ -23,20 +22,16 @@
 <script setup>
 
 import PostView from "./PostListView.vue";
-import PostFilterBar from "./PostFilterBar.vue";
 import { onDeactivated, onMounted, reactive, ref } from "vue";
-import { getCommentByPost, getPostList } from "../../api/postapi";
+import { getPostList } from "../../api/postapi";
 
 let postItemList = ref([]);
 
 let isShowPost = ref(false);
 
-let param = reactive({
-  sectionUid: null,
-  tagUid: null
-})
-
 let queryParam = reactive({
+  sectionUid: null,
+  tagUid: null,
   curPage: 1,
   sidx: 'created_time',
   order: 'desc'
@@ -50,9 +45,8 @@ const loadNextPage = () => {
   let scrollHeight = document.documentElement.scrollHeight;
   if (scrollTop + clientHeight + 1 >= scrollHeight) { // 滚动到底部，逻辑代码
     if (queryParam.curPage < totalPage.value) {
-      console.log("加载下一页")
       queryParam.curPage++;
-      getPostList(param, queryParam).then(resp => {
+      getPostList(queryParam).then(resp => {
         if (resp.data.code === 0) {
           postItemList.value = postItemList.value.concat(resp.data.data.list);
         }
@@ -64,31 +58,33 @@ const loadNextPage = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', loadNextPage);
-  getPostList(param, queryParam).then(resp => {
+  getPostList(queryParam).then(resp => {
     if (resp.data.code === 0) {
       postItemList.value = resp.data.data.list;
       totalPage.value = resp.data.data.totalPage;
       setTimeout(() => {
         isShowPost.value = true;
-      }, 800)
+      }, 500)
     }
   })
 })
-const changePostStream = (selectForm) => {
-  param.sectionUid = selectForm.sectionUid;
-  param.tagUid = selectForm.tagUid;
-  isShowPost.value = false;
-  getPostList(param, queryParam).then(resp => {
-    if (resp.data.code === 0) {
-      postItemList.value = resp.data.data.list;
-      queryParam.curPage = 1;
-      totalPage.value = resp.data.data.totalPage;
-      setTimeout(() => {
-        isShowPost.value = true;
-      }, 800)
-    }
-  })
-}
+
+// 选择分类
+// const changePostStream = (selectForm) => {
+//   queryParam.sectionUid = selectForm.sectionUid;
+//   queryParam.tagUid = selectForm.tagUid;
+//   isShowPost.value = false;
+//   getPostList(queryParam).then(resp => {
+//     if (resp.data.code === 0) {
+//       postItemList.value = resp.data.data.list;
+//       queryParam.curPage = 1;
+//       totalPage.value = resp.data.data.totalPage;
+//       setTimeout(() => {
+//         isShowPost.value = true;
+//       }, 500)
+//     }
+//   })
+// }
 
 onDeactivated(() => {
   window.removeEventListener('scroll', loadNextPage);

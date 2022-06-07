@@ -12,15 +12,11 @@ import myAxios from "./axios";
  *              order: 正序:asc 倒序:desc
  * @returns {*|AxiosPromise}
  */
-export function getPostList(param,pageParam){
+export function getPostList(pageParam){
   return myAxios({
-    url: 'api/v1/post/post/list',
-    method: 'post',
-    data: pageParam,
-    params: {
-      "sectionUid": param.sectionUid,
-      "tagUid": param.tagUid
-    }
+    url: '/post/post/query/list',
+    method: 'get',
+    params: pageParam
   },{
     repeat_request_cancel: true,
     error_message_show: true,
@@ -35,7 +31,7 @@ export function getPostList(param,pageParam){
  */
 export function savePost(postForm){
   return myAxios({
-    url: 'api/v1/post/post/save',
+    url: '/post/post/save',
     method: 'post',
     data: postForm
   })
@@ -48,7 +44,7 @@ export function savePost(postForm){
  */
 export function getPostByUid(postUid) {
   return myAxios({
-    url: `api/v1/post/post/info/${postUid}`,
+    url: `/post/post/info/${postUid}`,
     method: 'get'
   })
 }
@@ -60,7 +56,7 @@ export function getPostByUid(postUid) {
  */
 export function saveComment(comment) {
   return myAxios({
-    url: 'api/v1/post/comment/save',
+    url: '/post/comment/save',
     method: 'post',
     data: comment
   })
@@ -74,7 +70,7 @@ export function saveComment(comment) {
  */
 export function getCommentByPost(queryParam,postUid) {
   return myAxios({
-    url: 'api/v1/post/comment/list',
+    url: '/post/comment/query/list',
     method: 'post',
     data: queryParam,
     params:{
@@ -90,7 +86,7 @@ export function getCommentByPost(queryParam,postUid) {
  */
 export function thumbSave(params) {
   return myAxios({
-    url: 'api/v1/post/thumb/save',
+    url: '/post/thumb/save',
     method: 'post',
     data: params
   })
@@ -103,7 +99,7 @@ export function thumbSave(params) {
  */
 export function thumbCancel(params) {
   return myAxios({
-    url: 'api/v1/post/thumb/cancel',
+    url: '/post/thumb/cancel',
     method: 'post',
     data: params
   })
@@ -113,15 +109,15 @@ export function thumbCancel(params) {
  * 根据用户id查询全部可见文章
  * @param params
  *      curPage: 页数
- *      limit: 一页条数
  *      memberUid: 目标用户Uid
+ * @param id 用户id
  * @returns {*|AxiosPromise}
  */
 export function queryPostByMemberUid(params) {
   return myAxios({
-    url: 'api/v1/post/post/query_list',
-    method: 'post',
-    data: params
+    url: '/post/post/query/list/member',
+    method: 'get',
+    params: params
   })
 }
 
@@ -132,8 +128,36 @@ export function queryPostByMemberUid(params) {
  */
 export function  queryThumbByMemberUid(params){
   return myAxios({
-    url: 'api/v1/post/thumb/query_list',
+    url: '/post/thumb/query/list',
     method: 'post',
     data: params
+  })
+}
+
+/**
+ * 删除评论
+ * @returns 删除结果
+ * @param params 评论uid
+ */
+export function delComment(params) {
+  return myAxios({
+    url: '/post/comment/delete',
+    method:'post',
+    data: params
+  })
+}
+
+/**
+ * 删除文章
+ * @param param 文章uid
+ * @returns {*} 删除结果
+ */
+export function delPost(param) {
+  return myAxios({
+    url: '/post/post/delete',
+    method: 'post',
+    params:{
+      postUid: param
+    }
   })
 }

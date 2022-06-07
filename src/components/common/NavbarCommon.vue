@@ -6,11 +6,11 @@
           <a id="logo" href="http://localhost:3000/">Smart Community</a>
           <div class="search-input">
             <a-input-search
-              v-model:value="searchText"
-              placeholder="搜索文章,用户..."
-              enter-button="搜索"
-              @search="searchHandler"
-              size="large"
+                v-model:value="searchText"
+                placeholder="搜索文章,用户..."
+                enter-button="搜索"
+                @search="searchHandler"
+                size="large"
             />
           </div>
         </div>
@@ -27,43 +27,54 @@
         </div>
       </a-col>
       <a-col :span="6">
-        <div v-if="!userStore.getters.getIsLogin" class="login-group">
+        <div v-if="!store.getters.getIsLogin" class="login-group">
           <a-button type="primary">
-            <router-link to="login">登录</router-link>
+            <router-link :to="{ name: 'login' }">登录</router-link>
           </a-button>
           <a-button>
-            <router-link to="register">注册</router-link>
+            <router-link :to="{ name: 'register' }">注册</router-link>
           </a-button>
         </div>
         <div v-else class="user-menu">
           <div style="margin-right: 25px">
-            <a-button type="primary">文章中心<pie-chart-outlined /></a-button>
+            <router-link :to="{ name: 'postManagement' }" target="_blank">
+              <a-button type="primary">
+                <div class="tw-flex tw-justify-center tw-items-center">文章中心
+                  <pie-chart-outlined class="tw-ml-1" />
+                </div>
+              </a-button>
+            </router-link>
           </div>
           <a-popover placement="bottom" trigger="click">
             <template #content>
               <UserNavBarPanel></UserNavBarPanel>
             </template>
-            <a-avatar :src="store.getters.getUserInfo.avatar" style="cursor: pointer;" size="48">
+            <a-avatar :src="avatar" style="cursor: pointer;" size="48">
               <template #icon>
-                <UserOutlined />
+                <UserOutlined/>
               </template>
             </a-avatar>
           </a-popover>
-          <router-link :to="{ name: 'postEdit' }">
+          <router-link :to="{ name: 'postEdit',params: {id: 'new'}}">
             <img
-              class="menu-item"
-              src="https://songtiancloud-1300061766.cos.ap-guangzhou.myqcloud.com/img/编辑.png"
-              alt
+                class="menu-item"
+                src="https://songtiancloud-1300061766.cos.ap-guangzhou.myqcloud.com/img/编辑.png"
+                alt
             />
           </router-link>
-          <a-badge count="0">
-            <a target="_blank">
-              <img
-                class="menu-item"
-                src="https://songtiancloud-1300061766.cos.ap-guangzhou.myqcloud.com/img/通知.png"
-                alt
-              />
-            </a>
+          <a-badge :count="notReadNotifyCount">
+            <router-link
+                v-slot="{ href }"
+                custom
+                :to="{ name: 'notification'}">
+              <a :href="href" target="_blank">
+                <img
+                    class="menu-item"
+                    src="https://songtiancloud-1300061766.cos.ap-guangzhou.myqcloud.com/img/通知.png"
+                    alt
+                />
+              </a>
+            </router-link>
           </a-badge>
         </div>
       </a-col>
@@ -73,37 +84,50 @@
 
 <script setup>
 
-import { onMounted, provide, ref } from "vue";
-import userStore from "../../store/userStore";
-import { UserOutlined } from '@ant-design/icons-vue'
-import { logout } from "../../api/memberapi";
+import {onMounted, ref} from "vue";
+import {UserOutlined} from '@ant-design/icons-vue'
 import UserNavBarPanel from "./UserNavBarPanel.vue";
-import router from "../../router";
-import { useRoute } from "vue-router";
-import { PieChartOutlined } from '@ant-design/icons-vue'
+import {useRoute, useRouter} from "vue-router";
+import {PieChartOutlined} from '@ant-design/icons-vue'
+import {queryNotificationNotReadCount} from "../../api/notifiapi";
+import {useStore} from "vuex";
 
-const store = userStore;
+const store = useStore();
 
 //搜索框value
 let searchText = ref('');
+let notReadNotifyCount = ref(0);
+let interval = ref(10000);
 
+const router = useRouter();
 const route = useRoute();
 const link = [
-  { "name": "首页", "url": "/" },
-  { "name": "道具城", "url": "/shop" },
+  {"name": "首页", "url": "/"},
 ]
+
+let avatar = ref('');
+
+if (store.getters.getIsLogin) {
+  avatar = store.getters.getUserInfo.avatar !== undefined ? store.getters.getUserInfo.avatar : '';
+}
 
 const searchHandler = () => {
   if (route.name !== 'search') {
-    let routerJump = router.resolve({ name: 'search', query: { query: searchText.value, type: '0', sort: '0' } })
+    let routerJump = router.resolve({name: 'search', query: {query: searchText.value, type: '0', sort: '0'}})
     window.open(routerJump.href, '_blank')
   } else {
     store.commit('setSearchKeyword', searchText.value);
-    router.push({ name: 'search', query: { query: searchText.value, type: '0', sort: '0' } })
+    router.push({name: 'search', query: {query: searchText.value, type: '0', sort: '0'}})
   }
 }
 
+
 onMounted(() => {
+  if (store.getters.getIsLogin) {
+    queryNotificationNotReadCount().then(res => {
+      notReadNotifyCount.value = res.data.count;
+    })
+  }
   if (route.query.query !== null) {
     searchText.value = route.query.query
   }
@@ -138,8 +162,8 @@ header {
   font-size: 20px;
   font-weight: 600;
   font-family: Avenir, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji", sans-serif;
+  Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji",
+  "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji", sans-serif;
   line-height: 64px;
   white-space: nowrap;
   text-decoration: none;

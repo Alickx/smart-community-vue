@@ -1,21 +1,29 @@
 import axios from 'axios';
 import {message} from "ant-design-vue";
 import userStore from "../store/userStore";
+import router from "../router";
 
-function myAxios(axiosConfig,customOptions) {
+const store = userStore;
 
-  const store = userStore;
+function myAxios(axiosConfig, customOptions) {
 
+  let baseUrl = ''
+  if (import.meta.env.DEV) {
+    baseUrl = 'http://localhost:8601/api/v1';
+  } else {
+    baseUrl = 'http://goroute.cn:8601/api/v1';
+  }
   const service = axios.create({
-    baseURL: 'http://localhost:8601', // 设置统一的请求前缀
-    timeout: 10000, // 设置统一的超时时长
+    baseURL: baseUrl,
+    timeout: 5000, // 设置统一的超时时长
   });
 
 
   let custom_options = Object.assign({
     repeat_request_cancel: true, // 是否开启取消重复请求, 默认为 true
     error_message_show: true, // 是否开启接口错误信息展示，默认为 true
-    code_message_show: true, // 是否开启code不为0时的信息提示, 默认为true
+    code_message_show: false, // 是否开启code不为0时的信息提示, 默认为false
+    default_control_error: true, // 是否开启默认的接口错误控制，默认为true
   }, customOptions);
 
   service.interceptors.request.use(
@@ -38,8 +46,12 @@ function myAxios(axiosConfig,customOptions) {
   service.interceptors.response.use(
     response => {
       removePending(response.config);
-      if(custom_options.code_message_show && response.data && response.data.code !== 0) {
+      if (response.data && response.data.code !== 0 && custom_options.default_control_error) {
         message.error(response.data.message);
+        if (response.data.code === '401') {
+          store.commit('logout');
+          // router.push({name: 'login'});
+        }
         return Promise.reject(response.data); // code不等于0, 页面具体逻辑就不执行了
       }
       return response;
@@ -58,15 +70,14 @@ function myAxios(axiosConfig,customOptions) {
 const pendingMap = new Map();
 
 
-
 /**
  * 生成每个请求独立的key
  * @param config
  * @returns {string}
  */
 function getPendingKey(config) {
-  let { url,method,params,data } = config;
-  if(typeof data === 'string') data = JSON.parse(data); // response里面返回的config.data是个字符串对象
+  let {url, method, params, data} = config;
+  if (typeof data === 'string') data = JSON.parse(data); // response里面返回的config.data是个字符串对象
   return [url, method, JSON.stringify(params), JSON.stringify(data)].join('&');
 }
 
@@ -76,9 +87,9 @@ function getPendingKey(config) {
  */
 function addPending(config) {
   const uniqueKey = getPendingKey(config);
-  config.cancelToken = config.cancelToken || new axios.CancelToken((cancel) =>{
+  config.cancelToken = config.cancelToken || new axios.CancelToken((cancel) => {
     if (!pendingMap.has(uniqueKey)) {
-      pendingMap.set(uniqueKey,cancel);
+      pendingMap.set(uniqueKey, cancel);
     }
   })
 }
@@ -149,11 +160,9 @@ function httpErrorStatusHandle(error) {
         msg = '异常问题，请联系管理员！';
         break
     }
-    message.error(msg);
+    message.error(msg)
   }
 }
-
-
 
 
 export default myAxios;

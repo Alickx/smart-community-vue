@@ -21,11 +21,11 @@
       </router-link>
       <div class="control-button">
         <a-button-group>
-          <a-button v-if="!data.isLike" class="countNum" @click.stop="thumbClickHandle(data.uid,index)">
+          <a-button v-if="!data.isLike" class="countNum" @click.stop="thumbClickHandle(data,index)">
             <like-filled class="icon"/>
             <span>{{ data.thumbCount }}</span>
           </a-button>
-          <a-button v-else class="countNum" @click.stop="thumbCancelHandle(data.uid,index)">
+          <a-button v-else class="countNum" @click.stop="thumbCancelHandle(data,index)">
             <like-two-tone class="icon"/>
             <span class="isLike">{{ data.thumbCount }}</span>
           </a-button>
@@ -42,12 +42,11 @@
 </template>
 
 <script setup>
-
-import dayjs from "_dayjs@1.10.8@dayjs";
 import {LikeFilled, MessageFilled, LikeTwoTone} from '@ant-design/icons-vue'
 import "dayjs/locale/zh-cn";
 import {thumbCancel, thumbSave} from "../../api/postapi";
-import {reactive, toRefs} from "vue";
+import {toRefs} from "vue";
+import dayjs from "dayjs";
 
 const props = defineProps({
   postList: {
@@ -55,15 +54,20 @@ const props = defineProps({
   }
 })
 
-let params = reactive({
-  toUid: ''
-})
 
 const {postList} = toRefs(props);
 
+/**
+ * 点赞操作
+ */
+const thumbClickHandle = (data, index) => {
+  const params = {
+    toMemberUid: data.authorInfo.uid,
+    toUid: data.uid,
+    postUid: data.uid,
+    type: 2
+  }
 
-const thumbClickHandle = (value, index) => {
-  params.toUid = value;
   thumbSave(params).then(resp => {
     if (resp.data.code === 0) {
       postList.value[index].thumbCount++;
@@ -72,8 +76,17 @@ const thumbClickHandle = (value, index) => {
   })
 }
 
-const thumbCancelHandle = (value, index) => {
-  params.toUid = value;
+/**
+ * 取消点赞
+ */
+const thumbCancelHandle = (data, index) => {
+  const params = {
+    toMemberUid: data.authorInfo.uid,
+    toUid: data.uid,
+    postUid: data.uid,
+    type: 2
+  }
+
   thumbCancel(params).then(resp => {
     if (resp.data.code === 0) {
       postList.value[index].thumbCount--;
@@ -82,6 +95,9 @@ const thumbCancelHandle = (value, index) => {
   })
 }
 
+/**
+ * 格式化时间
+ */
 const formatTime = (time) => {
   return dayjs(time).toNow();
 }

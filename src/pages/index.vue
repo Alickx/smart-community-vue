@@ -16,16 +16,23 @@ import NavbarCommon from "../components/common/NavbarCommon.vue";
 
 <style scoped>
 
+
 .main-container {
   position: relative;
   width: 100%;
-  max-width: 960px;
+  max-width: 850px;
   background-color: #ffffff;
-  margin: 10px auto 0;
   padding: 25px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  margin: 30px auto 20px 200px;
+}
+
+@media (max-width: 1060px) {
+  .main-container {
+    margin: 30px auto 20px;
+  }
 }
 
 

@@ -2,7 +2,7 @@ import myAxios from "./axios";
 
 export function getOssPolicy() {
     return myAxios({
-      url:'api/v1/thirdpart/oss/getPolicy',
+      url:'/thirdpart/oss/getPolicy',
       method:'post'
     })
 }

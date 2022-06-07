@@ -4,13 +4,17 @@
         :header="`${totalCount} 条回复`"
         item-layout="horizontal"
         :data-source="commentList"
-        class="comment-list">
+        class="comment-list"
+    >
       <template #renderItem="{ item }">
         <a-list-item>
           <custom-comment
+              :author-info="authorInfo"
               @sendReplySuccess="sendReplySuccessHandler"
+              @delCommentSuccess="delCommentSuccessHandler"
               :first-comment-uid="item.uid"
-              :comment-item="item">
+              :comment-item="item"
+          >
           </custom-comment>
         </a-list-item>
       </template>
@@ -39,11 +43,9 @@ let commentList = ref([]);
 const route = useRoute();
 
 const sendReplySuccessHandler = (reply, firstCommentUid) => {
-  console.log("sendReplySuccessHandler=>",reply,firstCommentUid)
   for (let item of commentList.value) {
     if (item.uid === firstCommentUid) {
       if (item.replyInfo != null) {
-        console.log("replyinfo=>",item.replyInfo)
         item.replyInfo.push(reply);
       } else {
         item.replyInfo = [];
@@ -51,6 +53,12 @@ const sendReplySuccessHandler = (reply, firstCommentUid) => {
       }
     }
   }
+}
+
+const delCommentSuccessHandler = (value) => {
+  commentList.value = commentList.value.filter(item => {
+    return item.uid !== value
+  })
 }
 
 const {newComment} = toRefs(props);
@@ -120,6 +128,4 @@ onDeactivated(() => {
 </script>
 
 <style scoped>
-
-
 </style>

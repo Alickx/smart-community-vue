@@ -11,7 +11,7 @@
 import {reactive} from "vue";
 
 
-const postContent = reactive({
+let postContent = reactive({
   text: '',
   html: ''
 })
@@ -22,6 +22,16 @@ const changeHandle = (text,html)=>{
   postContent.html = html;
   emit("textChange",postContent);
 }
+
+const setPostContent = (post)=>{
+  postContent.text = post.text;
+  postContent.html = post.html;
+}
+
+defineExpose({
+  setPostContent
+})
+
 
 
 </script>

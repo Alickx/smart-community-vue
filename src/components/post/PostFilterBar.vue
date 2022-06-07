@@ -19,7 +19,6 @@
             :options="tagList"
             style="width: 100%"
             :placeholder=' tagList.length === 0 ? "标签" : tagList[0].label '
-            mode="combobox"
             @change="tagChangeHandle"
             @focus="focus"
         ></a-select>
@@ -40,8 +39,8 @@
 
 <script setup>
 import {onMounted, reactive, ref} from "vue";
-import {getSectionList} from "../../api/sectionapi";
-import {getTagBySection} from "../../api/tagApi";
+import {getCategoryList} from "../../api/categoryApi";
+import {getTagByCategory} from "../../api/tagApi";
 
 
 let sectionList = ref([])
@@ -64,7 +63,7 @@ const emit = defineEmits(["selectChange"])
 
 const selectChangeHandle = () => {
   tagSelectStatus.value = true;
-  getTagBySection(selectForm.sectionUid).then(resp=>{
+  getTagByCategory(selectForm.sectionUid).then(resp=>{
     if (resp.data.code === 0) {
       tagList.value = resp.data.data
       if (tagList.value !== []) {
@@ -80,7 +79,7 @@ const tagChangeHandle = ()=>{
 }
 
 onMounted(() => {
-  getSectionList().then(resp => {
+  getCategoryList().then(resp => {
     if (resp.data.code === 0) {
       for (let item of resp.data.data) {
         const sectionItem = {

@@ -6,9 +6,11 @@
         @back="backPage"
     >
       <template #extra>
-        <a-button type="primary" @click.stop="panelOpen">发布文章</a-button>
+        <a-button type="primary" @click.stop="panelOpen">
+          {{ type === 'new' ? '发布' : '更新' }}
+        </a-button>
         <div class="panel" :class="{ hide:!panelShow }" @click.stop>
-          <a-card title="发布文章" style="width: 550px">
+          <a-card title="发布" style="width: 550px">
             <a-form
                 autocomplete="off"
                 @finish="postSubmit"
@@ -17,45 +19,30 @@
                 class="login-form"
                 :label-col="{ span: 4 }"
             >
-              <a-form-item label="文章题目" required="true" name="title">
+              <a-form-item label="文章题目" :required="true" name="title" :rules="[{ required: true, message: '请填写文章题目' }]">
                 <a-input v-model:value="postForm.title" maxlength="50"></a-input>
               </a-form-item>
-              <a-form-item label="分类" required="true" name="sectionUid" :rules="[{ required: true, message: '请选择分类' }]">
-                <a-radio-group v-model:value="postForm.sectionUid" button-style="solid">
+              <a-form-item label="分类" :required="true" name="categoryUid"
+                           :rules="[{ required: true, message: '请选择分类' }]">
+                <a-radio-group v-model:value="postForm.categoryUid" button-style="solid" @change="categoryChange">
                   <a-space class="section-select">
-                    <a-radio-button :value="data.uid" v-for="(data,index) in sectionList">
+                    <a-radio-button :value="data.uid" v-for="(data,index) in categoryTagList">
                       {{ data.name }}
                     </a-radio-button>
                   </a-space>
                 </a-radio-group>
               </a-form-item>
-
-              <a-form-item label="添加标签" name="tagUid">
-                <!--              TODO 封装选择器-->
+              <a-form-item label="添加标签" name="tagUid" :rules="[{ required: true, message: '请选择标签' }]">
                 <a-select
+                    :disabled="tagList.length === 0"
                     v-model:value="postForm.tagUid"
                     mode="multiple"
                     :options="tagList"
                     value="content"
-                    showArrow="true"
-                    placeholder="请选择标签"
+                    :showArrow="true"
+                    :placeholder="tagList.length === 0 ? '请选择分类' : '请选择标签'"
                 ></a-select>
               </a-form-item>
-
-              <a-form-item label="文章封面" name="headImg">
-                <a-upload
-                    v-model:file-list="postForm.headImg"
-                    list-type="picture"
-                    :max-count="1"
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                >
-                  <a-button>
-                    <upload-outlined></upload-outlined>
-                    请选择文章首图
-                  </a-button>
-                </a-upload>
-              </a-form-item>
-
               <a-form-item label="编辑摘要" name="summary">
                 <a-textarea v-model:value="postForm.summary"
                             show-count
@@ -66,28 +53,33 @@
                 <a-checkbox v-model:checked="postForm.isPublish"></a-checkbox>
               </a-form-item>
               <div id="post-submit-button">
-                <a-button type="primary" html-type="submit">发布文章</a-button>
+                <a-button type="primary" html-type="submit">
+                  {{ type === 'new' ? '发布文章' : '更新文章' }}
+                </a-button>
               </div>
             </a-form>
           </a-card>
         </div>
       </template>
     </a-page-header>
-    <PostEditor @textChange="textSyn"></PostEditor>
+    <PostEditor @textChange="textSyn" ref="postEditorRef"></PostEditor>
   </div>
 </template>
 
 <script setup>
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import PostEditor from "../components/post/PostEditor.vue";
 import {onMounted, reactive, ref} from "vue";
-import {UploadOutlined} from '@ant-design/icons-vue'
-import {savePost} from "../api/postapi";
+import {getPostByUid, savePost} from "../api/postapi";
 import {notification} from "ant-design-vue";
-import {getSectionList} from "../api/sectionapi";
-import {getTagList} from "../api/tagApi";
+import {getCategoryList, getCategoryTagList} from "../api/categoryApi";
+import {getTagByCategory, getTagList} from "../api/tagApi";
 
 const router = useRouter();
+const route = useRoute();
+
+let type = ref('');
+let postEditorRef = ref(null);
 
 const backPage = () => {
   router.back();
@@ -96,19 +88,17 @@ const backPage = () => {
 const panelShow = ref(false);
 
 onMounted(() => {
-  getSectionList().then(resp => {
+  type.value = route.params.id;
+  // 如果type不为new，则请求文章详情
+  if (type.value !== 'new') {
+    postForm.type = '1';
+    getPostDetail();
+  } else {
+    postForm.type = '0';
+  }
+  getCategoryTagList().then(resp => {
     if (resp.data.code === 0) {
-      sectionList.value = resp.data.data;
-    }
-  })
-  getTagList().then(resp => {
-    if (resp.data.code === 0) {
-      for (let item of resp.data.data) {
-        tagList.value.push({
-          label: item.content,
-          value: item.uid
-        })
-      }
+      categoryTagList.value = resp.data.data;
     }
   })
 })
@@ -118,21 +108,21 @@ const pageHelperStyle = {
 }
 
 let postForm = reactive({
-  sectionUid: '',
+  categoryUid: '',
   title: '',
   tagUid: [],
   headImg: '',
   summary: '',
   content: '',
   isPublish: true,
-  contentHtml:''
+  contentHtml: '',
+  type: '',
+  uid: route.params.id === 'new' ? '' : route.params.id,
 })
 
-const sectionList = ref([])
+let categoryTagList = ref([])
+let tagList = ref([])
 
-const tagList = ref([])
-
-//TODO OSS图片上传
 
 const postSubmit = () => {
   if (postForm.content.length < 50) {
@@ -140,10 +130,49 @@ const postSubmit = () => {
       message: '发布错误',
       description: '文章字数不能少于50字',
     })
+    return;
   }
   savePost(postForm).then(resp => {
     if (resp.data.code === 0) {
       router.push("/post/" + resp.data.url);
+    }
+  })
+}
+
+const filterCategoryLabels = (uid) => {
+  let tags = categoryTagList.value.find(item => item.uid === uid).tags;
+  let temp = [];
+  tags.forEach(item => {
+    temp.push({
+      label: item.content,
+      value: item.uid
+    });
+  })
+  tagList.value = temp;
+}
+
+
+const categoryChange = (event) => {
+  tagList.value = [];
+  postForm.tagUid = [];
+  filterCategoryLabels(event.target.value);
+}
+
+const getPostDetail = async () => {
+  await getPostByUid(type.value).then(resp => {
+    if (resp.data.code === 0) {
+      postForm.categoryUid = resp.data.data.categoryUid;
+      postForm.title = resp.data.data.title;
+      postForm.tagUid = resp.data.data.tagUid;
+      postForm.headImg = resp.data.data.headImg;
+      postForm.summary = resp.data.data.summary;
+      postForm.content = resp.data.data.content;
+      postEditorRef.value.setPostContent({
+        text: resp.data.data.content
+      });
+      postForm.isPublish = resp.data.data.isPublish === "1";
+      postForm.contentHtml = resp.data.data.contentHtml;
+      filterCategoryLabels(postForm.categoryUid);
     }
   })
 }
@@ -185,6 +214,7 @@ const panelOpen = () => {
 }
 
 /deep/ .section-select {
+  align-content: flex-start;
   flex-wrap: wrap;
 }
 

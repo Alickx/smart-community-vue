@@ -1,10 +1,22 @@
 <template>
   <div class="menu">
     <ul class="menu-list">
-      <router-link class="menu-link" v-for="data in menuItemList" :key="data.key"
-          :to="{name: 'userDetail',params:{ type: data.key }}">
+      <router-link class="menu-link"
+                   :to="{name: 'userDetailList'}">
         <li class="menu-list-item">
-          <span class="menu-item">{{ data.label }}</span>
+          <span class="menu-item">文章</span>
+        </li>
+      </router-link>
+      <router-link class="menu-link"
+                   :to="{name: 'userDetail',params:{ type: 'thumb' }}">
+        <li class="menu-list-item">
+          <span class="menu-item">点赞</span>
+        </li>
+      </router-link>
+      <router-link class="menu-link"
+                   :to="{name: 'userDetail',params:{ type: 'collect' }}">
+        <li class="menu-list-item">
+          <span class="menu-item">收藏</span>
         </li>
       </router-link>
     </ul>
@@ -20,18 +32,6 @@ const router = useRouter();
 const route = useRoute();
 
 const id = route.params.id;
-
-
-const menuItemList = reactive([
-  {"label": "文章", key: 'post'},
-  {"label": "点赞", key: 'thumb'},
-  {"label": "收藏", key: 'collect'}
-])
-
-onMounted(()=>{
-  //初始化访问用户文章
-  router.push({name: 'userDetail',params:{ type: 'post' }})
-})
 
 
 </script>
@@ -63,7 +63,7 @@ onMounted(()=>{
   font-weight: 550;
 }
 
-.menu-link{
+.menu-link {
   border-bottom: 2px solid #ffffff;
 }
 

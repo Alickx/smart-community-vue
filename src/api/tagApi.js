@@ -2,16 +2,16 @@ import myAxios from "./axios";
 
 export function getTagList() {
   return myAxios({
-    url: '/api/v1/post/tag/list',
+    url: '/post/tag/list',
     method: 'get'
   })
 }
 
-export function getTagBySection(sectionUid){
+export function getTagByCategory(categoryUid){
   return myAxios({
-    url: '/api/v1/post/sectiontag/list',
+    url: '/post/categoryTag/list',
     params:{
-      sectionUid: sectionUid
+      categoryUid: categoryUid
     }
   })
 }

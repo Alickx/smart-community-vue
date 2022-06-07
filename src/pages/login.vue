@@ -27,11 +27,7 @@
               </template>
             </a-input-password>
           </a-form-item>
-
-          <a-form-item name="rememberMe">
-            <a-checkbox v-model:checked="loginForm.rememberMe">记住我</a-checkbox>
-          </a-form-item>
-
+<!--          TODO 协议-->
           <div class="login-form-button">
             <a-form-item>
               <a-button type="primary" :loading="loading" html-type="submit" block size="large">登录</a-button>
@@ -50,13 +46,15 @@ import {
   KeyOutlined
 } from '@ant-design/icons-vue';
 import 'ant-design-vue/es/message/style/index'
-import {useRouter} from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 import {memberLogin} from "../api/loginapi";
-import userStore from "../store/userStore";
+import {message} from "ant-design-vue";
+import {useStore} from "vuex";
 
 
-const store = userStore;
+const store = useStore();
 const router = useRouter();
+const route = useRoute();
 
 let loginForm = reactive({
   username: '',
@@ -73,20 +71,28 @@ onMounted(() => {
 })
 
 const loginFormSubmit = (value) => {
+  loading.value = true;
   memberLogin(value).then(res => {
-    if (res.data.code === 0) {
-      loading.value = true;
-      const {user_info, access_token, permission_list, role_list} = res.data
-      store.commit('setUserInfo', user_info);
-      store.commit('setAccessToken', access_token);
-      store.commit('setPermissionList', permission_list);
-      store.commit('setRoleList', role_list);
-      store.commit('setIsLogin', true)
       setTimeout(() => {
-        loading.value = false;
-        router.push({name: 'index'})
-      }, 1200)
-    }
+        if (res.data.code === 0) {
+          const {user_info, access_token, permission_list, role_list} = res.data.data
+          store.commit('setUserInfo', user_info);
+          store.commit('setAccessToken', access_token);
+          store.commit('setPermissionList', permission_list);
+          store.commit('setRoleList', role_list);
+          store.commit('setIsLogin', true);
+          loading.value = false;
+          //有redirect登录成功返回将要跳转的页面且返回上一页不是登录页
+          if (route.query.redirect && route.query.redirect !== '/login') {
+            router.replace(route.query.redirect)
+          } else {
+            router.replace("/");
+          }
+        } else {
+          loading.value = false;
+          message.error(res.data.message);
+        }
+      }, 500)
   })
 }
 //校验规则
@@ -101,7 +107,7 @@ let checkUsername = async (_rule, value) => {
     return Promise.reject("请输入邮箱");
   }
 
-  const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+  const reg = /^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/;
 
   if (!reg.test(value)) {
     return Promise.reject("请输入正确的邮箱");
@@ -118,7 +124,8 @@ let checkPass = async (_rule, value) => {
     return Promise.reject("请输入密码");
   }
 
-  const reg = /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{8,16}$/
+  // const reg = /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{8,16}$/
+  const reg = /^[a-zA-Z0-9_-]{6,18}$/;
   if (!reg.test(value)) {
     return Promise.reject("请输入正确的密码");
   }

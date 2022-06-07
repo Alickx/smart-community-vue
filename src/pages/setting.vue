@@ -12,10 +12,14 @@
     <div class="panel-container">
       <div class="left-panel">
         <ul style="background-color:#ffffff;height: 100%">
-          <li class="panel-item" @click="router.push({ name: 'userProfile' })">
-            <solution-outlined/>
-            用户信息
-          </li>
+          <router-link
+              v-slot="{ isActive }"
+              :to="{ name: 'userProfile' }">
+            <li class="panel-item" :class="{ active:isActive }">
+              <solution-outlined/>
+              用户信息
+            </li>
+          </router-link>
           <li class="panel-item">
             <setting-outlined/>
             账号设置
@@ -39,7 +43,6 @@
 
 import {useRouter} from "vue-router";
 import NavbarCommon from "../components/common/NavbarCommon.vue";
-import userStore from "../store/userStore";
 import {
   ArrowLeftOutlined,
   SettingOutlined,
@@ -47,15 +50,12 @@ import {
   CloseCircleOutlined
 } from '@ant-design/icons-vue'
 import {onMounted} from "vue";
+import {useStore} from "vuex";
 
 
 const router = useRouter();
-const store = userStore;
+const store = useStore();
 
-
-onMounted(()=>{
-  router.push({name: 'userProfile'})
-})
 
 </script>
 
@@ -97,6 +97,11 @@ onMounted(()=>{
   color: #40a9ff;
 }
 
+.active{
+  background-color: #e8f3ff;
+  color: #40a9ff;
+}
+
 .input-form {
   margin-left: 20px;
   background-color: #ffffff;
@@ -104,7 +109,7 @@ onMounted(()=>{
   width: 100%;
 }
 
-.panel-container{
+.panel-container {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;

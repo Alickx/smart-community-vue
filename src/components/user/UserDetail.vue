@@ -30,7 +30,7 @@ let postItemList = ref(null)
 let queryParam = reactive({
   curPage: '1',
   sidx: "created_time",
-  memberUid: route.params.id
+  uid: route.params.id
 })
 
 const loadData = (type) => {
@@ -50,7 +50,7 @@ const loadData = (type) => {
     case 'thumb': {
       queryThumbByMemberUid(queryParam).then(resp => {
         if (resp.data.code === 0) {
-          postItemList.value = resp.data.data
+          postItemList.value = resp.data.data.list
           setTimeout(() => {
             isShowPost.value = true
           }, 500)

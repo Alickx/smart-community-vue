@@ -67,7 +67,9 @@ import {
 import { message } from 'ant-design-vue';
 import 'ant-design-vue/es/message/style/index'
 import {memberReg, sendCaptcha} from "../api/loginapi";
-import router from "../router";
+import {useRouter} from "vue-router";
+
+const router = useRouter();
 
 
 let loginForm = reactive({
@@ -93,7 +95,7 @@ const loginFormSubmit = (value) => {
     memberReg(value).then(res=>{
     if (res.data.code === 0) {
       message.success("注册成功！请重新登录")
-      router.push({name:"login"});
+      router.push("/login");
     }
   })
 }

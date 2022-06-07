@@ -17,7 +17,13 @@
         <a-col :span="22">
           <div class="author-info">
             <div class="avatar" style="display: flex;align-items: center">
-              <a-avatar size="large" :src="postInfo.authorInfo.avatar"/>
+              <router-link v-slot="{ href }"
+                           custom
+                           :to="{ name:'user',params: { id: postInfo.authorInfo.uid } }">
+                <a :href="href" target="_blank">
+                  <a-avatar size="large" :src="postInfo.authorInfo.avatar"/>
+                </a>
+              </router-link>
             </div>
             <div class="author-info-item">
               <div class="nick-name">
@@ -30,7 +36,7 @@
           </div>
         </a-col>
         <a-col :span="2">
-          <div class="follow-button">
+          <div class="follow-button" :class="{ 'hide': store.getters.getIsLogin }">
             <a-button type="primary" size="large">关注</a-button>
           </div>
         </a-col>
@@ -44,14 +50,19 @@
 
 <script setup>
 import {SyncOutlined} from '@ant-design/icons-vue'
+import dayjs from "dayjs";
+import {toRefs} from "vue";
+import {useStore} from "vuex";
 
-import dayjs from "_dayjs@1.10.8@dayjs";
+const store = useStore();
 
 const props = defineProps({
   'postInfo': {
     type: Object
   }
 })
+
+const { postInfo } = toRefs(props);
 
 const timeFormat = (value) => {
   return dayjs(value).format("YYYY-MM-DD HH:mm:ss");
@@ -88,6 +99,10 @@ const timeFormat = (value) => {
 
 .post-content {
   margin-top: 50px;
+}
+
+.hide {
+  display: none;
 }
 
 

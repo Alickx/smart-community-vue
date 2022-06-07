@@ -21,11 +21,11 @@
 </template>
 <script setup>
 
-import userStore from "../../store/userStore";
 import {reactive, ref, toRefs} from "vue";
 import {saveComment} from "../../api/postapi";
 import {message} from "ant-design-vue";
 import {useRoute} from "vue-router";
+import {useStore} from "vuex";
 
 const props = defineProps({
   toMemberInfo: {
@@ -47,7 +47,7 @@ const props = defineProps({
   }
 })
 
-const store = userStore;
+const store = useStore();
 const route = useRoute();
 
 const emit = defineEmits([
@@ -62,19 +62,17 @@ const params = reactive({
   content: ''
 })
 
-const {toMemberInfo} = toRefs(props)
-
 const sendComment = () => {
+  console.log("firstCommentUid" , props.firstCommentUid)
   saveComment(params).then(resp => {
     if (resp.data.code === 0) {
       message.success("发送评论成功");
       const param = {
         userContent: params.content,
-        memberInfo: toMemberInfo.value,
+        memberInfo: store.getters.getUserInfo,
         uid: resp.data.data
       }
       if (props.firstCommentUid !== null) {
-        console.log("reply=", param, props.firstCommentUid)
         emit('replySuccess', param, props.firstCommentUid);
         params.content = ''
       } else {

@@ -9,19 +9,15 @@
       <div class="uploadForm">
         <div class="infoInput">
           <a-form-item label="昵称" name="nickName" :rules="[{required:true,validator: checkNickName,trigger:blur}]">
-            <a-input v-model:value="memberInfoForm.nickName"></a-input>
+            <a-input v-model:value="memberInfoForm.nickName" show-count :maxlength="20"></a-input>
           </a-form-item>
           <a-divider/>
-          <a-form-item label="性别" name="gender">
+          <a-form-item label="性别" name="gender" :rules="[{required:true,validator: checkGender,trigger:blur}]">
             <a-radio-group v-model:value="memberInfoForm.gender">
               <a-radio value="0">男</a-radio>
               <a-radio value="1">女</a-radio>
               <a-radio value="2">私密</a-radio>
             </a-radio-group>
-          </a-form-item>
-          <a-divider/>
-          <a-form-item label="生日" name="birthday">
-            <a-date-picker v-model:value="memberInfoForm.birthday"/>
           </a-form-item>
           <a-divider/>
           <a-form-item label="个人介绍" name="intro">
@@ -41,7 +37,8 @@
                 :before-upload="beforeUpload"
                 @change="handleChange"
             >
-              <img :src="memberInfoForm.avatar" style="width: 90px;height: 90px;" alt="avatar"/>
+              <a-avatar :src="memberInfoForm.avatar" :size="64">
+              </a-avatar>
               <div v-if="uploadAvatarStatus === false">
                 <loading-outlined v-if="loading"></loading-outlined>
                 <plus-outlined v-else></plus-outlined>
@@ -66,13 +63,14 @@
 <script setup>
 
 import {onMounted, reactive, ref} from "vue";
-import userStore from "../../store/userStore";
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons-vue";
 import {getMemberInfoByUid, memberSettingProfileUpload} from "../../api/memberapi";
 import {getOssPolicy, ossUpload} from "../../api/common";
 import {message} from "ant-design-vue";
+import {useStore} from "vuex";
 
-const store = userStore;
+
+const store = useStore();
 const fileList = ref([])
 let loading = ref(false)
 let submitLoading = ref(false)
@@ -111,7 +109,7 @@ const handleChange = (info) => {
 }
 
 
- const customRequest = async (file) => {
+const customRequest = async (file) => {
   await getOssPolicy().then(resp => {
     if (resp.data.code === 0) {
       ossPolicy.value = resp.data.data
@@ -145,15 +143,18 @@ const revokeAvatarUpload = () => {
 
 const profileSubmit = (value) => {
   submitLoading.value = true;
-  memberSettingProfileUpload(value).then(resp=>{
-    if (resp.data.code === 0) {
-      setTimeout(()=>{
+  memberSettingProfileUpload(value).then(resp => {
+    setTimeout(() => {
+      if (resp.data.code === 0) {
         //更新vuex中用户信息
-        store.commit('uploadMemberSetting',resp.data.data)
+        store.commit('uploadMemberSetting', resp.data.data)
         submitLoading.value = false;
         message.success(resp.data.message)
-      },800)
-    }
+      } else {
+        submitLoading.value = false;
+        message.error(resp.data.message)
+      }
+    }, 500)
   })
 }
 
@@ -165,6 +166,13 @@ const checkNickName = async (_rule, value) => {
 
   if (value.length > 20) {
     return Promise.reject("用户名请保持20个汉字以内")
+  }
+  return Promise.resolve();
+}
+
+const checkGender = async (_rule, value) => {
+  if (!value) {
+    return Promise.reject("请选择性别")
   }
   return Promise.resolve();
 }

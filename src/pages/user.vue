@@ -11,7 +11,30 @@
             />
           </div>
           <div class="list-block">
-            <UserDetailList></UserDetailList>
+            <div class="menu">
+              <ul class="menu-list">
+                <router-link class="menu-link"
+                             :to="{name: 'user'}">
+                  <li class="menu-list-item" :class="{ active:route.name === 'user' }">
+                    <span class="menu-item">文章</span>
+                  </li>
+                </router-link>
+                <router-link class="menu-link"
+                             :to="{name: 'userDetail',params:{ type: 'thumb' }}">
+                  <li class="menu-list-item">
+                    <span class="menu-item">点赞</span>
+                  </li>
+                </router-link>
+                <router-link class="menu-link"
+                             :to="{name: 'userDetail',params:{ type: 'collect' }}">
+                  <li class="menu-list-item">
+                    <span class="menu-item">收藏</span>
+                  </li>
+                </router-link>
+              </ul>
+            </div>
+            <UserDefaultShow v-if="route.name === 'user'"></UserDefaultShow>
+            <router-view v-else></router-view>
           </div>
         </div>
       </div>
@@ -25,7 +48,7 @@ import {useRoute} from "vue-router";
 import NavbarCommon from "../components/common/NavbarCommon.vue";
 import {getMemberInfoByUid} from "../api/memberapi";
 import UserInfo from "../components/user/UserInfo.vue";
-import UserDetailList from "../components/user/UserDetailList.vue";
+import UserDefaultShow from "../components/user/UserDefaultShow.vue";
 
 const targetUserInfo = ref();
 const route = useRoute()
@@ -75,6 +98,7 @@ onMounted(() => {
 .shadow {
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
 }
+
 .major-area {
   flex: 1 1 auto;
   min-width: 0;
@@ -101,6 +125,39 @@ onMounted(() => {
   width: 100%;
   max-width: 960px;
   display: block;
+}
+
+.menu {
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.menu-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.menu-list-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 25px;
+}
+
+.menu-item {
+  color: black;
+  font-size: 19px;
+  font-weight: 550;
+}
+
+.menu-link {
+  border-bottom: 2px solid #ffffff;
+}
+
+.active {
+  border-bottom: 2px solid #40a9ff;
 }
 
 </style>

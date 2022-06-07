@@ -50,6 +50,7 @@ onMounted(() => {
   getPostByUid(route.params.id).then(resp => {
     if (resp.data.code === 0) {
       postInfo.value = resp.data.data
+      document.title = postInfo.value.title;
       isShowPostContent.value = true;
     }
   })

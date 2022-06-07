@@ -1,19 +1,25 @@
 <template>
-  <div class="container">
-    <router-view></router-view>
-  </div>
+  <a-config-provider :locale="locale">
+  <router-view></router-view>
+  </a-config-provider>
 </template>
 
 
-<script setup>
+<script>
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+dayjs.locale('zh-cn');
 
-
+export default {
+  data() {
+    return {
+      locale: zhCN,
+    };
+  },
+};
 </script>
 <style>
-
-
-
-/*!* 把我们所有标签的内外边距清零 *!*/
 * {
   margin: 0;
   padding: 0;
@@ -32,12 +38,10 @@ html {
   overflow-x: hidden;
 }
 
-.container {
-  background-color: #f4f5f5;
-}
-
 body {
   background-color: #f4f5f5 !important;
-  height: auto!important;
+  height: auto !important;
+  font-family: "Hiragino Sans GB", "Microsoft YaHei",
+  "WenQuanYi Micro Hei", sans-serif;
 }
 </style>
