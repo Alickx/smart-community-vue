@@ -12,6 +12,7 @@
       <div style="color: red;margin-left: 5px" v-else-if="store.getters.getUserInfo.gender === '1'">
         <woman-outlined/>
       </div>
+      <BanPanel v-if="isShowBan" :target-user-info="targetUserInfo">封禁管理</BanPanel>
     </div>
     <div class="show">
       <span class="user-show">
@@ -27,11 +28,12 @@
 </template>
 
 <script setup>
-import {onMounted, reactive, ref} from "vue";
+import {onMounted,reactive, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {ManOutlined, WomanOutlined} from '@ant-design/icons-vue'
 import {followQuery, followSave} from "../../api/memberapi";
 import {useStore} from "vuex";
+import BanPanel from "../common/BanPanel.vue";
 
 const props = defineProps({
   targetUserInfo: {
@@ -47,6 +49,7 @@ let isLogin = ref(store.getters.getIsLogin)
 let userInfo = reactive(store.getters.getUserInfo)
 let isMyHome = ref(false);
 let isFollow = ref(false);
+let isShowBan = ref(false);
 
 
 const followClickHandler = () => {
@@ -56,6 +59,15 @@ const followClickHandler = () => {
       isFollow.value = true
     }
   })
+}
+
+const isShowBanHandler = ()=> {
+  // 判断用户是否为自己
+  let isMe = userInfo.uid !== route.params.id
+  // 判断是否拥有封禁权限
+  let hasRole = store.getters.getRoleList.includes('admin');
+
+  isShowBan.value = isMe && hasRole
 }
 
 
@@ -68,6 +80,7 @@ onMounted(() => {
   } else {
     isMyHome.value = userInfo.uid === props.targetUserInfo.uid;
   }
+  isShowBanHandler();
 })
 
 </script>

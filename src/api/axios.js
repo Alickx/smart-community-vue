@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {message} from "ant-design-vue";
 import userStore from "../store/userStore";
-import router from "../router";
 
 const store = userStore;
 

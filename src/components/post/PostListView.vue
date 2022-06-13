@@ -10,9 +10,13 @@
           >{{ data.title }}</router-link>
         </div>
         <div class="post-view-content">
-          <div class="member-avatar">
-            <a-avatar class="avatar" shape="square" :src="data.authorInfo.avatar" :size="58"></a-avatar>
-          </div>
+          <router-link v-slot="{href}" custom :to="{ name: 'user',params: { id: data.authorInfo.uid } }">
+            <a :href="href" target="_blank">
+              <div class="member-avatar">
+                <a-avatar class="avatar" shape="square" :src="data.authorInfo.avatar" :size="58"></a-avatar>
+              </div>
+            </a>
+          </router-link>
           <div class="post-summary">
             <span class="summary">{{ data.summary }}</span>
           </div>
