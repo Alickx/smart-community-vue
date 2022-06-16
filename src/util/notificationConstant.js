@@ -22,6 +22,10 @@ const notificationConstant = {
   REMIND_AT_ACTION_TYPE: 3,
 
 
+
+  REMIND_SYSTEM_ACTION_TYPE : 4,
+
+
   /* ----------事件源类型----------- */
 
 

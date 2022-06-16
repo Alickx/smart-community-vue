@@ -14,6 +14,12 @@
           <span>评论通知</span>
           <a-badge :number-style="{ marginLeft: '5px' }" :count='remindUnreadCount["1"]'/>
         </router-link>
+        <router-link
+            class="notification-type-item"
+            :to="{ name: 'systemRemind'}">
+          <span>系统通知</span>
+          <a-badge :number-style="{ marginLeft: '5px' }" :count='remindUnreadCount["4"]'/>
+        </router-link>
         <!--        <router-link-->
         <!--            class="notification-type-item"-->
         <!--            :to="{ name: 'notificationList', params: { type: 'follow' } }"-->

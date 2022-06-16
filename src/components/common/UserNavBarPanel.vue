@@ -30,6 +30,14 @@
         </li>
       </div>
       <div class="nav-menu-item-group">
+        <li class="nav-menu-item">
+          <router-link :to="{ name: 'userManage' }">
+            <dashboard-outlined />
+            <span>用户管理</span>
+          </router-link>
+        </li>
+      </div>
+      <div class="nav-menu-item-group">
         <li class="nav-menu-item" @click.stop="ClickLogout">
           <a>
             <logout-outlined/>
@@ -43,7 +51,7 @@
 
 <script setup>
 import {onMounted, ref} from "vue";
-import {EditOutlined, UserOutlined, LikeOutlined, StarOutlined, LogoutOutlined} from '@ant-design/icons-vue'
+import {EditOutlined, UserOutlined, LikeOutlined, StarOutlined, LogoutOutlined,DashboardOutlined} from '@ant-design/icons-vue'
 import router from "../../router";
 import {useStore} from "vuex";
 import {memberLogout} from "../../api/loginapi";

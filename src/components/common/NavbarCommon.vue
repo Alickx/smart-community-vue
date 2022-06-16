@@ -37,7 +37,7 @@
         </div>
         <div v-else class="user-menu">
           <div style="margin-right: 25px">
-            <router-link :to="{ name: 'postManagement' }" target="_blank">
+            <router-link :to="{ name: 'postManagement' }">
               <a-button type="primary">
                 <div class="tw-flex tw-justify-center tw-items-center">文章中心
                   <pie-chart-outlined class="tw-ml-1" />

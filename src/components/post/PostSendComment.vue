@@ -62,8 +62,13 @@ const params = reactive({
   content: ''
 })
 
+/**
+ * 发送评论
+ */
 const sendComment = () => {
-  console.log("firstCommentUid" , props.firstCommentUid)
+  if (!this.isValid()) {
+    return;
+  }
   saveComment(params).then(resp => {
     if (resp.data.code === 0) {
       message.success("发送评论成功");
@@ -82,6 +87,18 @@ const sendComment = () => {
     }
   })
 }
+
+
+const isValid = () => {
+  // 检查输入内容是否为空
+  if (params.content === '') {
+    message.error("评论内容不能为空");
+    return false;
+  }
+}
+
+
+
 
 
 </script>
@@ -110,11 +127,6 @@ const sendComment = () => {
   margin-left: 60px;
   width: 100%;
 }
-
-/*/deep/ .comment-input textarea {*/
-/*  min-height: 120px;*/
-/*  min-width: 100%;*/
-/*}*/
 
 .avatar {
   display: flex;

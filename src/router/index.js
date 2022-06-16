@@ -127,6 +127,15 @@ const router = createRouter({
           },
           name: 'thumbRemind',
           component: () => import('../components/notification/ThumbRemind.vue')
+        },
+        {
+          path: 'system',
+          meta: {
+            title: '系统通知 -智慧社区',
+            auth: true
+          },
+          name: 'systemRemind',
+          component: () => import('../components/notification/SystemRemind.vue')
         }
       ]
     },
@@ -137,6 +146,7 @@ const router = createRouter({
         title: '用户管理 -智慧社区',
         auth: true
       },
+      redirect: '/manage/ban',
       component: () => import('../pages/userManagement.vue'),
       children: [
         {
