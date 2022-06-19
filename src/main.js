@@ -15,10 +15,10 @@ dayjs.locale(zhCN)
 dayjs.extend(relativeTime)
 
 const app = createApp(App);
-app.use(router)
 app.use(store)
 app.use(VMdEditor);
 app.use(ConfigProvider)
+app.use(router)
 app.mount('#app')
 // SocketService.Instance.connect()
 // app.config.globalProperties.$socket = SocketService.Instance

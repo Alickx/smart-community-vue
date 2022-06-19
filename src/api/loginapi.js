@@ -35,6 +35,11 @@ export function memberLogout() {
   })
 }
 
+/**
+ * 发送验证码
+ * @param emailAddress
+ * @returns {*}
+ */
 export function sendCaptcha(emailAddress){
   return myAxios({
     url: '/thirdpart/register/captcha',
@@ -42,5 +47,17 @@ export function sendCaptcha(emailAddress){
     params:{
       emailAddress: emailAddress
     }
+  })
+}
+
+/**
+ * 查询是否登录
+ */
+export function queryIsLogin() {
+  return myAxios({
+    url: '/auth/isLogin',
+    method: 'get'
+  },{
+    default_control_error: false
   })
 }

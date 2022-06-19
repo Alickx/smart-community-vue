@@ -28,20 +28,6 @@ export function memberSettingProfileUpload(data) {
     })
 }
 
-/**
- * 查询用户贝壳余额
- * @param param
- * @returns {*}
- */
-export function queryMemberConchByUid(param) {
-  return myAxios({
-    url: '/member/conch/query_info',
-    method: 'get',
-    params: {
-      uid: param
-    }
-  })
-}
 
 /**
  * 关注操作

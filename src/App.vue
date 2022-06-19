@@ -1,6 +1,6 @@
 <template>
   <a-config-provider :locale="locale">
-  <router-view></router-view>
+    <router-view></router-view>
   </a-config-provider>
 </template>
 
@@ -9,6 +9,8 @@
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
+import {queryIsLogin} from "./api/loginapi";
+
 dayjs.locale('zh-cn');
 
 export default {
@@ -16,6 +18,14 @@ export default {
     return {
       locale: zhCN,
     };
+  },
+
+  mounted() {
+    queryIsLogin().then(resp => {
+      if (resp.data.code !== 0) {
+        this.$store.commit('logout');
+      }
+    });
   },
 };
 </script>
