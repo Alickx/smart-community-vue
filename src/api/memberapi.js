@@ -56,3 +56,26 @@ export function followQuery(param) {
     }
   })
 }
+
+/**
+ * 获取签到信息
+ * @returns {*}
+ */
+export function getCheckInInfo() {
+  return myAxios({
+    url: '/member/checkin/getCheckInInfo',
+    method: 'get'
+  })
+}
+
+
+/**
+ * 签到
+ * @returns {*}
+ */
+export function checkIn() {
+  return myAxios({
+    url: '/member/checkin',
+    method: 'post'
+  })
+}
