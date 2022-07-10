@@ -6,12 +6,7 @@ const store = userStore;
 
 function myAxios(axiosConfig, customOptions) {
 
-  let baseUrl = ''
-  if (import.meta.env.DEV) {
-    baseUrl = 'http://localhost:8601/api/v1';
-  } else {
-    baseUrl = 'http://goroute.cn:8601/api/v1';
-  }
+  let baseUrl = 'http://localhost:8601/api/v1'
   const service = axios.create({
     baseURL: baseUrl,
     timeout: 5000, // 设置统一的超时时长
