@@ -8,9 +8,6 @@
     </div>
     <div class="notification-item" v-for="(data,index) in notificationList">
       <div class="notification-container">
-<!--        <router-link :to="{ name: 'user',params:{ id: data.sender.uid }}" target="_blank">-->
-<!--          <a-avatar :size="55" :src="data.sender.avatar" alt="avatar"></a-avatar>-->
-<!--        </router-link>-->
         <div class="notification-info">
           <div class="notification-info-content ">
             <div class="notification-content">

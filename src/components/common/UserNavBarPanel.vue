@@ -30,14 +30,6 @@
         </li>
       </div>
       <div class="nav-menu-item-group">
-        <li class="nav-menu-item">
-          <router-link :to="{ name: 'userManage' }">
-            <dashboard-outlined />
-            <span>用户管理</span>
-          </router-link>
-        </li>
-      </div>
-      <div class="nav-menu-item-group">
         <li class="nav-menu-item" @click.stop="ClickLogout">
           <a>
             <logout-outlined/>

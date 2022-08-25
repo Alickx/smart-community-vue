@@ -2,14 +2,14 @@
   <div class="main-container">
     <a-comment class="comment-contain">
       <template #actions>
-        <span key="comment-basic-like">
+        <span key="comment-basic-like" class="tw-flex tw-items-center">
             <template v-if="commentItem.isLike !== true">
               <LikeOutlined @click="thumbClickHandle"/>
             </template>
             <template v-else>
               <LikeFilled @click="thumbCancelHandle"/>
             </template>
-          <span style="padding-left: 8px; cursor: auto">{{ commentItem.thumbCount }}</span>
+          <span style="padding-left: 3px; cursor: auto">{{ commentItem.thumbCount }}</span>
         </span>
         <span
             key="comment-basic-reply-to"
@@ -155,7 +155,7 @@ const replySuccessHandler = (param, firstCommentUid) => {
     toMember: memberInfo,
     uid: uid
   }
-  console.log(reply,firstCommentUid)
+  console.log(reply, firstCommentUid)
   emit('sendReplySuccess', reply, firstCommentUid)
   replyInputStatus.value = false;
 }

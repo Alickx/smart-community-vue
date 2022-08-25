@@ -140,27 +140,6 @@ const router = createRouter({
       ]
     },
     {
-      path: '/manage',
-      name: 'userManage',
-      meta: {
-        title: '用户管理 -智慧社区',
-        auth: true
-      },
-      redirect: '/manage/ban',
-      component: () => import('../pages/userManagement.vue'),
-      children: [
-        {
-          path: 'ban',
-          name: 'banManage',
-          meta: {
-            title: '封禁管理 -智慧社区',
-            auth: true
-          },
-          component: () => import('../pages/manage/BannedManagement.vue')
-        }
-      ]
-    },
-    {
       path: '/:w+',
       name: '404',
       meta: {

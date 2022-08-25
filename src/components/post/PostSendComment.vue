@@ -66,7 +66,7 @@ const params = reactive({
  * 发送评论
  */
 const sendComment = () => {
-  if (!this.isValid()) {
+  if (isValid() === false) {
     return;
   }
   saveComment(params).then(resp => {
@@ -90,15 +90,13 @@ const sendComment = () => {
 
 
 const isValid = () => {
+  console.log("hello")
   // 检查输入内容是否为空
   if (params.content === '') {
     message.error("评论内容不能为空");
     return false;
   }
 }
-
-
-
 
 
 </script>
