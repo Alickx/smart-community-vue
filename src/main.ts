@@ -2,8 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import piniaStore from './store';
-import '/@/styles/index.less';
-import '/@/styles/reset.less';
+import '/@/assets/styles/reset.less';
 import 'uno.css';
 import 'vue-global-api';
 
