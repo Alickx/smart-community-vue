@@ -1,10 +1,18 @@
 export default [
   {
     path: '/',
-    component: () => import('@/pages/login/index.vue'),
-  },
-  {
-    path: '/demo',
-    component: () => import('@/pages/demo/index.vue'),
+    component: () => import('/@/layout/index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Home',
+        component: () => import('/@/views/index.vue'),
+      },
+      {
+        path: 'login',
+        name: 'Login',
+        component: () => import('/@/views/login/index.vue'),
+      }
+    ],
   },
 ];

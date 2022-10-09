@@ -1,5 +1,5 @@
 <template>
-  <header class="antialiased bg-white Male text-slate-500 text-slate-400 bg-slate-900">
+  <div class="antialiased bg-white Male text-slate-500 text-slate-400 bg-slate-900">
     <div
         class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 bg-transparent"
     >
@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-  </header>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -41,7 +41,7 @@
 import {useUserStore} from "/@/store";
 
 const userStore = useUserStore();
-const handlerClickAvatar = () => {
+const handleClickAvatar = () => {
   console.log('点击头像')
 }
 

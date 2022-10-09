@@ -13,7 +13,7 @@ import { AutoImportDeps } from './autoImport';
 import { ConfigMockPlugin } from './mock';
 import { ConfigVisualizerConfig } from './visualizer';
 import { ConfigCompressPlugin } from './compress';
-import { ConfigPagesPlugin } from './pages';
+// import { ConfigPagesPlugin } from './pages';
 import { ConfigRestartPlugin } from './restart';
 import { ConfigProgressPlugin } from './progress';
 import { ConfigImageminPlugin } from './imagemin';
@@ -40,7 +40,7 @@ export function createVitePlugins(isBuild: boolean) {
   vitePlugins.push(AutoImportDeps());
 
   // 自动生成路由
-  vitePlugins.push(ConfigPagesPlugin());
+  // vitePlugins.push(ConfigPagesPlugin());
 
   // 开启.gz压缩  rollup-plugin-gzip
   vitePlugins.push(ConfigCompressPlugin());

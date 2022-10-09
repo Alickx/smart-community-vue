@@ -1,16 +1,12 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
-import routes from 'virtual:generated-pages';
+import { createRouter, createWebHistory } from 'vue-router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
+import root from './root';
 
-routes.push({
-  path: '/',
-  redirect: '/login',
-});
 //导入生成的路由数据
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes,
+  history: createWebHistory(),
+  routes: root,
 });
 
 router.beforeEach(async (_to, _from, next) => {
