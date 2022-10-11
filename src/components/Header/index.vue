@@ -1,54 +1,74 @@
 <template>
-  <div class="antialiased bg-white Male text-slate-500 text-slate-400 bg-slate-900">
-    <div
-        class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 bg-transparent"
-    >
-      <div class="mx-auto max-w-8xl">
-        <div class="px-4 py-4 border-b border-slate-900/10 lg:px-8 lg:border-0 border-slate-300/10">
-          <div class="relative flex items-center text-2xl sm:text-2xl font-blimone">
-            <router-link to="/" class="mr-3 flex-none w-[2.0625rem] md:w-auto leading-6 text-black-200">
-              智慧社区
-            </router-link>
-            <div class="text-sm font-semibold ml-8">
-              <ul class="flex space-x-10">
-                <li>
-                  <router-link to="/" class="hover:text-sky-500 hover:text-sky-400">首页</router-link>
-                </li>
-              </ul>
-            </div>
-            <div class="relative items-center hidden ml-auto lg:flex">
-              <nav class="text-sm font-semibold leading-6 text-slate-700 text-slate-200">
-                <ul class="flex space-x-8">
-                  <li v-if="!userStore.isLogin">
-                    <router-link to="/login" class="hover:text-sky-500 hover:text-sky-400">登录 | 注册</router-link>
-                  </li>
-                  <li v-else>
-                    <el-avatar :src="userStore.userProfile.avatar" class="cursor-pointer"
-                               @click="handleClickAvatar"></el-avatar>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
+  <nav class="flex flex-row z-50 p-y-4 p-x-10 bg-white">
+    <div class="w-50 flex flex-row items-center space-x-2">
+      <!-- logo -->
+      <svg-icon name="svg-logo" size="40px" />
+      <span class="text-lg font-bold">智慧社区</span>
+    </div>
+    <div class="flex items-center">
+      <!-- 链接处 -->
+      <ul class="space-x-8 flex flex-row items-center">
+        <li><a href="#" class="text-gray-500 hover:text-gray-900">链接项</a></li>
+        <li><a href="#" class="text-gray-500 hover:text-gray-900">链接项</a></li>
+        <li><a href="#" class="text-gray-500 hover:text-gray-900">链接项</a></li>
+        <li><a href="#" class="text-gray-500 hover:text-gray-900">链接项</a></li>
+        <li><a href="#" class="text-gray-500 hover:text-gray-900">链接项</a></li>
+        <li><a href="#" class="text-gray-500 hover:text-gray-900">链接项</a></li>
+      </ul>
+    </div>
+    <form class="flex justify-center">
+      <!-- 搜索栏 -->
+      <div class="border-gray h-10 p-x-3 p-y-1 rounded-1 border-1 flex flex-row transition-width duration-300 ease-in-out" :class="searchInputWidth">
+        <input type="text"
+        @blur="handleSearchInputBlur"
+        @focus="handleSearchInputFocus"
+          class="border-none text-base font-medium w-[calc(100%-44px)] outline-none"
+          placeholder="搜索点什么吧" />
+        <div
+          class="cursor-pointer bg-[#f2f3f5] w-10 flex items-center justify-center">
+          <svg-icon name="svg-search" size="20px" />
         </div>
       </div>
+    </form>
+    <div class="">
+      <!-- 工具栏 -->
+
     </div>
-  </div>
+    <div class="">
+      <!-- 用户信息模态框 -->
+    </div>
+  </nav>
 </template>
 
 <script setup lang="ts">
+import SvgIcon from "../SvgIcon/index.vue";
 
-import {useUserStore} from "/@/store";
+let searchInputWidth = ref('search-input-blur')
 
-const userStore = useUserStore();
-const handleClickAvatar = () => {
-  console.log('点击头像')
-}
+const handleSearchInputFocus = () => {
+  searchInputWidth.value = 'search-input-focus'
+};
+
+const handleSearchInputBlur = () => {
+  searchInputWidth.value = 'search-input-blur'
+};
+
 
 
 </script>
 
 
 <style lang="less">
+
+.search-input-blur {
+  width: 200px;
+}
+
+.search-input-focus {
+  width: 400px;
+  border: 1px solid blue;
+}
+
+
 
 </style>

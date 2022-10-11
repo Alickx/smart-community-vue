@@ -1,6 +1,6 @@
 <template>
-  <div class="login-form-container">
-    <login-form/>
+  <div class="h-100vh bg-[#e0e4e8] grid place-items-center">
+    <login-form />
   </div>
 </template>
 
@@ -9,16 +9,3 @@ import LoginForm from './components/LoginForm/index.vue'
 
 
 </script>
-
-<style lang="less" scoped>
-
-.login-form-container {
-  width: 100vw;
-  height: 100vh;
-  background-color: #e0e4e8;
-  display: grid;
-  place-items: center;
-}
-
-
-</style>

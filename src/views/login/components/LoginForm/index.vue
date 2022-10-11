@@ -1,34 +1,70 @@
 <template>
-  <div class="login-form">
-    <div class="login-form-warp">
-      <el-form :hide-required-asterisk="true"
-               ref="loginFormRef"
-               :rules="rules"
-               :model="loginForm">
-        <el-form-item prop="username">
-          <el-input v-model="loginForm.username" placeholder="请输入邮箱"/>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input v-model="loginForm.password"  placeholder="请输入密码"/>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="loginHandler(loginFormRef)">登录</el-button>
-        </el-form-item>
-      </el-form>
+  <div class="w-80 p-10 rounded-2 bg-white">
+    <div class="flex flex-col space-y-5 items-center justify-center tracking-wider">
+      <span class="text-3xl color-[black] font-light">智慧社区用户登录</span>
+      <svg-icon name="svg-user" size="100px" />
+    </div>
+    <div class="mt-8">
+      <el-tabs v-model="tagActive">
+        <el-tab-pane label="密码登录" name="password">
+          <el-form :hide-required-asterisk="true" class="space-y-5 mt-2" ref="loginFormRef" :rules="rules"
+            :model="loginForm">
+            <el-form-item prop="username">
+              <el-input v-model="loginForm.username" placeholder="请输入邮箱" />
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input v-model="loginForm.password" type="password" placeholder="请输入密码" />
+            </el-form-item>
+            <div class="flex flex-row items-center justify-center">
+              <el-button type="primary" size="large" @click="loginHandler(loginFormRef)">登录</el-button>
+            </div>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="手机登录" name="phone">
+          <el-form :hide-required-asterisk="true" ref="loginFormRef" :rules="rules" :model="loginForm">
+            <el-form-item prop="username">
+              <el-input v-model="loginForm.username" placeholder="请输入手机" />
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input v-model="loginForm.password" placeholder="请输入验证码" />
+            </el-form-item>
+            <div class="flex flex-row items-center justify-center">
+              <el-button type="primary" size="large" @click="loginHandler(loginFormRef)">登录</el-button>
+            </div>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+    <div class="flex flex-col space-y-3 mt-10">
+      <div class="flex flex-row items-center">
+        <span class="text-base font-medium">第三方登录/注册</span>
+        <div class="space-x-3 ml-15">
+          <el-button circle size="large">
+            <svg-icon name="svg-wechat" size="25px" />
+          </el-button>
+          <el-button circle size="large">
+            <svg-icon name="svg-qq" size="25px" />
+          </el-button>
+        </div>
+      </div>
+      <span class="mt-4 text-base font-medium">没有账号，
+        <a href="https://baidu.com" class="color-[#3494fc]">立刻注册</a>
+      </span>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import {FormInstance} from "element-plus";
-import {checkEmail} from "/@/utils/validation/checkEmail";
-import {useUserStore} from "/@/store";
-import {LoginResResultData} from "/@/api/auth/types";
+import { FormInstance } from "element-plus";
+import { checkEmail } from "/@/utils/validation/checkEmail";
+import { useUserStore } from "/@/store";
+import { LoginResResultData } from "/@/api/auth/types";
 
 
 const userStore = useUserStore();
 const loginFormRef = ref<FormInstance>()
 const router = useRouter()
 
+const tagActive = ref('password')
 //TODO 集成第三方登录,现在默认邮箱密码登录
 const loginForm = reactive({
   username: '',
@@ -60,8 +96,8 @@ const checkPassword = (rule: any, value: string, callback: any) => {
 
 // 校验用户名和密码规则
 const rules = reactive({
-  username: [{validator: checkUsername, trigger: 'blur'}],
-  password: [{validator: checkPassword, trigger: 'blur'}]
+  username: [{ validator: checkUsername, trigger: 'blur' }],
+  password: [{ validator: checkPassword, trigger: 'blur' }]
 })
 
 const loginHandler = (formEl: FormInstance | undefined) => {
@@ -77,7 +113,7 @@ const loginHandler = (formEl: FormInstance | undefined) => {
           //TODO 登录失败
         } else {
           //跳转到首页
-          router.push({path: '/'})
+          router.push({ path: '/' })
         }
       })
     } else {
@@ -90,7 +126,6 @@ const loginHandler = (formEl: FormInstance | undefined) => {
 </script>
 
 <style lang="less" scoped>
-
 .login-form {
   width: 300px;
   padding: 20px;
@@ -102,6 +137,4 @@ const loginHandler = (formEl: FormInstance | undefined) => {
   }
 
 }
-
-
 </style>
