@@ -1,5 +1,5 @@
 <template>
-    <div class="flex p-3 flex-col space-y-4 hover:bg-[#fafafa] hover:cursor-pointer">
+    <div class="flex p-3 flex-col space-y-4 hover:bg-[#fafafa] hover:cursor-pointer rounded-2">
         <div class="flex flex-row space-x-7 font-medium text-base">
             <a href="https://baidu.com/" targer="_black" class="hover:color-[#1d7dfa]">Alickx</a>
             <a href="https://baidu.com/" targer="_black" class="hover:color-[#1d7dfa]">后端</a>

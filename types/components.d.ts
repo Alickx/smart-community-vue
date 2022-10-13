@@ -22,6 +22,7 @@ declare module '@vue/runtime-core' {
     HotArticleList: typeof import('./../src/components/HotArticleList/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Search: typeof import('./../src/components/SearchInput/search.vue')['default']
     SplitLine: typeof import('./../src/components/SplitLine/index.vue')['default']
     SvgIcon: typeof import('./../src/components/SvgIcon/index.vue')['default']
     UserProfile: typeof import('./../src/components/UserProfile/index.vue')['default']
