@@ -17,7 +17,7 @@
         </div>
         <div class="flex flex-row flex-nowrap space-x-4 items-center">
             <div class="flex flex-row flex-nowrap items-center space-x-1">
-                <SvgIcon name="svg-thumb" color="black" size="20px" />
+                <SvgIcon name="svg-thumb" color="black"  size="20px" />
                 <span>11</span>
             </div>
             <div class="flex flex-row flex-nowrap items-center space-x-1">

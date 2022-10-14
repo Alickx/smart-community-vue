@@ -8,7 +8,7 @@ import {getUserProfile} from "/@/api/user";
 export const useUserStore = defineStore('user', {
   state: (): UserState => ({
     userId: undefined,
-    nickname: undefined,
+    nickName: undefined,
     gender: undefined,
     avatar: undefined,
     intro: undefined,
@@ -27,10 +27,10 @@ export const useUserStore = defineStore('user', {
     storage: window.sessionStorage,
   },
   getters: {
-    userProfile(state: UserState): UserState {
+    getUserProfile(state: UserState): UserState {
       return {...state};
     },
-    isLogin(state: UserState): boolean {
+    getIsLogin(state: UserState): boolean {
       return !!state.userId;
     }
   },
@@ -71,7 +71,7 @@ export const useUserStore = defineStore('user', {
       this.resetInfo();
       clearToken();
       // 路由表重置
-      // location.reload();
+      location.reload();
     },
   },
 });

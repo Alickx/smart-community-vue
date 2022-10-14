@@ -2,7 +2,7 @@
   <div class="w-80 p-10 rounded-2 bg-white">
     <div class="flex flex-col space-y-5 items-center justify-center tracking-wider">
       <span class="text-3xl color-[black] font-light">智慧社区用户登录</span>
-      <svg-icon name="svg-user" size="100px" />
+      <svg-icon name="svg-user" color="#0396ff" size="100px" />
     </div>
     <div class="mt-8">
       <el-tabs v-model="tagActive">
@@ -54,7 +54,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { FormInstance } from "element-plus";
+import { ElMessage, FormInstance } from "element-plus";
 import { checkEmail } from "/@/utils/validation/checkEmail";
 import { useUserStore } from "/@/store";
 import { LoginResResultData } from "/@/api/auth/types";
@@ -63,6 +63,7 @@ import { LoginResResultData } from "/@/api/auth/types";
 const userStore = useUserStore();
 const loginFormRef = ref<FormInstance>()
 const router = useRouter()
+const route = useRoute()
 
 const tagActive = ref('password')
 //TODO 集成第三方登录,现在默认邮箱密码登录
@@ -110,18 +111,17 @@ const loginHandler = (formEl: FormInstance | undefined) => {
       const res = userStore.login(loginForm);
       res.then((res: Result<LoginResResultData>) => {
         if (res.code !== 200) {
-          //TODO 登录失败
+          ElMessage.error(res.message)
         } else {
-          //跳转到首页
-          router.push({ path: '/' })
+          ElMessage.success('登录成功')
+          setTimeout(() => {
+            router.push({ name: 'Home' })
+          }, 1000)
         }
       })
-    } else {
-      console.log('登录失败');
     }
   })
 }
-
 
 </script>
 

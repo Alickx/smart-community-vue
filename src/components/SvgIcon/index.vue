@@ -27,10 +27,9 @@
   const fontSize = reactive({ default: '32px'});
 </script>
 <style lang="less" scoped>
-.svg-icon-spin {
-    width: v-bind('props.size || fontSize.default');
+.svg-icon-spin {    width: v-bind('props.size || fontSize.default');
     height: v-bind('props.size || fontSize.default');
-    fill: v-bind(color);
+    fill: currentColor;
     vertical-align: middle;
     color: v-bind(color);
   }

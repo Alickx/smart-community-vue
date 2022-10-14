@@ -1,8 +1,6 @@
 <template>
   <div class="flex w-100% h-100% bg-[#f4f5f5]">
-    <div class="lg:w-20 xl:w-100 w-0 h-100% ">
-      <!-- todo 用户信息 -->
-    </div>
+    <div class="lg:w-15% xl:w-20% w-0 h-100% "></div>
     <div class="flex-1 h-100% grid place-items-center">
       <!-- todo 文章信息 -->
       <div class="space-y-2 bg-white p-5 mt-3">
