@@ -13,25 +13,11 @@ axios.defaults.headers.post['Access-Control-Allow-Origin-Type'] = '*';
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: import.meta.env.BASE_URL + 'api/api/v1',
-  // transformRequest: [
-  //   function (data) {
-  //     //由于使用的 form-data传数据所以要格式化
-  //     delete data.Authorization
-  //     data = qs.stringify(data)
-  //     return data
-  //   },
-  // ],
 });
 
 // axios实例拦截响应
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
-    // if (response.headers.authorization) {
-    //   localStorage.setItem('app_token', response.headers.authorization)
-    // } else if (response.data && response.data.token) {
-    //   localStorage.setItem('app_token', response.data.token)
-    // }
-
     if (response.status === 200) {
       return response;
     }

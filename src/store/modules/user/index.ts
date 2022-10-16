@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia';
-import {clearToken, setToken} from '/@/utils/auth';
+import {clearToken, isLogin, setToken} from '/@/utils/auth';
 import {UserState} from './types';
 import {LoginReq} from "/@/api/auth/types";
 import {login, logout} from "/@/api/auth";
@@ -30,8 +30,8 @@ export const useUserStore = defineStore('user', {
     getUserProfile(state: UserState): UserState {
       return {...state};
     },
-    getIsLogin(state: UserState): boolean {
-      return !!state.userId;
+    getIsLogin(): boolean {
+      return isLogin();
     }
   },
   actions: {

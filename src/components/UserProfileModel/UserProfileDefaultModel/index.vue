@@ -87,8 +87,8 @@ let avatarRef = ref();
 
 const userStore = useUserStore()
 
-
-onClickOutside(avatarRef, (event) => {
+// 点击模态框外部关闭模态框
+onClickOutside(avatarRef, () => {
     showModel.value = false
 })
 
