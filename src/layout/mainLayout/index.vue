@@ -6,7 +6,7 @@
         <div class="flex-1 h-100%">
             <slot name="main"></slot>
         </div>
-        <div class="display-none w-100 h-100% lg:flex flex-col ml-3 mt-3 space-y-15">
+        <div class="display-none w-25% h-100% lg:flex flex-col ml-3 space-y-15">
             <slot name="right"></slot>
         </div>
     </div>

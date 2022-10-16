@@ -1,7 +1,7 @@
 <template>
   <mainLayout>
     <template #main>
-      <div class="space-y-2 bg-white p-5 mt-3">
+      <div class="space-y-2 bg-white p-5">
         <Post v-for="post in 15" />
       </div>
     </template>
