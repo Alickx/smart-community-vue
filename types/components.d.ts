@@ -7,7 +7,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Article: typeof import('./../src/components/Article/index.vue')['default']
     CategoryList: typeof import('./../src/components/CategoryList/index.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -22,7 +21,6 @@ declare module '@vue/runtime-core' {
     ElTag: typeof import('element-plus/es')['ElTag']
     Footer: typeof import('./../src/components/Footer/index.vue')['default']
     Header: typeof import('./../src/components/Header/index.vue')['default']
-    HotArticleList: typeof import('./../src/components/HotArticleList/index.vue')['default']
     HotPostList: typeof import('./../src/components/HotPostList/index.vue')['default']
     Post: typeof import('./../src/components/Post/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

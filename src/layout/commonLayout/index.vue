@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col h-100vh">
-        <header class="border-b-5 border-[#f4f5f5]">
+        <header>
             <Header/>
         </header>
         <main class="flex-1">
