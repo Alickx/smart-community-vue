@@ -5,7 +5,7 @@
         </el-form-item>
         <el-form-item label="文章板块:">
             <el-select v-model="params.category" placeholder="请选择板块">
-                <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id">
+                <el-option v-for="item in categoryList" :key="item.value" :label="item.name" :value="item.value">
                 </el-option>
             </el-select>
         </el-form-item>
@@ -18,7 +18,8 @@
     </el-form>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts">import { getCategorySelect } from '/@/api/post';
+
 
 
 const params = reactive({
@@ -28,28 +29,15 @@ const params = reactive({
     isPublish: true,
 })
 
-const categoryList = [
-    {
-        id: 1,
-        name: '前端',
-    },
-    {
-        id: 2,
-        name: '后端',
-    },
-    {
-        id: 3,
-        name: '数据库',
-    },
-    {
-        id: 4,
-        name: '运维',
-    },
-    {
-        id: 5,
-        name: '其他',
-    },
-]
+const categoryList = ref<selectData[]>([])
+
+
+onMounted(()=>{
+    // 获取文章板块下拉列表
+    getCategorySelect().then(resp=> {
+        categoryList.value = resp.data;
+    })
+})
 
 defineExpose({
     params,

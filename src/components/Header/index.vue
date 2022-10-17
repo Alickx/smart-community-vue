@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100% h-15 border-b-5 border-b-[#f4f5f5]"></div>
+  <div class="w-100% h-15 border-b-30 border-b-[#f4f5f5]"></div>
   <nav :class="navClass" class="lg:flex flex-row z-50 p-x-10 bg-[#fff] border-b-1 border-b-[#e3e5e7] h-15 w-100% ">
     <div class="display-none w-50 xl:flex xl:flex-row items-center space-x-2">
       <!-- logo -->
