@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia';
-import {clearToken, isLogin, setToken} from '/@/utils/auth';
+import {clearToken, setToken} from '/@/utils/auth';
 import {UserState} from './types';
 import {LoginReq} from "/@/api/auth/types";
 import {login, logout} from "/@/api/auth";
@@ -31,7 +31,7 @@ export const useUserStore = defineStore('user', {
       return {...state};
     },
     getIsLogin(): boolean {
-      return isLogin();
+      return !!this.userId;
     }
   },
   actions: {

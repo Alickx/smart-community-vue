@@ -12,6 +12,11 @@ export default [
         path: '/post/editor',
         name: 'PostEditor',
         component: () => import('/@/views/postEditor/index.vue'),
+      },
+      {
+        path: '/post/:id',
+        name: 'Post',
+        component: () => import('/@/views/post/index.vue'),
       }
     ],
   },

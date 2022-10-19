@@ -21,6 +21,9 @@ import MainLayout from '../../layout/mainLayout/index.vue'
 import Editor from './components/editor/index.vue'
 import SplitLine from '/@/components/SplitLine/index.vue';
 import PostForm from './components/postForm/index.vue';
+import { savePost } from '/@/api/post';
+import { savePostReq } from '/@/api/post/types';
+import { ElMessage } from 'element-plus';
 
 const editorRef = ref();
 const postFormRef = ref();
@@ -28,18 +31,24 @@ const postFormRef = ref();
 
 const submit = () => {
 
-    const { title,tag,category,isPublish } = postFormRef.value.params;
+    const { title,tagId,categoryId,isPublish } = postFormRef.value.params;
     const htmlContent = editorRef.value.htmlContent;
 
-    const data = {
+    // interface savePostReq
+    const data = ref<savePostReq>({
         title,
-        tag,
-        category,
+        tagId,
+        categoryId,
         isPublish,
-        htmlContent,
-    }
+        content : htmlContent,
+    })
 
     console.log(data);
+
+    savePost(data.value).then(resp => {
+        console.log(resp);
+        ElMessage.success('发布成功')
+    })
 
 }
 

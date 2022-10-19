@@ -16,7 +16,7 @@
               <el-input v-model="loginForm.password" type="password" placeholder="请输入密码" />
             </el-form-item>
             <div class="flex flex-row items-center justify-center">
-              <el-button type="primary" size="large" @click="loginHandler(loginFormRef)">登录</el-button>
+              <el-button type="primary" size="large"  @click="loginHandler(loginFormRef)">登录</el-button>
             </div>
           </el-form>
         </el-tab-pane>
@@ -63,7 +63,6 @@ import { LoginResResultData } from "/@/api/auth/types";
 const userStore = useUserStore();
 const loginFormRef = ref<FormInstance>()
 const router = useRouter()
-const route = useRoute()
 
 const tagActive = ref('password')
 //TODO 集成第三方登录,现在默认邮箱密码登录
@@ -101,6 +100,15 @@ const rules = reactive({
   password: [{ validator: checkPassword, trigger: 'blur' }]
 })
 
+// 按下enter登录
+const enterLogin = (e: KeyboardEvent) => {
+  console.log(e);
+  if (e.code === 'Enter') {
+    loginHandler(loginFormRef.value)
+  }
+}
+
+// 登录的表单提交
 const loginHandler = (formEl: FormInstance | undefined) => {
   if (!formEl) {
     console.log('formEl is undefined')
@@ -122,6 +130,14 @@ const loginHandler = (formEl: FormInstance | undefined) => {
     }
   })
 }
+
+onMounted(() => {
+  window.addEventListener('keydown', enterLogin)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', enterLogin)
+})
 
 </script>
 

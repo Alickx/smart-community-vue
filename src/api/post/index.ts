@@ -2,7 +2,7 @@ import { savePostReq } from './types';
 import { get, post } from '/@/utils/http/axios';
 
 enum URL {
-  save_post = '/post/save',
+  save_post = '/post/post/save',
   category_select = '/post/category/selectData',
 }
 
