@@ -24,7 +24,7 @@ export const useUserStore = defineStore('user', {
   }),
   persist: {
     key: 'user',
-    storage: window.sessionStorage,
+    storage: window.localStorage,
   },
   getters: {
     getUserProfile(state: UserState): UserState {

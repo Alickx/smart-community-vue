@@ -15,8 +15,8 @@ export default [
       },
       {
         path: '/post/:id',
-        name: 'Post',
-        component: () => import('/@/views/post/index.vue'),
+        name: 'PostView',
+        component: () => import('/@/views/postView/index.vue'),
       }
     ],
   },
