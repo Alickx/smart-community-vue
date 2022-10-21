@@ -1,8 +1,8 @@
 <template>
   <mainLayout>
     <template #main>
-      <div class="space-y-2 bg-white p-5">
-        <Post v-for="post in 15" />
+      <div class="bg-white p-5">
+        <Post />
       </div>
     </template>
     <template #right>

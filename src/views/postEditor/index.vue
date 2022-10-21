@@ -4,7 +4,7 @@
             <div class="bg-white flex flex-col px-10 py-10 border-gray-200  border-1 space-y-6">
                 <span class="text-xl font-bold">发布文章</span>
                 <post-form ref="postFormRef" />
-                <SplitLine/>
+                <SplitLine mode="vertical"/>
                 <div class="border-1 border-gray-300">
                     <Editor ref="editorRef" class="h-120 overflow-hidden" />
                 </div>
@@ -27,6 +27,7 @@ import { ElMessage } from 'element-plus';
 
 const editorRef = ref();
 const postFormRef = ref();
+const router = useRouter();
 
 
 const submit = () => {
@@ -46,8 +47,12 @@ const submit = () => {
     console.log(data);
 
     savePost(data.value).then(resp => {
-        console.log(resp);
-        ElMessage.success('发布成功')
+        router.push({
+            name: 'PostView',
+            params: {
+                id: resp.data
+            }
+        });
     })
 
 }

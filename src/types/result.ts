@@ -4,12 +4,12 @@ interface Result<T> {
   code: number;
 }
 
-interface pageResultData<T> {
+interface PageResult<T> {
   total: number;
   records: T[];
 }
 
-interface selectData {
+interface SelectData {
   name: string;
   value: any;
   selected: boolean;
