@@ -31,4 +31,7 @@ declare module '@vue/runtime-core' {
     UserProfile: typeof import('./../src/components/UserProfile/index.vue')['default']
     UserProfileDefaultModel: typeof import('./../src/components/UserProfileModel/UserProfileDefaultModel/index.vue')['default']
   }
+  export interface ComponentCustomProperties {
+    vInfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
+  }
 }

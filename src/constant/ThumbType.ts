@@ -1,4 +1,4 @@
-enum thumbType {
+export enum thumbType {
     /**
      * 文章
      */
@@ -8,7 +8,7 @@ enum thumbType {
      */
     'COMMENT' = 2,
     /**
-     * 
+     *
      */
     'REPLY' = 3,
 }
