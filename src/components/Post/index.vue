@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import SvgIcon from '../SvgIcon/index.vue';
 import SplitLine from '../SplitLine/index.vue';
-import { pageGetPost } from '/@/api/post';
+import { pageGetPost, saveThumb } from '/@/api/post';
 import { PageParam } from '/@/types/req';
 import { PostAbbreviationDTO } from '/@/api/post/types';
 import { dateFormatDay } from '/@/utils/dateFormatUtil';
@@ -66,7 +66,21 @@ router.push({
 
 
 const thumbHandle = (id: string,thumbState: boolean) => {
-    console.log(id,thumbState);
+    if (thumbState === false) {
+        // 点赞操作
+        saveThumb(id,thumbType.POST).then(resp=>{
+            if (resp.data === true) {
+                postList.value.forEach(item=>{
+                    if (item.id === id) {
+                        item.thumbCount = item.thumbCount + 1;
+                        item.expansion.isThumb = true;
+                    }
+                })
+            }
+        })
+    } else {
+        // 取消点赞
+    }
 }
 
 

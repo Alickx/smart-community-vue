@@ -7,12 +7,13 @@ enum URL {
   get_category_select = '/post/category/selectData',
   get_post = '/post/post/info/',
   page_get_post = '/post/post/info/page',
+  save_thumb = '/post/thumb/save',
 }
 
-const savePost = async (data:PostVO) => post<Result<string>>({ url: URL.save_post ,data: data});
+const savePost = async (data: PostVO) => post<Result<string>>({ url: URL.save_post, data: data });
 const getCategorySelect = async () => get<Result<SelectData[]>>({ url: URL.get_category_select });
-const getPost = async (id:string) => get<Result<PostDTO>>({ url: URL.get_post + id });
-const pageGetPost = async (param: PageParam) => get<Result<PageResult<PostAbbreviationDTO>>>( { url: URL.page_get_post ,params: param});
+const getPost = async (id: string) => get<Result<PostDTO>>({ url: URL.get_post + id });
+const pageGetPost = async (param: PageParam) => get<Result<PageResult<PostAbbreviationDTO>>>({ url: URL.page_get_post, params: param });
+const saveThumb = async (toId: string,type: number) => post<Result<boolean>>({ url: URL.save_thumb, data: {"toId": toId,"type": type} });
 
-
-export { savePost, getCategorySelect,getPost,pageGetPost };
+export { savePost, getCategorySelect, getPost, pageGetPost, saveThumb };
