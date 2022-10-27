@@ -26,9 +26,10 @@ export interface TagDTO {
 export interface PostExpansionBO {
     isComment: boolean;
     isThumb: boolean;
+    isAuthor: boolean;
 }
 
-export interface PostDTO {
+export interface PostInfoDTO {
     id: string;
     categoryId: string;
     authorId: string;
@@ -37,7 +38,6 @@ export interface PostDTO {
     collectCount: number;
     thumbCount: number;
     commentCount: number;
-    summary: string;
     updateTime: string;
     createTime: string;
     author: UserProfileDTO;

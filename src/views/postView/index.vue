@@ -7,18 +7,20 @@
             </div>
         </template>
         <template #main>
-            <div class="py-10 px-5 bg-white space-y-3">
-                <div>
-                    <!-- 文章标题 -->
-                    <span class="text-4xl font-medium ">这是一个测试标题</span>
+            <div class="py-10 px-5 bg-white">
+                <div class="space-y-3">
+                    <div>
+                        <!-- 文章标题 -->
+                        <span class="text-4xl font-medium ">这是一个测试标题</span>
+                    </div>
+                    <div>
+                        <!-- 作者信息及关注信息 -->
+                        <PostViewAuthorInfo />
+                    </div>
                 </div>
-                <div>
-                    <!-- 作者信息及关注信息 -->
-                    <PostViewAuthorInfo />
-                </div>
-                <div>
+                <div class="mt-10" >
                     <!-- 文章内容 -->
-
+                    <PostViewContent  :content="postData?.content"/>
                 </div>
                 <div>
                     <!-- 回复组件 -->
@@ -38,12 +40,14 @@
 import MainLayout from '/@/layout/mainLayout/index.vue';
 import PostViewHandleButtonList from './components/PostViewHandleButtonList/index.vue';
 import PostViewAuthorInfo from './components/PostViewAuthorInfo/index.vue';
+import PostViewContent from './components/PostViewContent/index.vue';
 import { getPost } from '/@/api/post';
+import { PostInfoDTO } from '/@/api/post/types';
 
 const route = useRoute();
 const router = useRouter();
 let postId = ref();
-let postData = ref();
+let postData = ref<PostInfoDTO>();
 
 /**
  * 检查文章相关信息
@@ -61,10 +65,16 @@ const checkPost = () => {
 }
 
 
-onMounted(()=>{
+onMounted(() => {
     checkPost();
 })
 
 
 
 </script>
+
+
+<style scoped lang="less">
+
+
+</style>
