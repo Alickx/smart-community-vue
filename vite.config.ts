@@ -1,8 +1,8 @@
-import { UserConfig, ConfigEnv } from 'vite';
+import { ConfigEnv, UserConfig } from 'vite';
 import { createVitePlugins } from './config/vite/plugins';
 import { resolve } from 'path';
 import { VITE_PORT } from './config/constant';
-import proxy from "./config/vite/proxy";
+import proxy from './config/vite/proxy';
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir);
@@ -51,7 +51,7 @@ export default ({ command }: ConfigEnv): UserConfig => {
       open: false, // 类型： boolean | string在服务器启动时自动在浏览器中打开应用程序；
       cors: false, // 类型： boolean | CorsOptions 为开发服务器配置 CORS。默认启用并允许任何源
       host: '0.0.0.0', // IP配置，支持从IP启动
-      proxy
+      proxy,
     },
   };
 };

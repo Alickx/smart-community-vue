@@ -11,16 +11,12 @@ declare module '@vue/runtime-core' {
     CategoryList: typeof import('./../src/components/CategoryList/index.vue')['default']
     Comment: typeof import('./../src/components/Comment/index.vue')['default']
     CommentInput: typeof import('./../src/components/CommentInput/index.vue')['default']
-    CommentList: typeof import('../src/views/postView/components/PostCommentList/index.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElInput: typeof import('element-plus/es')['ElInput']
-    ElOption: typeof import('element-plus/es')['ElOption']
     ElPopconfirm: typeof import('element-plus/es')['ElPopconfirm']
-    ElSelect: typeof import('element-plus/es')['ElSelect']
-    ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
@@ -28,9 +24,7 @@ declare module '@vue/runtime-core' {
     Header: typeof import('./../src/components/Header/index.vue')['default']
     HotPostList: typeof import('./../src/components/HotPostList/index.vue')['default']
     Post: typeof import('./../src/components/Post/index.vue')['default']
-    PostCommentReply: typeof import('./../src/components/PostCommentReply/index.vue')['default']
     PostRecommend: typeof import('./../src/components/PostRecommend/index.vue')['default']
-    PostViewReply: typeof import('./../src/components/PostViewReply/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Search: typeof import('./../src/components/SearchInput/search.vue')['default']
@@ -38,8 +32,5 @@ declare module '@vue/runtime-core' {
     SvgIcon: typeof import('./../src/components/SvgIcon/index.vue')['default']
     UserProfile: typeof import('./../src/components/UserProfile/index.vue')['default']
     UserProfileDefaultModel: typeof import('./../src/components/UserProfileModel/UserProfileDefaultModel/index.vue')['default']
-  }
-  export interface ComponentCustomProperties {
-    vInfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
   }
 }
