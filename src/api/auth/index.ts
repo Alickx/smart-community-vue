@@ -2,9 +2,9 @@ import {LoginReq, LoginResResultData} from "./types";
 import { post } from "/@/utils/http/axios";
 
 enum AuthUrlEnum {
-  register = 'auth/register',
-  login = 'auth/login',
-  logout = 'auth/logout',
+  register = '/authApi/auth/register',
+  login = '/authApi/auth/login',
+  logout = '/authApi/auth/logout',
 }
 
 /**

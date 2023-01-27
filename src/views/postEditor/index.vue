@@ -22,8 +22,7 @@ import Editor from './components/editor/index.vue'
 import SplitLine from '/@/components/SplitLine/index.vue';
 import PostForm from './components/postForm/index.vue';
 import { savePost } from '/@/api/post';
-import { savePostReq } from '/@/api/post/types';
-import { ElMessage } from 'element-plus';
+import {PostVO} from '/@/api/post/types';
 
 const editorRef = ref();
 const postFormRef = ref();
@@ -35,8 +34,7 @@ const submit = () => {
     const { title,tagId,categoryId,isPublish } = postFormRef.value.params;
     const htmlContent = editorRef.value.htmlContent;
 
-    // interface savePostReq
-    const data = ref<savePostReq>({
+    const data = ref<PostVO>({
         title,
         tagId,
         categoryId,

@@ -7,9 +7,9 @@
 </template>
 
 <script setup lang="ts">
-
+import '@wangeditor/editor/dist/css/style.css'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
-import { editorConfig, toolbarConfig } from './config'
+import { editorConfig, toolbarConfig } from '/@/config/wangEditor'
 
 const editorRef = shallowRef()
 let htmlContent = ref('')

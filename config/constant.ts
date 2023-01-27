@@ -10,7 +10,7 @@ export const APP_TITLE = 'smart-community';
 export const VITE_PORT = 3000;
 
 // prefix
-export const API_PREFIX = '/api';
+export const API_PREFIX = '/';
 
 // serve
 export const API_BASE_URL = '/api';

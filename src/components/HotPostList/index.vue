@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white w-80 p-x-3">
+    <div class="bg-white w-full p-x-3">
         <div class="p-y-3">
             <span class="text-lg tracking-wider">🔥最火文章榜</span>
         </div>

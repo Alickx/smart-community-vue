@@ -23,10 +23,11 @@ export interface TagDTO {
     intro: string;
 }
 
-export interface PostExpansionBO {
+export interface ContentExpansionBO {
     isComment: boolean;
     isThumb: boolean;
     isAuthor: boolean;
+    isCollect: boolean;
 }
 
 export interface PostInfoDTO {
@@ -43,7 +44,8 @@ export interface PostInfoDTO {
     author: UserProfileDTO;
     category: CategoryDTO;
     tag: TagDTO;
-    expansion: PostExpansionBO;
+    expansion: ContentExpansionBO;
+    region: string;
 }
 
 /**
@@ -63,10 +65,41 @@ export interface PostAbbreviationDTO {
     author: UserProfileDTO;
     category: CategoryDTO;
     tag: TagDTO;
-    expansion: PostExpansionBO;
+    expansion: ContentExpansionBO;
 }
 
 export interface PostQO {
     categoryId: string;
     authorId: string;
+}
+
+export interface CommentVO {
+    id?: string;
+    postId: string;
+    toUserId: string;
+    content: string;
+    type: number;
+    firstCommentId: string;
+}
+
+export interface CommentQO {
+    postId?: string;
+    toUserId?: string;
+    type: number;
+    firstCommentId?: string;
+}
+
+export interface CommentDTO {
+    id: string;
+    userId: string;
+    postId: string;
+    toUserId: string;
+    content: string;
+    thumbCount: number;
+    type: number;
+    firstCommentId: string;
+    createTime: string;
+    userProfile: UserProfileDTO;
+    expansion: ContentExpansionBO;
+    replyList: PageResult<CommentDTO>
 }

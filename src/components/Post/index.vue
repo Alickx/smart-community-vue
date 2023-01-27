@@ -40,12 +40,10 @@ import SplitLine from '../SplitLine/index.vue';
 import { cancelThumb, pageGetPost, saveThumb } from '/@/api/post';
 import { PageParam } from '/@/types/req';
 import { PostAbbreviationDTO } from '/@/api/post/types';
-import { dateFormatDay } from '/@/utils/dateFormatUtil';
+import { dateFormatDay } from '/@/utils/DateFormatUtil';
 import { thumbType } from '/@/constant/ThumbType';
 import { useUserStore } from '/@/store';
-
 import { useDebounceFn } from '@vueuse/core'
-import { stringify } from 'querystring';
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -79,7 +77,7 @@ const thumbHandle = (id: string, thumbState: boolean) => {
         });
         return;
     }
-    if (thumbState === false) {
+    if (!thumbState) {
         postList.value.forEach(item => {
             if (item.id === id) {
                 item.thumbCount = item.thumbCount + 1;

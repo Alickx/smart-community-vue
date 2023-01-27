@@ -55,7 +55,7 @@
 </template>
 <script lang="ts" setup>
 import { ElMessage, FormInstance } from "element-plus";
-import { checkEmail } from "/@/utils/validation/checkEmail";
+import { checkEmail } from "/@/utils/validation/CheckEmail";
 import { useUserStore } from "/@/store";
 import { LoginResResultData } from "/@/api/auth/types";
 

@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { showMessage } from './status';
 import { IResponse } from './type';
-import { getToken } from '/@/utils/auth';
+import { getToken } from '/@/utils/AuthUtil';
 
 // 如果请求超过 `timeout` 的时间，请求将被中断
 axios.defaults.timeout = 5000;
@@ -12,7 +12,7 @@ axios.defaults.withCredentials = false;
 axios.defaults.headers.post['Access-Control-Allow-Origin-Type'] = '*';
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: import.meta.env.BASE_URL + 'api/api/v1',
+  baseURL: import.meta.env.VITE_APP_API_BASEURL
 });
 
 // axios实例拦截响应

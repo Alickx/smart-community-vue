@@ -30,14 +30,14 @@ const params = reactive({
     isPublish: true,
 })
 
-const categoryList = ref<selectData[]>([])
-const tagList = ref<selectData[]>([])
+const categoryList = ref<SelectData[]>([])
+const tagList = ref<SelectData[]>([])
 
 watch(() => params.categoryId, (newVal) => {
     categoryList.value.forEach(item => {
         if (item.value === newVal) {
             params.tagId = ''
-            tagList.value = item.extendObj;
+            tagList.value = item.attributes;
         }
     })
 })

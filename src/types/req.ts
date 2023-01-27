@@ -6,5 +6,5 @@ export interface Sort {
 export interface PageParam {
   page: number;
   size: number;
-  sort?: Sort[];
+  sort?: string;
 }

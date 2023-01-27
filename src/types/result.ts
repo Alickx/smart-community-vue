@@ -15,5 +15,5 @@ interface SelectData {
   selected: boolean;
   disabled: boolean;
   type: string;
-  extendObj: any;
+  attributes: any;
 }

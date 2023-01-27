@@ -54,11 +54,7 @@ let navShow = ref(true);
  */
 watch(navTop, (newValue, oldValue) => {
   if (newValue > 100) {
-    if (newValue > oldValue) {
-      navShow.value = false;
-    } else {
-      navShow.value = true;
-    }
+    navShow.value = newValue <= oldValue;
   }
 });
 
