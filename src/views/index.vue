@@ -16,14 +16,9 @@
 </template>
 
 <script setup lang="ts" name="index">
-import Post from '../components/Post/index.vue';
-import HotPostList from '../components/HotPostList/index.vue';
-import MainLayout from '/@/layout/mainLayout/index.vue';
-
-
-
+  import Post from '../components/Post/index.vue';
+  import HotPostList from '../components/HotPostList/index.vue';
+  import MainLayout from '/@/layout/mainLayout/index.vue';
 </script>
 
-<style lang="less" scoped>
-
-</style>
+<style lang="less" scoped></style>

@@ -1,5 +1,5 @@
-import {LoginReq, LoginResResultData} from "./types";
-import { post } from "/@/utils/http/axios";
+import { LoginReq, LoginResResultData } from './types';
+import { post } from '/@/utils/http/axios';
 
 enum AuthUrlEnum {
   register = '/authApi/auth/register',
@@ -16,9 +16,6 @@ const login = async (data: LoginReq) => post<Result<LoginResResultData>>({ url: 
 /**
  * 登出
  */
-const logout = async () => post<Result<null>>({url: AuthUrlEnum.logout });
+const logout = async () => post<Result<null>>({ url: AuthUrlEnum.logout });
 
-export {
-  login,
-  logout
-}
+export { login, logout };

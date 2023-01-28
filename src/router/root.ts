@@ -17,7 +17,12 @@ export default [
         path: '/post/:id',
         name: 'PostView',
         component: () => import('/@/views/postView/index.vue'),
-      }
+      },
+      {
+        path: '/user/:id',
+        name: 'UserHome',
+        component: () => import('/@/views/userHome/index.vue'),
+      },
     ],
   },
   {
