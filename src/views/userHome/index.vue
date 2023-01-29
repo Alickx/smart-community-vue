@@ -1,7 +1,10 @@
 <template>
-  <MainLayout left-width="25" right-width="25">
+  <MainLayout left-width="20" right-width="20">
     <template #main>
-      <user-profile-view :user-profile="userProfile" v-if="userProfile" />
+      <div class="space-y-3">
+        <user-profile-view :user-profile="userProfile" v-if="userProfile" />
+        <user-tabs />
+      </div>
     </template>
   </MainLayout>
 </template>
@@ -9,6 +12,7 @@
 <script setup lang="ts">
   import MainLayout from '/@/layout/mainLayout/index.vue';
   import UserProfileView from '/@/views/userHome/components/UserProfileView/index.vue';
+  import UserTabs from '/@/views/userHome/components/UserTabs/index.vue';
   import { useUserStore } from '/@/store';
 
   const route = useRoute();

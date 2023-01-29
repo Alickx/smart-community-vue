@@ -14,6 +14,7 @@ export const useUserStore = defineStore('user', {
     intro: undefined,
     fanNum: undefined,
     followNum: undefined,
+    articleNum: undefined,
     level: undefined,
     score: undefined,
     gitee: undefined,

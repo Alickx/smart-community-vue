@@ -8,20 +8,18 @@
   const props = withDefaults(
     defineProps<{
       src: string;
-      width?: number;
-      height?: number;
+      size?: number | string;
     }>(),
     {
       src: '',
-      width: 12,
-      height: 12,
+      size: 12,
     },
   );
 
   const style = computed(() => {
     return {
-      width: `${props.width}rem`,
-      height: `${props.height}rem`,
+      width: `${props.size}rem`,
+      height: `${props.size}rem`,
     };
   });
 </script>

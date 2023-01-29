@@ -70,7 +70,7 @@ export interface PostAbbreviationDTO {
 
 export interface PostQO {
   categoryId: string;
-  authorId: string;
+  userId: string;
 }
 
 export interface CommentVO {

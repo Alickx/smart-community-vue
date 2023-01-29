@@ -12,7 +12,7 @@ axios.defaults.withCredentials = false;
 axios.defaults.headers.post['Access-Control-Allow-Origin-Type'] = '*';
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_APP_API_BASEURL
+  baseURL: import.meta.env.VITE_APP_API_BASEURL,
 });
 
 // axios实例拦截响应
@@ -42,7 +42,7 @@ axiosInstance.interceptors.request.use(
     const token = getToken();
     if (token) {
       // @ts-ignore
-      config.headers.Authorization = `${token}`
+      config.headers.Authorization = `${token}`;
     }
     return config;
   },
@@ -55,9 +55,7 @@ const request = <T = any>(config: AxiosRequestConfig): Promise<T> => {
   const conf = config;
   return new Promise((resolve) => {
     axiosInstance.request<any, AxiosResponse<IResponse>>(conf).then((res: AxiosResponse<IResponse>) => {
-      const {
-        data,
-      } = res;
+      const { data } = res;
       resolve(data as T);
     });
   });

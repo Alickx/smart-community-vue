@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-row p-3 justify-center space-x-10 bg-white min-h-30">
-    <Avatar :src="userProfile.avatar" width="6" height="6" />
+  <div class="flex flex-row p-4 justify-center space-x-10 bg-white min-h-30">
+    <Avatar :src="userProfile.avatar" size="6" />
     <div class="flex-1 flex flex-col space-y-3">
       <span class="font-semibold text-xl">{{ userProfile.nickName }}</span>
       <p class="text-normal color-gray">{{ userProfile.intro }}</p>

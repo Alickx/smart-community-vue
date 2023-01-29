@@ -1,7 +1,13 @@
 <template>
   <div class="space-y-13 mt-15">
     <template v-for="comment in commentList" :key="comment.id">
-      <comment @delete:comment="onDeleteComment" :comment="comment" :type="commentType.COMMENT" :postId="comment.postId" />
+      <comment
+        class="list-item"
+        @delete:comment="onDeleteComment"
+        :comment="comment"
+        :type="commentType.COMMENT"
+        :postId="comment.postId"
+      />
     </template>
   </div>
 </template>
@@ -35,7 +41,10 @@
   };
 
   const onDeleteComment = (commentId: string) => {
-    commentList.value = commentList.value.filter((comment) => comment.id !== commentId);
+    const updateList = commentList.value.filter((comment) => comment.id !== commentId);
+    setTimeout(() => {
+      commentList.value = updateList;
+    }, 500);
   };
 
   defineExpose({
@@ -46,3 +55,16 @@
     pageRequest();
   });
 </script>
+
+<style scoped>
+  .list-item {
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out, transform 0.3s ease-in-out;
+    transform: translateY(0);
+  }
+
+  .list-item.removing {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+</style>

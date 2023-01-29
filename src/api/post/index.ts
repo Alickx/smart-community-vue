@@ -13,6 +13,7 @@ enum URL {
   page_get_comment = '/postApi/comment/page',
   delete_comment = '/postApi/comment/delete',
   query_more_reply = '/postApi/comment/queryMoreReply',
+  query_by_comment = '/postApi/post/query/comment',
 }
 
 const savePost = async (data: PostVO) => post<Result<string>>({ url: URL.save_post, data: data });
@@ -44,6 +45,9 @@ const queryMoreReply = async (postId: string, type: number, firstCommentId: stri
     params: { postId: postId, type: type, firstCommentId: firstCommentId },
   });
 
+const queryByComment = async (params: PageParam) =>
+  get<Result<PageResult<PostAbbreviationDTO>>>({ url: URL.query_by_comment, params: params });
+
 export {
   savePost,
   getCategorySelect,
@@ -55,4 +59,5 @@ export {
   pageComment,
   deleteComment,
   queryMoreReply,
+  queryByComment,
 };

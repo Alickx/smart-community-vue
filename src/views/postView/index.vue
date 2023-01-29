@@ -7,8 +7,9 @@
       </div>
     </template>
     <template #main>
-      <div class="">
+      <div>
         <div class="flex flex-col space-y-3 bg-white py-10 px-5">
+          <skeleton :loading="loading" />
           <!-- 文章标题 -->
           <span class="text-4xl font-medium">{{ postData?.title }}</span>
           <div>
@@ -58,6 +59,8 @@
   import { UserProfileDTO } from '/@/api/user/types';
   import { useUserStore } from '/@/store';
   import { dataFormat } from '/@/utils/DateFormatUtil';
+  import Skeleton from '/@/components/Skeleton/index.vue';
+  import useLoading from '/@/hooks/loading';
 
   const userStore = useUserStore();
   const route = useRoute();
@@ -65,18 +68,22 @@
   let commentListRef = ref();
   let postId = ref();
   let postData = ref<PostInfoDTO>();
+  const { loading, toggle } = useLoading();
 
   /**
    * 检查文章相关信息
    */
   const checkPost = () => {
     postId.value = route.params.id;
-
+    toggle();
     getPost(postId.value).then((resp) => {
-      if (resp.data === null) {
-        router.push({ name: '404' });
-      } else {
-        postData.value = resp.data;
+      if (resp.code === 200) {
+        toggle();
+        if (resp.data === null) {
+          router.push({ name: '404' });
+        } else {
+          postData.value = resp.data;
+        }
       }
     });
   };
@@ -101,6 +108,7 @@
         isComment: false,
         isThumb: false,
         isCollect: false,
+        isMoreReply: false,
       },
       firstCommentId: data.firstCommentId,
       postId: data.postId,

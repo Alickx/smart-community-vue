@@ -13,26 +13,26 @@
 </template>
 
 <script setup lang="ts">
+  const props = withDefaults(
+    defineProps<{
+      leftWidth: number | string;
+      rightWidth: number | string;
+    }>(),
+    {
+      leftWidth: 15,
+      rightWidth: 25,
+    },
+  );
 
-const props = withDefaults(defineProps<{
-  leftWidth: number;
-  rightWidth: number;
-}>(),{
-  leftWidth: 15,
-  rightWidth: 25,
-});
+  const leftComputed = computed(() => {
+    return {
+      width: props.leftWidth + '%',
+    };
+  });
 
-const leftComputed = computed(() => {
-  return {
-    width: props.leftWidth + '%',
-  }
-})
-
-const rightComputed = computed(() => {
-  return {
-    width: props.rightWidth + '%',
-  }
-})
-
-
+  const rightComputed = computed(() => {
+    return {
+      width: props.rightWidth + '%',
+    };
+  });
 </script>

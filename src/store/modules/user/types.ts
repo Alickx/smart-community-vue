@@ -8,6 +8,7 @@ export interface UserState {
   intro?: string;
   fanNum?: number;
   followNum?: number;
+  articleNum?: number;
   level?: number;
   score?: number;
   gitee?: string;

@@ -6,7 +6,9 @@
       v-if="showModel"
     >
       <div class="flex flex-col items-center justify-center space-y-5 mt-2">
-        <el-avatar size="large" @click="onClickAvatar" class="cursor-pointer" :src="userStore.getUserProfile.avatar" />
+        <router-link :to="{ name: 'UserHome', params: { id: userStore.userId } }">
+          <Avatar size="5" class="cursor-pointer" :src="userStore.getUserProfile.avatar" />
+        </router-link>
         <!-- 用户昵称 -->
         <span class="text-xl font-medium">{{ userStore.getUserProfile.nickName }}</span>
         <!-- 等级条 -->
@@ -80,6 +82,7 @@
   import SplintLine from '../../SplitLine/index.vue';
   import { onClickOutside } from '@vueuse/core';
   import { useUserStore } from '/@/store';
+  import Avatar from '/@/components/Avatar/index.vue';
 
   let showModel = ref(false);
   let avatarRef = ref();

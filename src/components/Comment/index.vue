@@ -1,9 +1,9 @@
 <template>
-  <div class="flex flex-row" ref="commentRef">
+  <div class="flex flex-row" :class="{ removing: isRemoving }" ref="commentRef">
     <div class="mr-5">
       <!--   头像,发布时间-->
-      <Avatar v-if="type === commentType.COMMENT" :src="commentProps.userProfile.avatar" :height="3" :width="3" />
-      <Avatar v-else :src="commentProps.userProfile.avatar" :height="2" :width="2" />
+      <Avatar v-if="type === commentType.COMMENT" :src="commentProps.userProfile.avatar" size="2" />
+      <Avatar v-else :src="commentProps.userProfile.avatar" size="2" />
     </div>
     <div class="flex flex-col flex-1">
       <!-- 一级评论主体-->
@@ -21,53 +21,57 @@
         <p>
           {{ commentProps.content }}
         </p>
-        <!-- 回复和点赞按钮 -->
-        <div class="flex flex-row flex-nowrap space-x-5 items-center w-90%">
-          <div class="flex flex-row flex-nowrap items-center space-x-1 cursor-pointer hover:color-[blue]">
-            <SvgIcon
-              @click.stop="thumbHandle(commentProps.id, commentProps.expansion.isThumb)"
-              name="svg-thumb"
-              :color="commentProps.expansion.isThumb ? 'blue' : 'black'"
-              size="20px"
-            />
-            <span>{{ commentProps.thumbCount === 0 ? '点赞' : commentProps.thumbCount }}</span>
-          </div>
-          <div
-            @click="showReplyInput(commentProps.id)"
-            class="flex flex-row flex-nowrap items-center space-x-1 cursor-pointer hover:color-[blue]"
-          >
-            <SvgIcon name="svg-comment" :color="commentProps.expansion.isComment ? 'blue' : 'black'" size="20px" />
-            {{ showReplyInputId === commentProps.id ? '收起' : '回复' }}
-          </div>
-          <div class="flex flex-1 justify-end" v-if="isShowPopconfirm || isReplySelf">
-            <el-popconfirm
-              title="是否删除该评论"
-              confirm-button-text="确定"
-              cancel-button-text="取消"
-              @confirm="onDeleteComment(commentProps.id)"
-              @cancel="onCancelPopConfirm"
+        <!-- 评论操作 -->
+        <div class="flex flex-col space-y-5" ref="commentInputRef">
+          <!-- 回复和点赞按钮 -->
+          <div class="flex flex-row flex-nowrap space-x-5 items-center w-90%">
+            <div class="flex flex-row flex-nowrap items-center space-x-1 cursor-pointer hover:color-[blue]">
+              <SvgIcon
+                @click.stop="thumbHandle(commentProps.id, commentProps.expansion.isThumb)"
+                name="svg-thumb"
+                :color="commentProps.expansion.isThumb ? 'blue' : 'black'"
+                size="20px"
+              />
+              <span>{{ commentProps.thumbCount === 0 ? '点赞' : commentProps.thumbCount }}</span>
+            </div>
+            <div
+              @click="showReplyInput(commentProps.id)"
+              class="flex flex-row flex-nowrap items-center space-x-1 cursor-pointer hover:color-[blue]"
             >
-              <template #reference>
-                <span class="cursor-pointer color-red">删除</span>
-              </template>
-            </el-popconfirm>
+              <SvgIcon name="svg-comment" :color="commentProps.expansion.isComment ? 'blue' : 'black'" size="20px" />
+              {{ showReplyInputId === commentProps.id ? '收起' : '回复' }}
+            </div>
+            <div class="flex flex-1 justify-end" v-if="isShowPopconfirm || isReplySelf">
+              <el-popconfirm
+                title="是否删除该评论"
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                @confirm="onDeleteComment(commentProps.id)"
+                @cancel="onCancelPopConfirm"
+              >
+                <template #reference>
+                  <span class="cursor-pointer color-red">删除</span>
+                </template>
+              </el-popconfirm>
+            </div>
           </div>
-        </div>
-        <!-- 回复组件 -->
-        <div class="h-45 w-full" v-if="showReplyInputId === commentProps.id" ref="commentInputRef">
-          <CommentInput
-            @comment:submit="onCommentSubmit"
-            @reply:submit="onReplyInputSubmit"
-            :type="commentType.REPLY"
-            :first-comment-id="type === commentType.COMMENT ? commentProps.id : commentProps.firstCommentId"
-            :post-id="postId"
-            :to-user-id="commentProps.userId"
-          />
+          <!-- 回复组件 -->
+          <div class="h-45 w-full" v-if="showReplyInputId === commentProps.id">
+            <CommentInput
+              @comment:submit="onCommentSubmit"
+              @reply:submit="onReplyInputSubmit"
+              :type="commentType.REPLY"
+              :first-comment-id="type === commentType.COMMENT ? commentProps.id : commentProps.firstCommentId"
+              :post-id="postId"
+              :to-user-id="commentProps.userId"
+            />
+          </div>
         </div>
       </div>
       <!-- 二级评论 -->
       <div v-if="type === commentType.COMMENT && replyList?.length > 0" class="p-5 bg-[#f9fafb] rounded-lg mt-5 space-y-6">
         <Reply
+          class="list-item"
           @delete:comment="onLocalDeleteComment"
           @reply:submit="onReplySubmit"
           v-for="reply in replyList"
@@ -126,6 +130,7 @@
   let commentRef = ref();
   let showReplyInputId = ref<String>('');
   let isShowPopconfirm = ref(false);
+  let isRemoving = ref(false);
   const commentProps = ref<CommentDTO>(props.comment);
   let isShowMoreReply = ref(commentProps.value.expansion.isMoreReply);
 
@@ -156,7 +161,6 @@
    * @param commentDTO
    */
   const onReplySubmit = (commentDTO: CommentDTO) => {
-    console.log(commentDTO);
     if (!Array.isArray(replyList.value)) {
       replyList.value = [];
     }
@@ -254,6 +258,7 @@
       });
       return;
     }
+    console.log('id = ', id, 'showReplyInputId = ', showReplyInputId.value);
     if (showReplyInputId.value !== id) {
       showReplyInputId.value = id;
     } else {
@@ -275,13 +280,17 @@
     isShowPopconfirm.value = true;
     deleteComment(id).then((resp) => {
       if (resp.code === 200) {
+        isRemoving.value = true;
         emit('delete:comment', id);
       }
     });
   };
 
   const onLocalDeleteComment = (commentId: string) => {
-    replyList.value = replyList.value.filter((comment) => comment.id !== commentId);
+    const updateList = replyList.value.filter((comment) => comment.id !== commentId);
+    setTimeout(() => {
+      replyList.value = updateList;
+    }, 500);
   };
 
   const onCancelPopConfirm = () => {
@@ -289,4 +298,15 @@
   };
 </script>
 
-<style scoped></style>
+<style scoped>
+  .list-item {
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out, transform 0.3s ease-in-out;
+    transform: translateY(0);
+  }
+
+  .list-item.removing {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+</style>
