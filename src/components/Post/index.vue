@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-  import SvgIcon from '../SvgIcon/index.vue';
+  import SvgIcon from '/@/components/SvgIcon/index.vue';
   import SplitLine from '../SplitLine/index.vue';
   import { cancelThumb, saveThumb } from '/@/api/post';
   import { dateFormatDay } from '/@/utils/DateFormatUtil';

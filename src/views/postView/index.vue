@@ -7,36 +7,34 @@
       </div>
     </template>
     <template #main>
-      <div>
-        <div class="flex flex-col space-y-3 bg-white py-10 px-5">
-          <skeleton :loading="loading" />
-          <!-- 文章标题 -->
-          <span class="text-4xl font-medium">{{ postData?.title }}</span>
-          <div>
-            <!-- 作者信息及关注信息 -->
-            <PostViewAuthorInfo v-if="postData" :post-info="postData" />
-          </div>
-          <div class="min-h-100 !mt-10">
-            <!-- 文章内容 -->
-            <PostViewContent :content="postData?.content" />
-          </div>
+      <div class="flex flex-col space-y-3 bg-white py-10 px-5">
+        <skeleton :loading="loading" />
+        <!-- 文章标题 -->
+        <span class="text-4xl font-medium">{{ postData?.title }}</span>
+        <div>
+          <!-- 作者信息及关注信息 -->
+          <PostViewAuthorInfo v-if="postData" :post-info="postData" />
         </div>
-        <div class="flex flex-col bg-white mt-5 py-5 px-5 space-y-5">
-          <span class="font-bold text-xl">回复</span>
-          <!-- 回复组件 -->
-          <div class="h-45">
-            <PostViewReply
-              @comment:submit="onCommentSubmit"
-              :type="commentType.COMMENT"
-              :post-id="postData?.id"
-              :to-user-id="postData?.authorId"
-            />
-          </div>
-          <div>
-            <!-- 评论列表 -->
-            <span class="font-bold text-xl">评论({{ commentListRef?.commentList.length }})</span>
-            <comment-list ref="commentListRef" v-if="postData" :post-id="postData?.id" />
-          </div>
+        <div class="min-h-100 !mt-10">
+          <!-- 文章内容 -->
+          <PostViewContent :content="postData?.content" />
+        </div>
+      </div>
+      <div class="flex flex-col bg-white mt-5 py-5 px-5 space-y-5">
+        <span class="font-bold text-xl">回复</span>
+        <!-- 回复组件 -->
+        <div class="h-45">
+          <PostViewReply
+            @comment:submit="onCommentSubmit"
+            :type="commentType.COMMENT"
+            :post-id="postData?.id"
+            :to-user-id="postData?.authorId"
+          />
+        </div>
+        <div>
+          <!-- 评论列表 -->
+          <span class="font-bold text-xl">评论({{ commentListRef?.commentList.length }})</span>
+          <comment-list ref="commentListRef" v-if="postData" :post-id="postData?.id" />
         </div>
       </div>
       <div>

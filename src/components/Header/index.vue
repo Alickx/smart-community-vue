@@ -1,11 +1,11 @@
 <template>
   <div class="w-100% h-15 border-b-30 border-b-[#f4f5f5]"></div>
-  <nav :class="navClass" class="lg:flex flex-row z-50 p-x-10 bg-[#fff] border-b-1 border-b-[#e3e5e7] h-15 w-100% ">
-      <router-link :to="{ name: 'Home' }" class="display-none w-50 xl:flex xl:flex-row items-center space-x-2">
-        <!-- logo -->
-        <svg-icon name="svg-logo" size="40px" />
-        <span class="text-lg font-bold">智慧社区</span>
-      </router-link>
+  <nav :class="navClass" class="lg:flex flex-row z-50 p-x-10 bg-[#fff] border-b-1 border-b-[#e3e5e7] h-15 w-100%">
+    <router-link :to="{ name: 'Home' }" class="display-none w-50 xl:flex xl:flex-row items-center space-x-2">
+      <!-- logo -->
+      <svg-icon name="svg-logo" size="40px" />
+      <span class="text-lg font-bold">智慧社区</span>
+    </router-link>
     <div class="lg:flex items-center display-none">
       <!-- 链接处 -->
       <ul class="space-x-8 flex flex-row items-center">
@@ -30,7 +30,7 @@
           <SvgIcon class="cursor-pointer" name="svg-notice" size="25px" />
         </div>
         <div class="flex flex-row items-center" v-else>
-          <RouterLink :to="{ name: 'Login'}" class="text-gray-500 hover:text-gray-900 ">登录/注册</RouterLink>
+          <RouterLink :to="{ name: 'Login' }" class="text-gray-500 hover:text-gray-900">登录/注册</RouterLink>
         </div>
       </div>
     </div>
@@ -38,64 +38,58 @@
 </template>
 
 <script setup lang="ts">
-import Search from '../SearchInput/search.vue';
-import SvgIcon from "../SvgIcon/index.vue";
-import UserProfileDefaultModel from "../UserProfileModel/UserProfileDefaultModel/index.vue";
-import { useUserStore } from '/@/store';
+  import Search from '../SearchInput/index.vue';
+  import SvgIcon from '../SvgIcon/index.vue';
+  import UserProfileDefaultModel from '../UserProfileModel/UserProfileDefaultModel/index.vue';
+  import { useUserStore } from '/@/store';
 
+  const userStore = useUserStore();
 
-const userStore = useUserStore();
+  let navTop = ref(0);
+  let navShow = ref(true);
 
-let navTop = ref(0);
-let navShow = ref(true);
-
-/**
- * 监听滚动事件
- */
-watch(navTop, (newValue, oldValue) => {
-  if (newValue > 100) {
-    navShow.value = newValue <= oldValue;
-  }
-});
-
-const navClass = computed(() => {
-  return navShow.value ? 'navOn' : 'navOff';
-});
-
-
-onMounted(() => {
-  window.addEventListener('scroll', () => {
-    navTop.value = window.scrollY;
+  /**
+   * 监听滚动事件
+   */
+  watch(navTop, (newValue, oldValue) => {
+    if (newValue > 100) {
+      navShow.value = newValue <= oldValue;
+    }
   });
-})
 
-onBeforeUnmount(() => {
-  window.removeEventListener('scroll', () => {
-    navTop.value = window.scrollY;
+  const navClass = computed(() => {
+    return navShow.value ? 'navOn' : 'navOff';
   });
-})
 
+  onMounted(() => {
+    window.addEventListener('scroll', () => {
+      navTop.value = window.scrollY;
+    });
+  });
 
-
+  onBeforeUnmount(() => {
+    window.removeEventListener('scroll', () => {
+      navTop.value = window.scrollY;
+    });
+  });
 </script>
 
-
 <style lang="less" scoped>
-.navOn {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  transition: all 0.2s;
-  transform: translate3d(0, 0, 0);
-}
+  .navOn {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    transition: all 0.2s;
+    transform: translate3d(0, 0, 0);
+  }
 
-.navOff {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  transition: all 0.2s;
-  transform: translate3d(0, -100%, 0);
-}
+  .navOff {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    transition: all 0.2s;
+    transform: translate3d(0, -100%, 0);
+  }
 </style>

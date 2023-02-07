@@ -1,5 +1,6 @@
 import { LoginReq, LoginResResultData } from './types';
 import { post } from '/@/utils/http/axios';
+import { Result } from '/@/types/result';
 
 enum AuthUrlEnum {
   register = '/authApi/auth/register',

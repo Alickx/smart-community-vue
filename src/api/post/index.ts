@@ -1,6 +1,7 @@
 import { CommentDTO, CommentVO, PostAbbreviationDTO, PostInfoDTO, PostVO } from './types';
 import { PageParam } from '/@/types/req';
 import { get, post } from '/@/utils/http/axios';
+import { PageResult, Result, SelectData } from '/@/types/result';
 
 enum URL {
   save_post = '/postApi/post/save',

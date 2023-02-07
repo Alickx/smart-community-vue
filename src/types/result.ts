@@ -1,15 +1,15 @@
-interface Result<T> {
+export interface Result<T> {
   data: T;
   message: string;
   code: number;
 }
 
-interface PageResult<T> {
+export interface PageResult<T> {
   total: number;
   records: T[];
 }
 
-interface SelectData {
+export interface SelectData {
   name: string;
   value: any;
   selected: boolean;

@@ -23,6 +23,11 @@ export default [
         name: 'UserHome',
         component: () => import('/@/views/userHome/index.vue'),
       },
+      {
+        path: '/search',
+        name: 'Search',
+        component: () => import('/@/views/search/index.vue'),
+      },
     ],
   },
   {

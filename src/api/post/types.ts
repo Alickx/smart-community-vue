@@ -1,4 +1,5 @@
 import { UserProfileDTO } from '../user/types';
+import { PageResult } from '/@/types/result';
 
 export interface PostVO {
   categoryId: string;
