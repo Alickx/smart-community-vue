@@ -1,40 +1,36 @@
 <template>
-  <div class="space-y-2">
-    <div @click="clickPush(post.id)" class="p-5 hover:bg-[#fafafa] rounded-2 hover:cursor-pointer flex flex-col space-y-4">
-      <div class="flex flex-row space-x-7 font-medium text-base">
-        <router-link custom :to="{ name: 'UserHome', params: { id: post.authorId } }" v-slot="{ href }">
-          <a :href="href" target="_black" class="hover:color-[#1d7dfa] font-medium">{{ post.author?.nickName }}</a>
-        </router-link>
-        <split-line mode="vertical" />
-        <a href="https://baidu.com/" target="_black" class="hover:color-[#1d7dfa] text-base">{{ post.category.name }}</a>
-        <split-line mode="vertical" />
-        <el-tag>{{ post.tag.content }}</el-tag>
-      </div>
-      <div class="flex flex-col justify-center space-y-4">
-        <span class="text-xl color-[black] font-bold">{{ post.title }}</span>
-        <p class="text-base color-[#86909c] line-clamp-2">
-          {{ post.summary }}
-        </p>
-      </div>
-      <div class="flex flex-row flex-nowrap space-x-4 items-center">
-        <div class="flex flex-row flex-nowrap items-center space-x-1">
-          <SvgIcon
-            @click.stop="thumbHandle(post.id, post.expansion.isThumb)"
-            name="svg-thumb"
-            :color="post.expansion.isThumb ? 'blue' : 'black'"
-            size="20px"
-          />
-          <span>{{ post.thumbCount }}</span>
-        </div>
-        <div class="flex flex-row flex-nowrap items-center space-x-1">
-          <SvgIcon name="svg-comment" :color="post.expansion.isComment ? 'blue' : 'black'" size="20px" />
-          <span>{{ post.commentCount }}</span>
-        </div>
-        <span class="text-sm color-[#95a5a6]">{{ dateFormatDay(post.createTime) }}</span>
-      </div>
+  <div @click="clickPush(post.id)" class="p-4 hover:bg-[#fafafa] rounded-2 hover:cursor-pointer flex flex-col space-y-2">
+    <div class="flex flex-row space-x-3 font-medium text-base">
+      <router-link custom :to="{ name: 'UserHome', params: { id: post.authorId } }" v-slot="{ href }">
+        <a :href="href" target="_black" class="hover:color-[#1d7dfa] color-[#4e5969] text-[13px]">{{ post.author?.nickName }}</a>
+      </router-link>
+      <split-line mode="vertical" />
+      <a href="https://baidu.com/" target="_black" class="hover:color-[#1d7dfa] color-[#4e5969] text-[13px]">{{ post.category.name }}</a>
+      <split-line mode="vertical" />
+      <a href="https://baidu.com/" target="_black" class="hover:color-[#1d7dfa] color-[#4e5969] text-[13px]">{{ post.tag.content }}</a>
     </div>
-    <split-line />
+    <span class="text-base color-[black] font-bold">{{ post.title }}</span>
+    <p class="text-sm color-[#86909c] line-clamp-1 p-r-5">
+      {{ post.summary }}
+    </p>
+    <div class="flex flex-row flex-nowrap space-x-4 items-center">
+      <div class="flex flex-row flex-nowrap items-center space-x-1">
+        <SvgIcon
+          @click.stop="thumbHandle(post.id, post.expansion.isThumb)"
+          name="svg-thumb"
+          :color="post.expansion.isThumb ? 'blue' : 'black'"
+          size="15px"
+        />
+        <span class="text-sm">{{ post.thumbCount }}</span>
+      </div>
+      <div class="flex flex-row flex-nowrap items-center space-x-1">
+        <SvgIcon name="svg-comment" :color="post.expansion.isComment ? 'blue' : 'black'" size="15px" />
+        <span class="text-sm">{{ post.commentCount }}</span>
+      </div>
+      <span class="text-sm color-[#95a5a6]">{{ dateFormatDay(post.createTime) }}</span>
+    </div>
   </div>
+  <split-line />
 </template>
 
 <script setup lang="ts">
@@ -69,24 +65,19 @@
       router.push({
         name: 'Login',
       });
-      return;
     }
-    if (!thumbState) {
-      emit('update:postList', id, true);
-      // 点赞请求
-      debounceThumbHandle(id, thumbState);
-    } else {
-      emit('update:postList', id, false);
-      // 取消点赞请求
-      debounceThumbHandle(id, thumbState);
-    }
+
+    // 发起点赞请求并更新点赞状态
+    debounceThumbHandle(id, thumbState);
   };
 
   const debounceThumbHandle = useDebounceFn((id: string, thumbState: boolean) => {
     if (!thumbState) {
       saveThumb(id, thumbType.POST);
+      emit('update:postList', id, true);
     } else {
       cancelThumb(id, thumbType.POST);
+      emit('update:postList', id, false);
     }
-  }, 400);
+  }, 100);
 </script>

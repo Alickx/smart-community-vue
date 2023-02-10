@@ -29,7 +29,7 @@
     }>(),
     {
       postId: '',
-      type: commentType.COMMENT,
+      type: undefined,
       toUserId: '',
       firstCommentId: '',
     },

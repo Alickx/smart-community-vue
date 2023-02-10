@@ -18,6 +18,11 @@ const axiosInstance: AxiosInstance = axios.create({
 // axios实例拦截响应
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
+    // 特判，需重新登录
+    if (response.data.code === 10004) {
+      window.location.href = '/login';
+    }
+
     if (response.status === 200) {
       return response;
     }

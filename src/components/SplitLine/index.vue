@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="mode === 'horizontal'" class="border-b mt-2 mb-2 flex flex-row b-[#e5e6eb]"></div>
+    <div v-if="mode === 'horizontal'" class="border-b flex flex-row b-[#e5e6eb]"></div>
     <div v-else class="bg-[#e5e6eb] w-0.2 h-100% float-left"></div>
   </div>
 </template>

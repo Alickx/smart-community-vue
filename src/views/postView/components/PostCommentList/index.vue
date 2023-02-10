@@ -3,6 +3,8 @@
     <template v-for="comment in commentList" :key="comment.id">
       <comment
         class="list-item"
+        :post-id="postId"
+        :thumb-type="thumbType.COMMENT"
         @delete:comment="onDeleteComment"
         :comment="comment"
         :type="commentType.COMMENT"
@@ -17,6 +19,7 @@
   import { CommentDTO } from '/@/api/post/types';
   import { commentType } from '/@/constant/CommentType';
   import Comment from '/@/components/Comment/index.vue';
+  import { thumbType } from '/@/constant/ThumbType';
 
   const props = defineProps<{
     postId: string;

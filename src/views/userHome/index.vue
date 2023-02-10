@@ -1,10 +1,8 @@
 <template>
-  <MainLayout left-width="20" right-width="20">
+  <MainLayout left-width="30" right-width="30">
     <template #main>
-      <div class="space-y-3">
-        <user-profile-view :user-profile="userProfile" v-if="userProfile" />
-        <user-tabs />
-      </div>
+      <user-profile-view :user-profile="userProfile" v-if="userProfile" class="mb-2" />
+      <user-tabs />
     </template>
   </MainLayout>
 </template>

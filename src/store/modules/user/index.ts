@@ -38,7 +38,6 @@ export const useUserStore = defineStore('user', {
   actions: {
     // 设置用户的信息
     setInfo(partial: Partial<UserState>) {
-      console.log('设置用户信息', partial);
       this.$patch(partial);
     },
     // 重置用户信息

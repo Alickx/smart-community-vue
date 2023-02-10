@@ -101,7 +101,6 @@
 
   // 按下enter登录
   const enterLogin = (e: KeyboardEvent) => {
-    console.log(e);
     if (e.code === 'Enter') {
       loginHandler(loginFormRef.value);
     }
@@ -110,7 +109,6 @@
   // 登录的表单提交
   const loginHandler = (formEl: FormInstance | undefined) => {
     if (!formEl) {
-      console.log('formEl is undefined');
       return;
     }
     formEl.validate((valid: boolean) => {

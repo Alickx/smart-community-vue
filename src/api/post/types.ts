@@ -104,3 +104,8 @@ export interface CommentDTO {
   expansion: ContentExpansionBO;
   replyList: PageResult<CommentDTO>;
 }
+
+export interface PostViewRankDTO {
+  postId: string;
+  title: string;
+}

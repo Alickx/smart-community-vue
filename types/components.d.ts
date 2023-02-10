@@ -27,6 +27,8 @@ declare module '@vue/runtime-core' {
     Footer: typeof import('./../src/components/Footer/index.vue')['default']
     Header: typeof import('./../src/components/Header/index.vue')['default']
     HotPostList: typeof import('./../src/components/HotPostList/index.vue')['default']
+    Index: typeof import('./../src/components/LeftPanel/Index.vue')['default']
+    LeftPanel: typeof import('./../src/components/LeftPanel/index.vue')['default']
     Post: typeof import('./../src/components/Post/index.vue')['default']
     PostRecommend: typeof import('./../src/components/PostRecommend/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

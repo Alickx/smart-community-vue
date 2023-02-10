@@ -6,7 +6,7 @@ export default [
       {
         path: '',
         name: 'Home',
-        component: () => import('/@/views/index.vue'),
+        component: () => import('/@/views/homePage/index.vue'),
       },
       {
         path: '/post/editor',

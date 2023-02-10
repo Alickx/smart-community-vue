@@ -1,4 +1,4 @@
-import { CommentDTO, CommentVO, PostAbbreviationDTO, PostInfoDTO, PostVO } from './types';
+import { CommentDTO, CommentVO, PostAbbreviationDTO, PostInfoDTO, PostViewRankDTO, PostVO } from './types';
 import { PageParam } from '/@/types/req';
 import { get, post } from '/@/utils/http/axios';
 import { PageResult, Result, SelectData } from '/@/types/result';
@@ -15,6 +15,7 @@ enum URL {
   delete_comment = '/postApi/comment/delete',
   query_more_reply = '/postApi/comment/queryMoreReply',
   query_by_comment = '/postApi/post/query/comment',
+  query_today_view_rank = '/postApi/post/query/todayViewRank',
 }
 
 const savePost = async (data: PostVO) => post<Result<string>>({ url: URL.save_post, data: data });
@@ -49,6 +50,8 @@ const queryMoreReply = async (postId: string, type: number, firstCommentId: stri
 const queryByComment = async (params: PageParam) =>
   get<Result<PageResult<PostAbbreviationDTO>>>({ url: URL.query_by_comment, params: params });
 
+const queryTodayViewRank = async () => get<Result<PostViewRankDTO[]>>({ url: URL.query_today_view_rank });
+
 export {
   savePost,
   getCategorySelect,
@@ -61,4 +64,5 @@ export {
   deleteComment,
   queryMoreReply,
   queryByComment,
+  queryTodayViewRank,
 };

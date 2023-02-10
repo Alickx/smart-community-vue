@@ -25,13 +25,11 @@
         <div class="flex flex-col space-y-5" ref="commentInputRef">
           <!-- 回复和点赞按钮 -->
           <div class="flex flex-row flex-nowrap space-x-5 items-center w-90%">
-            <div class="flex flex-row flex-nowrap items-center space-x-1 cursor-pointer hover:color-[blue]">
-              <SvgIcon
-                @click.stop="thumbHandle(commentProps.id, commentProps.expansion.isThumb)"
-                name="svg-thumb"
-                :color="commentProps.expansion.isThumb ? 'blue' : 'black'"
-                size="20px"
-              />
+            <div
+              @click.stop="thumbHandle(commentProps.id, commentProps.expansion.isThumb)"
+              class="flex flex-row flex-nowrap items-center space-x-1 cursor-pointer hover:color-[blue]"
+            >
+              <SvgIcon name="svg-thumb" :color="commentProps.expansion.isThumb ? 'blue' : 'black'" size="20px" />
               <span>{{ commentProps.thumbCount === 0 ? '点赞' : commentProps.thumbCount }}</span>
             </div>
             <div
@@ -76,6 +74,7 @@
           @reply:submit="onReplySubmit"
           v-for="reply in replyList"
           :key="reply.id"
+          :thumb-type="thumbType.REPLY"
           :type="commentType.REPLY"
           :post-id="postId"
           :comment="reply"
@@ -117,6 +116,10 @@
     },
     type: {
       type: Number as PropType<commentType>,
+      required: true,
+    },
+    thumbType: {
+      type: Number as PropType<thumbType>,
       required: true,
     },
   });
@@ -174,7 +177,14 @@
    */
   const onReplyInputSubmit = (data, id) => {
     let commentDTO = generateComment(data, id);
-    emit('reply:submit', commentDTO);
+    if (props.type === commentType.COMMENT) {
+      if (!Array.isArray(replyList.value)) {
+        replyList.value = [];
+      }
+      replyList.value.unshift(commentDTO);
+    } else {
+      emit('reply:submit', commentDTO);
+    }
   };
 
   /**
@@ -216,11 +226,21 @@
    */
   const debounceThumbHandle = useDebounceFn((id: string, thumbState: boolean) => {
     if (!thumbState) {
-      saveThumb(id, thumbType.COMMENT);
+      saveThumb(id, props.thumbType).then((resp) => {
+        if (resp.code === 200) {
+          commentProps.value.thumbCount = props.comment.thumbCount + 1;
+          commentProps.value.expansion.isThumb = true;
+        }
+      });
     } else {
-      cancelThumb(id, thumbType.COMMENT);
+      cancelThumb(id, props.thumbType).then((resp) => {
+        if (resp.code === 200) {
+          commentProps.value.thumbCount = props.comment.thumbCount - 1;
+          commentProps.value.expansion.isThumb = false;
+        }
+      });
     }
-  }, 400);
+  }, 100);
 
   /**
    * 点赞操作
@@ -233,14 +253,6 @@
         name: 'Login',
       });
       return;
-    }
-    if (!thumbState) {
-      commentProps.value.thumbCount = commentProps.value.thumbCount + 1;
-      commentProps.value.expansion.isThumb = true;
-    } else {
-      // 取消点赞
-      commentProps.value.thumbCount = props.comment.thumbCount - 1;
-      commentProps.value.expansion.isThumb = false;
     }
     // 请求
     debounceThumbHandle(id, thumbState);
@@ -258,7 +270,6 @@
       });
       return;
     }
-    console.log('id = ', id, 'showReplyInputId = ', showReplyInputId.value);
     if (showReplyInputId.value !== id) {
       showReplyInputId.value = id;
     } else {
