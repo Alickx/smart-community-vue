@@ -2,8 +2,8 @@ import { UserProfileDTO } from '../user/types';
 import { PageResult } from '/@/types/result';
 
 export interface PostVO {
-  categoryId: string;
-  tagId: string;
+  categoryName: string;
+  tagName: string;
   title: string;
   content: string;
   isPublish: boolean;
@@ -54,7 +54,6 @@ export interface PostInfoDTO {
  */
 export interface PostAbbreviationDTO {
   id: string;
-  categoryId: string;
   authorId: string;
   title: string;
   collectCount: number;
@@ -70,7 +69,8 @@ export interface PostAbbreviationDTO {
 }
 
 export interface PostQO {
-  categoryId: string;
+  categoryName: string;
+  tagName: string;
   userId: string;
 }
 

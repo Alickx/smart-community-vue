@@ -58,6 +58,8 @@
   import { checkEmail } from '/@/utils/validation/CheckEmail';
   import { useUserStore } from '/@/store';
   import { LoginResResultData } from '/@/api/auth/types';
+  import svgIcon from '/@/components/svg-icon/index.vue';
+  import { Result } from '/@/types/result';
 
   const userStore = useUserStore();
   const loginFormRef = ref<FormInstance>();
@@ -120,7 +122,7 @@
           } else {
             ElMessage.success('登录成功');
             setTimeout(() => {
-              router.push({ name: 'Home' });
+              router.push({ name: 'home' });
             }, 1000);
           }
         });

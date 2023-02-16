@@ -1,12 +1,11 @@
 import { defineStore } from 'pinia';
 import { clearToken, setToken } from '/@/utils/AuthUtil';
-import { UserState } from './types';
 import { LoginReq } from '/@/api/auth/types';
 import { login, logout } from '/@/api/auth';
 import { getUserProfile } from '/@/api/user';
 
 export const useUserStore = defineStore('user', {
-  state: (): UserState => ({
+  state: () => ({
     userId: undefined,
     nickName: undefined,
     gender: undefined,
@@ -28,7 +27,7 @@ export const useUserStore = defineStore('user', {
     storage: window.localStorage,
   },
   getters: {
-    getUserProfile(state: UserState): UserState {
+    getUserProfile(state) {
       return { ...state };
     },
     getIsLogin(): boolean {
@@ -37,7 +36,7 @@ export const useUserStore = defineStore('user', {
   },
   actions: {
     // 设置用户的信息
-    setInfo(partial: Partial<UserState>) {
+    setInfo(partial) {
       this.$patch(partial);
     },
     // 重置用户信息
@@ -54,7 +53,7 @@ export const useUserStore = defineStore('user', {
     // 异步登录并存储token和用户信息
     async login(loginForm: LoginReq) {
       const res = await login(loginForm);
-      const token = res?.data?.access_token;
+      const token = res?.data?.accessToken;
       if (token) {
         setToken(token);
       }

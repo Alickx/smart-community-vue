@@ -6,8 +6,6 @@ export interface LoginReq {
 }
 
 export interface LoginResResultData {
-  access_token: string;
-  permissions: string[];
-  roles: string[];
+  accessToken: string;
   userProfile: UserState;
 }

@@ -1,6 +1,0 @@
-{
-    "nuxt.isNuxtApp": false,
-    "[vue]":{
-        "editor.defaultFormatter": "Vue.volar"
-    }
-}

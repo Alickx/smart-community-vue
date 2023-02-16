@@ -5,7 +5,5 @@
 </template>
 
 <script lang="ts" setup name="ViewsLoginIndex">
-import LoginForm from './components/LoginForm/index.vue'
-
-
+  import LoginForm from './components/LoginForm/index.vue';
 </script>

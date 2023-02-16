@@ -29,10 +29,9 @@ const pageGetPost = async (param: PageParam) =>
 const saveThumb = async (toId: string, type: number) =>
   post<Result<boolean>>({
     url: URL.save_thumb,
-    data: { toId: toId, type: type },
+    data: { toId, type },
   });
-const cancelThumb = async (toId: string, type: number) =>
-  post<Result<boolean>>({ url: URL.cancel_thumb, data: { toId: toId, type: type } });
+const cancelThumb = async (toId: string, type: number) => post<Result<boolean>>({ url: URL.cancel_thumb, data: { toId, type } });
 const saveComment = async (data: CommentVO) => post<Result<boolean>>({ url: URL.save_comment, data: data });
 const pageComment = async (param: PageParam) =>
   get<Result<PageResult<CommentDTO>>>({

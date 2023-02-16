@@ -75,7 +75,7 @@ dependencies:
   '@vueuse/core': 9.3.0_vue@3.2.40
   '@wangeditor/editor': 5.1.21
   '@wangeditor/editor-for-vue': 5.1.12_m4nwp4qupl3m2mwvp2ornv5qmq
-  '@wangeditor/plugin-md': 1.0.0_@wangeditor+editor@5.1.21
+  '@wangeditor/plugin-md': 1.0.0_@wangeditor+post-edit-editor@5.1.21
   axios: 0.27.2
   dayjs: 1.11.6
   element-plus: 2.2.17_vue@3.2.40
