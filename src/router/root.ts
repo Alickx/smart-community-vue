@@ -45,6 +45,14 @@ export default [
         },
         component: () => import('/@/views/notice/index.vue'),
       },
+      {
+        path: 'post/manage',
+        name: 'post-manage',
+        meta: {
+          auth: true,
+        },
+        component: () => import('/@/views/post-manage/index.vue'),
+      },
     ],
   },
   {

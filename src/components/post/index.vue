@@ -24,19 +24,8 @@
       {{ post.summary }}
     </p>
     <div class="flex flex-row flex-nowrap space-x-4 items-center">
-      <div class="flex flex-row flex-nowrap items-center space-x-1">
-        <SvgIcon
-          @click.stop="thumbHandle(post.id, post.expansion.isThumb)"
-          name="svg-thumb"
-          :color="post.expansion.isThumb ? 'blue' : 'black'"
-          size="15px"
-        />
-        <span class="text-sm">{{ post.thumbCount }}</span>
-      </div>
-      <div class="flex flex-row flex-nowrap items-center space-x-1">
-        <SvgIcon name="svg-comment" :color="post.expansion.isComment ? 'blue' : 'black'" size="15px" />
-        <span class="text-sm">{{ post.commentCount }}</span>
-      </div>
+      <!--      工具栏-->
+      <post-tool-list :post="post" />
       <span class="text-sm color-[#95a5a6]">{{ dateFormatDay(post.createTime) }}</span>
     </div>
   </div>
@@ -44,23 +33,14 @@
 </template>
 
 <script setup lang="ts">
-  import SvgIcon from '/@/components/svg-icon/index.vue';
-  import SplitLine from '../split-line/index.vue';
-  import { cancelThumb, saveThumb } from '/@/api/post';
+  import SplitLine from '/@/components/split-line/index.vue';
   import { dateFormatDay } from '/@/utils/DateFormatUtil';
-  import { thumbTypeEnum } from '/@/constant/ThumbTypeEnum';
-  import { useUserStore } from '/@/store';
-  import { useDebounceFn } from '@vueuse/core';
   import { PostAbbreviationDTO } from '/@/api/post/types';
-
-  const router = useRouter();
-  const userStore = useUserStore();
+  import PostToolList from './components/post-tool-list/index.vue';
 
   defineProps<{
     post: PostAbbreviationDTO;
   }>();
-  const emit = defineEmits(['update:postList']);
-
   /**
    * 点击跳转到文章详情页
    * @param id 文章id
@@ -73,26 +53,4 @@
     }
     window.open(`/post/${id}`, '_blank');
   };
-
-  const thumbHandle = (id: string, thumbState: boolean) => {
-    // 如果未登录，跳转到登录页面
-    if (!userStore.getIsLogin) {
-      router.push({
-        name: 'login',
-      });
-    }
-
-    // 发起点赞请求并更新点赞状态
-    debounceThumbHandle(id, thumbState);
-  };
-
-  const debounceThumbHandle = useDebounceFn((id: string, thumbState: boolean) => {
-    if (!thumbState) {
-      saveThumb(id, thumbTypeEnum.POST);
-      emit('update:postList', id, true);
-    } else {
-      cancelThumb(id, thumbTypeEnum.POST);
-      emit('update:postList', id, false);
-    }
-  }, 100);
 </script>

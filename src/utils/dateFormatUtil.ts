@@ -11,8 +11,11 @@ dayjs.extend(relativeTime);
  * @param format 格式字符串
  * @returns 格式化后的时间字符串
  */
-export const dateFormat = (date: Date, format: string) => {
-  return dayjs(date).format(format);
+export const dateFormat = (date: string | Date, format?: string) => {
+  if (format) {
+    return dayjs(date).format(format);
+  }
+  return dayjs(date).format('YYYY-MM-DD HH:mm:ss');
 };
 
 /**
@@ -23,14 +26,4 @@ export const dateFormat = (date: Date, format: string) => {
  */
 export const dateFormatDay = (date: string | Date) => {
   return dayjs(date).fromNow();
-};
-
-/**
- * 格式化时间 - 默认格式
- * @param date 时间对象
- * @returns 格式化后的时间字符串
- * @example 2021-01-01 00:00:00
- */
-export const dataFormat = (date: Date) => {
-  return dayjs(date).format('YYYY-MM-DD HH:mm:ss');
 };

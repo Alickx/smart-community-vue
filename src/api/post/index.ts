@@ -7,7 +7,8 @@ enum URL {
   save_post = '/postApi/post/save',
   get_category_select = '/postApi/category/selectData',
   get_post = '/postApi/post/info/',
-  page_get_post = '/postApi/post/info/page',
+  delete_post = '/postApi/post/delete/',
+  page_post = '/postApi/post/info/page',
   save_thumb = '/postApi/thumb/save',
   cancel_thumb = '/postApi/thumb/cancel',
   save_comment = '/postApi/comment/save',
@@ -21,11 +22,14 @@ enum URL {
 const savePost = async (data: PostVO) => post<Result<string>>({ url: URL.save_post, data: data });
 const getCategorySelect = async () => get<Result<SelectData[]>>({ url: URL.get_category_select });
 const getPost = async (id: string) => get<Result<PostInfoDTO>>({ url: URL.get_post + id });
-const pageGetPost = async (param: PageParam) =>
+const pagePost = async (param: PageParam) =>
   get<Result<PageResult<PostAbbreviationDTO>>>({
-    url: URL.page_get_post,
+    url: URL.page_post,
     params: param,
   });
+
+const deletePost = async (postId: string) => post<Result<boolean>>({ url: URL.delete_post + postId });
+
 const saveThumb = async (toId: string, type: number) =>
   post<Result<boolean>>({
     url: URL.save_thumb,
@@ -55,7 +59,7 @@ export {
   savePost,
   getCategorySelect,
   getPost,
-  pageGetPost,
+  pagePost,
   saveThumb,
   cancelThumb,
   saveComment,
@@ -64,4 +68,5 @@ export {
   queryMoreReply,
   queryByComment,
   queryTodayViewRank,
+  deletePost,
 };

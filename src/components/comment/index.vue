@@ -96,7 +96,7 @@
   import { CommentDTO } from '/@/api/post/types';
   import Avatar from '/@/components/avatar/index.vue';
   import { thumbTypeEnum } from '/@/constant/ThumbTypeEnum';
-  import { dataFormat, dateFormatDay } from '/@/utils/DateFormatUtil';
+  import { dateFormat, dateFormatDay } from '/@/utils/DateFormatUtil';
   import SvgIcon from '/@/components/svg-icon/index.vue';
   import { commentTypeEnum } from '/@/constant/CommentTypeEnum';
   import CommentInput from '/@/components/comment-input/index.vue';
@@ -196,7 +196,7 @@
     // 评论成功后本地添加评论
     let comment: CommentDTO = {
       content: data.content,
-      createTime: dataFormat(new Date()),
+      createTime: dateFormat(new Date()),
       expansion: {
         isAuthor: false,
         isComment: false,

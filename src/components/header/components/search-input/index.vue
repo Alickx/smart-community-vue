@@ -22,6 +22,7 @@
   import { useSearchStore } from '/@/store/modules/search';
 
   const router = useRouter();
+  const route = useRoute();
   const searchStore = useSearchStore();
   let searchContent = ref('');
   let inputRef = ref();
@@ -69,6 +70,10 @@
         isInputFocus.value = false;
       }
     });
+
+    if (route.query.keyword) {
+      searchContent.value = route.query.keyword as string;
+    }
   });
 
   onBeforeUnmount(() => {
@@ -81,7 +86,7 @@
   });
 
   router.beforeResolve((to, from, next) => {
-    if (to.name !== 'Search') {
+    if (to.name !== 'search') {
       isInputFocus.value = false;
       searchContent.value = '';
       next();

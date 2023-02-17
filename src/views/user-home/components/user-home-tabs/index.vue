@@ -13,7 +13,7 @@
 <script setup lang="ts">
   import Post from '/@/components/post/index.vue';
   import { PostAbbreviationDTO } from '/@/api/post/types';
-  import { pageGetPost, queryByComment } from '/@/api/post';
+  import { pagePost, queryByComment } from '/@/api/post';
   import { TabsPaneContext } from 'element-plus';
 
   const route = useRoute();
@@ -39,7 +39,7 @@
   });
 
   const getPosts = async () => {
-    const { data } = await pageGetPost(params);
+    const { data } = await pagePost(params);
     postList.value = data.records;
   };
 

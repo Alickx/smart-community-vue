@@ -56,7 +56,7 @@
   import { commentTypeEnum } from '/@/constant/CommentTypeEnum';
   import { UserProfileDTO } from '/@/api/user/types';
   import { useUserStore } from '/@/store';
-  import { dataFormat } from '/@/utils/DateFormatUtil';
+  import { dateFormat } from '/@/utils/DateFormatUtil';
   import Skeleton from '/@/components/skeleton/index.vue';
   import useLoading from '/@/hooks/loading';
 
@@ -100,7 +100,7 @@
     // 评论成功后本地添加评论
     let comment: CommentDTO = {
       content: data.content,
-      createTime: dataFormat(new Date()),
+      createTime: dateFormat(new Date()),
       expansion: {
         isAuthor: false,
         isComment: false,
@@ -117,8 +117,8 @@
       thumbCount: 0,
       toUserId: data.toUserId,
       type: commentTypeEnum.COMMENT,
-      userId: userStore.userId as string,
-      userProfile: userStore.getUserProfile as UserProfileDTO,
+      userId: userStore.userId as unknown as string,
+      userProfile: userStore.getUserProfile as unknown as UserProfileDTO,
       id: id,
     };
     return comment;

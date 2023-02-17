@@ -49,13 +49,15 @@
           </div>
           <svg-icon name="svg-right" size="20px" />
         </div>
-        <div class="flex flex-row p-y-3 cursor-pointer p-x-7 rounded-3 hover:bg-[#e3e5e7]">
-          <div class="flex flex-1 flex-row space-x-3">
-            <svg-icon name="svg-article" size="20px" />
-            <span class="">我的文章</span>
+        <router-link :to="{ name: 'post-manage' }">
+          <div class="flex flex-row p-y-3 cursor-pointer p-x-7 rounded-3 hover:bg-[#e3e5e7]">
+            <div class="flex flex-1 flex-row space-x-3">
+              <svg-icon name="svg-article" size="20px" />
+              <span class="">我的文章</span>
+            </div>
+            <svg-icon name="svg-right" size="20px" />
           </div>
-          <svg-icon name="svg-right" size="20px" />
-        </div>
+        </router-link>
         <div class="flex flex-row p-y-3 cursor-pointer p-x-7 rounded-3 hover:bg-[#e3e5e7]">
           <div class="flex flex-1 flex-row space-x-3">
             <svg-icon name="svg-safe" size="20px" />

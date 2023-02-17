@@ -6,12 +6,17 @@
       </div>
     </template>
     <template #main>
+      <div class="m-y-5 flex flex-row items-center justify-center" v-if="route.params.categoryName || route.params.tagName">
+        <h2 class="color-gray">{{ route.params.categoryName }}</h2>
+        <el-divider v-if="route.params.tagName" direction="vertical" />
+        <h2 class="color-gray">{{ route.params.tagName }}</h2>
+      </div>
       <div class="flex flex-col space-y-5">
         <div class="bg-white">
           <div class="p-3" v-if="loading">
             <el-skeleton :loading="loading" :rows="10" animated />
           </div>
-          <Post v-for="post in postList" :post="post" :key="post.id" @update:post-list="onUpdateThumbPostList" />
+          <Post v-for="post in postList" :post="post" :key="post.id" />
         </div>
       </div>
     </template>
@@ -27,7 +32,7 @@
   import Post from '/@/components/post/index.vue';
   import HotPostList from '/@/components/hot-post-list/index.vue';
   import MainLayout from '/@/layout/main-layout/index.vue';
-  import { pageGetPost } from '/@/api/post';
+  import { pagePost } from '/@/api/post';
   import { useDebounceFn } from '@vueuse/core';
   import { PostAbbreviationDTO } from '/@/api/post/types';
   import LeftPanel from '/@/views/home/components/home-left-panel/index.vue';
@@ -53,7 +58,7 @@
     if (params.page === 1) {
       toggle();
     }
-    pageGetPost(params).then((resp) => {
+    pagePost(params).then((resp) => {
       if (loading) {
         toggle();
       }
@@ -74,16 +79,6 @@
       }
     }
   }, 500);
-
-  const onUpdateThumbPostList = (id: string, type: boolean) => {
-    postList.value = postList.value.map((item) => {
-      if (item.id === id) {
-        item.expansion.isThumb = type;
-        item.thumbCount = type ? item.thumbCount + 1 : item.thumbCount - 1;
-      }
-      return item;
-    });
-  };
 
   // 监听路由变化，如果路由中tagName或者categoryName变化，重新获取数据
   watch(

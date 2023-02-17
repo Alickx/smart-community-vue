@@ -65,6 +65,7 @@
 
   onMounted(() => {
     queryKeyword.value = route.query.keyword as string;
+    search();
   });
 </script>
 

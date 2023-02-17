@@ -2,7 +2,7 @@
   <div class="space-y-2">
     <div @click="onClickPush(post.id)" class="p-4 hover:bg-[#fafafa] rounded-2 hover:cursor-pointer flex flex-col space-y-4">
       <div class="flex flex-row space-x-7 font-medium text-base">
-        <router-link custom :to="{ name: 'UserHome', params: { id: post.authorId } }" v-slot="{ href }">
+        <router-link custom :to="{ name: 'user-home', params: { id: post.authorId } }" v-slot="{ href }">
           <a :href="href" target="_black" class="hover:color-[#1d7dfa] text-base">{{ post.author?.nickName }}</a>
         </router-link>
         <split-line mode="vertical" />
