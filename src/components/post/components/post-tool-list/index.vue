@@ -19,8 +19,8 @@
   import { PostAbbreviationDTO } from '/@/api/post/types';
   import { useDebounceFn } from '@vueuse/core';
   import { cancelThumb, saveThumb } from '/@/api/post';
-  import { thumbTypeEnum } from '/@/constant/ThumbTypeEnum';
   import { useUserStore } from '/@/store';
+import { thumbTypeEnum } from '/@/constant/thumb-type-const';
 
   const userStore = useUserStore();
   const router = useRouter();
@@ -46,14 +46,14 @@
   const debounceThumbHandle = useDebounceFn((id: string, thumbState: boolean) => {
     if (!thumbState) {
       saveThumb(id, thumbTypeEnum.POST);
-      updateThumb(id, thumbState);
+      updateThumb(thumbState);
     } else {
       cancelThumb(id, thumbTypeEnum.POST);
-      updateThumb(id, thumbState);
+      updateThumb(thumbState);
     }
   }, 200);
 
-  const updateThumb = (id: string, thumbState: boolean) => {
+  const updateThumb = (thumbState: boolean) => {
     if (!thumbState) {
       post.value.thumbCount++;
       post.value.expansion.isThumb = true;

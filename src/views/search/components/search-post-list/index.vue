@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-  import { dateFormatDay } from '/@/utils/dateFormatUtil';
+  import { dateFormatDay } from '../../../../utils/DateFormatUtil';
   import SvgIcon from '/@/components/svg-icon/index.vue';
   import SplitLine from '/@/components/split-line/index.vue';
   import { searchPage } from '/@/api/search/types';

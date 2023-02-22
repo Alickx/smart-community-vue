@@ -8,7 +8,6 @@
         @delete:comment="onDeleteComment"
         :comment="comment"
         :type="commentTypeEnum.COMMENT"
-        :postId="comment.postId"
       />
     </template>
   </div>
@@ -17,9 +16,9 @@
 <script setup lang="ts">
   import { pageComment } from '/@/api/post';
   import { CommentDTO } from '/@/api/post/types';
-  import { commentTypeEnum } from '/@/constant/CommentTypeEnum';
+  import { commentTypeEnum } from '/@/constant/comment-type-const';
   import Comment from '/@/components/comment/index.vue';
-  import { thumbTypeEnum } from '/@/constant/ThumbTypeEnum';
+  import { thumbTypeEnum } from '/@/constant/thumb-type-const';
 
   const props = defineProps<{
     postId: string;

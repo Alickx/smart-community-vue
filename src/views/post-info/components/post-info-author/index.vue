@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
   import { PostInfoDTO } from '/@/api/post/types';
-  import { dateFormatDay } from '/@/utils/DateFormatUtil';
+  import { dateFormatDay } from '../../../../utils/DateFormatUtil';
   import Avatar from '/@/components/avatar/index.vue';
 
   const props = defineProps<{

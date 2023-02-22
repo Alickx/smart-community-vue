@@ -1,25 +1,18 @@
 import { defineStore } from 'pinia';
-import { clearToken, setToken } from '/@/utils/AuthUtil';
-import { LoginReq } from '/@/api/auth/types';
-import { login, logout } from '/@/api/auth';
+import { clearToken } from '/@/utils/AuthUtil';
+import { userLogout } from '/@/api/auth';
 import { getUserProfile } from '/@/api/user';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
     userId: undefined,
+    userName: undefined,
     nickName: undefined,
-    gender: undefined,
     avatar: undefined,
     intro: undefined,
     fanNum: undefined,
     followNum: undefined,
     articleNum: undefined,
-    level: undefined,
-    score: undefined,
-    gitee: undefined,
-    github: undefined,
-    qqNumber: undefined,
-    userTag: undefined,
     state: undefined,
   }),
   persist: {
@@ -50,22 +43,9 @@ export const useUserStore = defineStore('user', {
         this.setInfo(result.data);
       }
     },
-    // 异步登录并存储token和用户信息
-    async login(loginForm: LoginReq) {
-      const res = await login(loginForm);
-      const token = res?.data?.accessToken;
-      if (token) {
-        setToken(token);
-      }
-      const userProfile = res?.data?.userProfile;
-      if (userProfile) {
-        this.setInfo(userProfile);
-      }
-      return res;
-    },
     // Logout
     async logout() {
-      await logout();
+      await userLogout();
       this.resetInfo();
       clearToken();
       // 路由表重置

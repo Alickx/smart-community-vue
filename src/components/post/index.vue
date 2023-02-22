@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
   import SplitLine from '/@/components/split-line/index.vue';
-  import { dateFormatDay } from '/@/utils/DateFormatUtil';
+  import { dateFormatDay } from '../../utils/DateFormatUtil';
   import { PostAbbreviationDTO } from '/@/api/post/types';
   import PostToolList from './components/post-tool-list/index.vue';
 

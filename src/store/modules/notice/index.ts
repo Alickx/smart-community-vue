@@ -1,5 +1,5 @@
 import { NoticeCountVO } from '/@/api/notice/type';
-import { NoticeTypeEnum } from '/@/constant/noticeTypeEnum';
+import { NoticeTypeEnum } from '../../../constant/notice-type-const';
 
 export const useNoticeStore = defineStore('notice', {
   state: () => ({

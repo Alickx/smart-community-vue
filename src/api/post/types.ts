@@ -74,7 +74,7 @@ export interface PostQO {
   userId: string;
 }
 
-export interface CommentVO {
+export interface CommentForm {
   id?: string;
   postId: string;
   toUserId: string;

@@ -3,9 +3,18 @@
     <template #main>
       <h1 class="text-center m-y-5">文章管理</h1>
       <ul class="bg-white rounded">
-        <li v-for="post in postList" :key="post.id" class="cursor-pointer hover:bg-[#fafafa] border-b-1 border-b-[#e5e6eb] p-3">
+        <div class="p-3" v-if="loading">
+          <el-skeleton :loading="loading" :rows="5" animated />
+        </div>
+        <li
+          v-else-if="postList.length && !loading"
+          v-for="post in postList"
+          :key="post.id"
+          class="cursor-pointer hover:bg-[#fafafa] border-b-1 border-b-[#e5e6eb] p-3"
+        >
           <post-manage-item :post="post" @delete:post="deletePost" />
         </li>
+        <el-empty v-else :image="searchSvg" :image-size="300" description="暂无文章" />
       </ul>
     </template>
   </main-layout>
@@ -18,6 +27,7 @@
   import { PostAbbreviationDTO } from '/@/api/post/types';
   import useLoading from '/@/hooks/loading';
   import postManageItem from './post-manage-item/index.vue';
+  import searchSvg from '/@/assets/icons/svg/search-empty.svg';
 
   const userStore = useUserStore();
   const { loading, toggle, setLoading } = useLoading();

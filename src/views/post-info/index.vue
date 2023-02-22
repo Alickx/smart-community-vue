@@ -33,7 +33,6 @@
         </div>
         <div>
           <!-- 评论列表 -->
-          <span class="font-bold text-xl">评论({{ commentListRef?.commentList.length }})</span>
           <comment-list ref="commentListRef" v-if="postData" :post-id="postData?.id" />
         </div>
       </div>
@@ -52,11 +51,11 @@
   import PostViewReply from '../../components/comment-input/index.vue';
   import CommentList from '/@/views/post-info/components/post-info-comment-list/index.vue';
   import { getPost } from '/@/api/post';
-  import { CommentDTO, PostInfoDTO } from '/@/api/post/types';
-  import { commentTypeEnum } from '/@/constant/CommentTypeEnum';
+  import { CommentDTO, CommentForm, PostInfoDTO } from '/@/api/post/types';
+  import { commentTypeEnum } from '../../constant/comment-type-const';
   import { UserProfileDTO } from '/@/api/user/types';
   import { useUserStore } from '/@/store';
-  import { dateFormat } from '/@/utils/DateFormatUtil';
+  import { dateFormat } from '../../utils/DateFormatUtil';
   import Skeleton from '/@/components/skeleton/index.vue';
   import useLoading from '/@/hooks/loading';
 
@@ -86,7 +85,7 @@
     });
   };
 
-  const onCommentSubmit = (data, id) => {
+  const onCommentSubmit = (data: CommentForm, id: string) => {
     let commentDTO = generateComment(data, id);
     commentListRef.value.commentList.unshift(commentDTO);
   };
@@ -128,5 +127,3 @@
     checkPost();
   });
 </script>
-
-<style scoped lang="less"></style>

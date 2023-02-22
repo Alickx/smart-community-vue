@@ -1,4 +1,4 @@
-import { CommentDTO, CommentVO, PostAbbreviationDTO, PostInfoDTO, PostViewRankDTO, PostVO } from './types';
+import { CommentDTO, CommentForm, PostAbbreviationDTO, PostInfoDTO, PostViewRankDTO, PostVO } from './types';
 import { PageParam } from '/@/types/req';
 import { get, post } from '/@/utils/http/axios';
 import { PageResult, Result, SelectData } from '/@/types/result';
@@ -36,7 +36,7 @@ const saveThumb = async (toId: string, type: number) =>
     data: { toId, type },
   });
 const cancelThumb = async (toId: string, type: number) => post<Result<boolean>>({ url: URL.cancel_thumb, data: { toId, type } });
-const saveComment = async (data: CommentVO) => post<Result<boolean>>({ url: URL.save_comment, data: data });
+const saveComment = async (data: CommentForm) => post<Result<boolean>>({ url: URL.save_comment, data: data });
 const pageComment = async (param: PageParam) =>
   get<Result<PageResult<CommentDTO>>>({
     url: URL.page_get_comment,

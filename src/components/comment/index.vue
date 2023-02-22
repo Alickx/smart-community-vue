@@ -95,15 +95,15 @@
   import { cancelThumb, deleteComment, queryMoreReply, saveThumb } from '/@/api/post';
   import { CommentDTO } from '/@/api/post/types';
   import Avatar from '/@/components/avatar/index.vue';
-  import { thumbTypeEnum } from '/@/constant/ThumbTypeEnum';
-  import { dateFormat, dateFormatDay } from '/@/utils/DateFormatUtil';
+  import { thumbTypeEnum } from '/@/constant/thumb-type-const';
   import SvgIcon from '/@/components/svg-icon/index.vue';
-  import { commentTypeEnum } from '/@/constant/CommentTypeEnum';
+  import { commentTypeEnum } from '../../constant/comment-type-const';
   import CommentInput from '/@/components/comment-input/index.vue';
   import Reply from '/@/components/comment/index.vue';
   import { PropType } from 'vue';
   import { useUserStore } from '/@/store';
   import { UserProfileDTO } from '/@/api/user/types';
+  import { dateFormat } from '/@/utils/DateFormatUtil';
 
   const props = defineProps({
     comment: {
@@ -213,8 +213,8 @@
       thumbCount: 0,
       toUserId: data.toUserId,
       type: commentTypeEnum.COMMENT,
-      userId: userStore.userId as string,
-      userProfile: userStore.getUserProfile as UserProfileDTO,
+      userId: userStore.userId as unknown as string,
+      userProfile: userStore.getUserProfile as unknown as UserProfileDTO,
       id: id,
     };
     return comment;

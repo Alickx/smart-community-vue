@@ -32,13 +32,14 @@
           </a>
         </router-link>
         <router-link :to="{ name: 'notice' }">
-          <el-badge :max="99" :hidden="userStore.getNoticeCount === 0" :value="userStore.getNoticeCount">
+          <el-badge :max="99" :hidden="noticeStore.getNoticeCount === 0" :value="noticeStore.getNoticeCount">
             <SvgIcon class="cursor-pointer" name="svg-notice" size="25px" />
           </el-badge>
         </router-link>
       </div>
-      <div class="flex flex-row items-center" v-else>
-        <RouterLink :to="{ name: 'login' }" class="text-gray-500 hover:text-gray-900">登录/注册</RouterLink>
+      <div class="flex flex-row items-center flex-gap-8" v-else>
+        <RouterLink :to="{ name: 'login' }" class="text-gray-500 hover:text-gray-900">登录</RouterLink>
+        <RouterLink :to="{ name: 'register' }" class="text-gray-500 hover:text-gray-900">注册</RouterLink>
       </div>
     </el-col>
   </el-row>
@@ -46,7 +47,7 @@
 
 <script setup lang="ts">
   import Search from './components/search-input/index.vue';
-  import SvgIcon from '../svg-icon/index.vue';
+  import SvgIcon from '/@/components/svg-icon/index.vue';
   import UserProfileDefaultModel from '../user-profile-model/user-profile-default-model/index.vue';
   import { useUserStore } from '/@/store';
   import { queryNoticeCount } from '/@/api/notice';

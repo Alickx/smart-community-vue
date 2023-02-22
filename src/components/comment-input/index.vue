@@ -17,8 +17,8 @@
 <script lang="ts" setup>
   import { ElMessage } from 'element-plus';
   import { saveComment } from '/@/api/post';
-  import { CommentVO } from '/@/api/post/types';
-  import { commentTypeEnum } from '/@/constant/CommentTypeEnum';
+  import { CommentForm } from '/@/api/post/types';
+  import { commentTypeEnum } from '../../constant/comment-type-const';
 
   const props = withDefaults(
     defineProps<{
@@ -53,7 +53,7 @@
     replyInputRef.value!.innerText = '';
   };
 
-  const getSubmitData = (): CommentVO => {
+  const getSubmitData = (): CommentForm => {
     return {
       postId: props.postId,
       type: props.type,

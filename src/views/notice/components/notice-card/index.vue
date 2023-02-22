@@ -44,8 +44,8 @@
 <script setup lang="ts">
   import { NoticeMessageVO } from '/@/api/notice/type';
   import avatar from '/@/components/avatar/index.vue';
-  import { dateFormatDay } from '/@/utils/dateFormatUtil';
-  import { NoticeTypeEnum } from '/@/constant/noticeTypeEnum';
+  import { dateFormatDay } from '../../../../utils/DateFormatUtil';
+  import { NoticeTypeEnum } from '../../../../constant/notice-type-const';
 
   const props = defineProps<{
     notice: NoticeMessageVO;
