@@ -30,7 +30,7 @@
     }>(),
     {
       leftWidth: 25,
-      rightWidth: 35,
+      rightWidth: 30,
     },
   );
 

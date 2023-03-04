@@ -11,7 +11,7 @@
         </el-col>
       </el-row>
     </el-col>
-    <el-col :span="10">
+    <el-col :span="8">
       <el-row :gutter="2" align="middle" justify="center">
         <!-- 链接处 -->
         <!--        <el-col :span="2" v-for="item in 3">-->
@@ -19,7 +19,7 @@
         <!--        </el-col>-->
       </el-row>
     </el-col>
-    <el-col :span="4">
+    <el-col :span="6">
       <Search />
     </el-col>
     <el-col :span="4">

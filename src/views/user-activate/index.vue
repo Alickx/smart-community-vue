@@ -38,6 +38,7 @@
   import MainLayout from '/@/layout/main-layout/index.vue';
 
   const route = useRoute();
+  const router = useRouter();
   const { loading, setLoading } = useLoading();
 
   let isActivateSuccess = ref(false);
@@ -51,6 +52,10 @@
         .then((res) => {
           if (res.code === 200 && res.data) {
             isActivateSuccess.value = true;
+            // 延迟3秒跳转至登录
+            setTimeout(() => {
+              router.push({ name: 'login' });
+            }, 3000);
           }
         })
         .finally(() => {

@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { showMessage } from './status';
 import { IResponse } from './type';
+import { useUserStore } from '/@/store/modules/user';
 import { getToken } from '/@/utils/AuthUtil';
 
 // 如果请求超过 `timeout` 的时间，请求将被中断
@@ -18,11 +19,12 @@ const axiosInstance: AxiosInstance = axios.create({
 // axios实例拦截响应
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
-    // 特判，需重新登录
+    // 如果用户登录信息过期，则清除用户登录信息
     if (response.data.code === 10004 || response.data.code === 10005) {
-      window.location.href = '/login';
+      // 执行登出操作
+      const userStore = useUserStore();
+      userStore.logout();
     }
-
     if (response.status === 200) {
       return response;
     }

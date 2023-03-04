@@ -1,5 +1,5 @@
 <template>
-  <MainLayout :right-width="35" :left-width="25">
+  <MainLayout :right-width="30" :left-width="25">
     <template #left>
       <div class="w-full mx-3 flex justify-center">
         <!--        <home-left-panel />-->

@@ -1,17 +1,17 @@
 <template>
-  <MainLayout>
+  <MainLayout :left-width="5" :right-width="5">
     <template #main>
-      <div class="bg-white flex flex-col px-10 py-10 border-gray-200 border-1 space-y-6">
-        <span class="text-xl font-bold">发布文章</span>
-        <post-form ref="postFormRef" />
-        <SplitLine mode="vertical" />
-        <div class="border-1 border-gray-300">
-          <Editor ref="editorRef" class="h-120 overflow-hidden" />
-        </div>
-        <div class="flex flex-row justify-end">
-          <el-button class="w-50" @click="submit" type="primary" size="large">发布</el-button>
-        </div>
+      <Editor ref="editorRef" />
+      <div class="flex flex-row justify-end">
+        <el-button class="mt-5 w-50" @click="() => (dialogVisible = true)" type="primary" size="large">发布</el-button>
       </div>
+      <el-dialog title="发布文章" v-model="dialogVisible" width="30%">
+        <div class="bg-white flex flex-col space-y-6">
+          <span class="text-xl font-bold">发布文章</span>
+          <post-form ref="postFormRef" />
+          <el-button class="w-50" @click="submit" type="primary" size="large">确认发布</el-button>
+        </div>
+      </el-dialog>
     </template>
   </MainLayout>
 </template>
@@ -19,7 +19,6 @@
 <script setup lang="ts">
   import MainLayout from '../../layout/main-layout/index.vue';
   import Editor from './components/post-edit-editor/index.vue';
-  import SplitLine from '/@/components/split-line/index.vue';
   import PostForm from './components/post-edit-form/index.vue';
   import { savePost } from '/@/api/post';
   import { PostVO } from '/@/api/post/types';
@@ -27,17 +26,18 @@
   const editorRef = ref();
   const postFormRef = ref();
   const router = useRouter();
+  let dialogVisible = ref(false);
 
   const submit = () => {
     const { title, tagName, categoryName, isPublish } = postFormRef.value.params;
-    const htmlContent = editorRef.value.htmlContent;
+    const content = editorRef.value.content;
 
     const data = ref<PostVO>({
       title,
       tagName,
       categoryName,
       isPublish,
-      content: htmlContent,
+      content,
     });
 
     savePost(data.value).then((resp) => {

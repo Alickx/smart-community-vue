@@ -1,21 +1,11 @@
 <template>
-    <div v-html="props.content">
-    </div>
+  <v-md-editor :model-value="content" mode="preview"></v-md-editor>
 </template>
 
 <script setup lang="ts">
-
-const props = defineProps<{
+  defineProps<{
     content?: string;
-}>()
-
-
-
+  }>();
 </script>
 
-<style scoped>
-
-
-
-
-</style>
+<style scoped></style>

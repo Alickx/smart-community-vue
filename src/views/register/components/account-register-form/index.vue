@@ -34,7 +34,7 @@
 
   const rules = reactive<FormRules>({
     username: [
-      { required: true, message: '请输入账号或邮箱', trigger: 'blur' },
+      { required: true, message: '请输入用户名', trigger: 'blur' },
       { pattern: /^[a-zA-Z0-9_-]{4,16}$/, message: '请输入正确的用户名', trigger: 'blur' },
     ],
     password: [{ required: true, type: 'string', message: '请输入密码', trigger: 'blur' }],

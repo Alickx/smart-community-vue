@@ -1,9 +1,11 @@
 import { get } from '/@/utils/http/axios';
-import { UserState } from '/@/store/modules/user/types';
+import { Result } from '/@/types/result';
+import { UserProfileDTO } from './types';
 
 enum URL {
   profile = '/userApi/user/profile',
 }
 
-const getUserProfile = async () => get<Result<UserState>>({ url: URL.profile });
+const getUserProfile = async () => get<Result<UserProfileDTO>>({ url: URL.profile });
+
 export { getUserProfile };

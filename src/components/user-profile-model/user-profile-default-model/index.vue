@@ -11,17 +11,6 @@
         </router-link>
         <!-- 用户昵称 -->
         <span class="text-xl font-medium">{{ userStore.getUserProfile.nickName }}</span>
-        <!-- 等级条 -->
-        <!--        <div class="flex flex-row justify-center items-center space-x-3">-->
-        <!--          &lt;!&ndash; 现有等级图标 &ndash;&gt;-->
-        <!--          <svg-icon name="svg-level-1" color="red" size="25px" />-->
-        <!--          &lt;!&ndash; 进度条 &ndash;&gt;-->
-        <!--          <div class="w-50 bg-[#f2f3f5] h-[0.17rem] rounded-1">-->
-        <!--            <div class="w-30% bg-red h-inherit rounded-1"></div>-->
-        <!--          </div>-->
-        <!--          &lt;!&ndash; 下一等级图标 &ndash;&gt;-->
-        <!--          <svg-icon name="svg-level-2" size="25px" />-->
-        <!--        </div>-->
       </div>
       <div class="flex flex-row items-center justify-center space-x-15">
         <!-- 关注 -->
@@ -85,6 +74,7 @@
   import { onClickOutside } from '@vueuse/core';
   import { useUserStore } from '/@/store';
   import Avatar from '/@/components/avatar/index.vue';
+  import { getUserProfile } from '/@/api/user';
 
   let showModel = ref(false);
   let avatarRef = ref();
@@ -100,9 +90,20 @@
     showModel.value = !showModel.value;
   };
 
+  // 调用用户查询接口
+  const queryUserInfo = () => {
+    getUserProfile().then((resp) => {
+      console.log(resp);
+    });
+  };
+
   const logout = () => {
     if (confirm('离开只为更好的归来')) {
       userStore.logout();
     }
   };
+
+  onMounted(() => {
+    queryUserInfo();
+  });
 </script>
