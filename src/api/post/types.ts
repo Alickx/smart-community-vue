@@ -1,4 +1,4 @@
-import { UserProfileDTO } from '../user/types';
+import { UserProfileVO } from '../user/types';
 import { PageResult } from '/@/types/result';
 
 export interface PostVO {
@@ -9,7 +9,7 @@ export interface PostVO {
   isPublish: boolean;
 }
 
-export interface CategoryDTO {
+export interface CategoryVO {
   categoryId: string;
   name: string;
   icon: string;
@@ -17,7 +17,7 @@ export interface CategoryDTO {
   intro: string;
 }
 
-export interface TagDTO {
+export interface TagVO {
   tagId: string;
   content: string;
   intro: string;
@@ -31,7 +31,7 @@ export interface ContentExpansionBO {
   isMoreReply: boolean;
 }
 
-export interface PostInfoDTO {
+export interface PostInfoVO {
   id: string;
   categoryId: string;
   authorId: string;
@@ -42,9 +42,9 @@ export interface PostInfoDTO {
   commentCount: number;
   updateTime: string;
   createTime: string;
-  author: UserProfileDTO;
-  category: CategoryDTO;
-  tag: TagDTO;
+  author: UserProfileVO;
+  category: CategoryVO;
+  tag: TagVO;
   expansion: ContentExpansionBO;
   region: string;
 }
@@ -52,7 +52,7 @@ export interface PostInfoDTO {
 /**
  * 首页文章缩略对象
  */
-export interface PostAbbreviationDTO {
+export interface PostAbbreviationVO {
   id: string;
   authorId: string;
   title: string;
@@ -62,9 +62,9 @@ export interface PostAbbreviationDTO {
   summary: string;
   updateTime: string;
   createTime: string;
-  author: UserProfileDTO;
-  category: CategoryDTO;
-  tag: TagDTO;
+  author: UserProfileVO;
+  category: CategoryVO;
+  tag: TagVO;
   expansion: ContentExpansionBO;
 }
 
@@ -90,7 +90,7 @@ export interface CommentQO {
   firstCommentId?: string;
 }
 
-export interface CommentDTO {
+export interface CommentVO {
   id: string;
   userId: string;
   postId: string;
@@ -100,9 +100,9 @@ export interface CommentDTO {
   type: number;
   firstCommentId: string;
   createTime: string;
-  userProfile: UserProfileDTO;
+  userProfile: UserProfileVO;
   expansion: ContentExpansionBO;
-  replyList: PageResult<CommentDTO>;
+  replyList: PageResult<CommentVO>;
 }
 
 export interface PostViewRankDTO {

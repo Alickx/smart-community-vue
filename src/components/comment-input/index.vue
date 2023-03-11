@@ -18,7 +18,7 @@
   import { ElMessage } from 'element-plus';
   import { saveComment } from '/@/api/post';
   import { CommentForm } from '/@/api/post/types';
-  import { commentTypeEnum } from '../../constant/comment-type-const';
+  import { commentTypeEnum } from '/@/constant/comment-type-const';
 
   const props = withDefaults(
     defineProps<{
@@ -85,7 +85,5 @@
     });
   };
 
-  onMounted(() => {
-    replyInputRef.value!.focus();
-  });
+  onMounted(() => {});
 </script>

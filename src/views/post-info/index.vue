@@ -1,16 +1,14 @@
 <template>
-  <MainLayout :left-width="20" :right-width="25">
+  <MainLayout :left-width="10" :right-width="25">
     <template #left>
       <!-- 左侧栏,点赞、关注、收藏等按钮 -->
-      <div>
-        <PostViewHandleButtonList />
-      </div>
+      <PostViewHandleButtonList />
     </template>
     <template #main>
-      <div class="flex flex-col space-y-3 bg-white py-10 px-5">
+      <div class="flex flex-col space-y-3 bg-white py-10 px-10">
         <skeleton :loading="loading" />
         <!-- 文章标题 -->
-        <span class="text-4xl font-medium">{{ postData?.title }}</span>
+        <span class="text-4xl font-bold">{{ postData?.title }}</span>
         <div>
           <!-- 作者信息及关注信息 -->
           <PostViewAuthorInfo v-if="postData" :post-info="postData" />
@@ -40,6 +38,10 @@
         <!-- 相关文章推荐 -->
       </div>
     </template>
+    <template #right>
+      <!-- 右侧栏,作者信 -->
+      <post-info-right-author-card v-if="postData?.author" :user="postData?.author" />
+    </template>
   </MainLayout>
 </template>
 
@@ -51,20 +53,21 @@
   import PostViewReply from '../../components/comment-input/index.vue';
   import CommentList from '/@/views/post-info/components/post-info-comment-list/index.vue';
   import { getPost } from '/@/api/post';
-  import { CommentDTO, CommentForm, PostInfoDTO } from '/@/api/post/types';
+  import { CommentVO, CommentForm, PostInfoVO } from '/@/api/post/types';
   import { commentTypeEnum } from '../../constant/comment-type-const';
-  import { UserProfileDTO } from '/@/api/user/types';
+  import { UserProfileVO } from '/@/api/user/types';
   import { useUserStore } from '/@/store';
   import { dateFormat } from '../../utils/DateFormatUtil';
   import Skeleton from '/@/components/skeleton/index.vue';
   import useLoading from '/@/hooks/loading';
+  import postInfoRightAuthorCard from './components/post-info-right-author-card/index.vue';
 
   const userStore = useUserStore();
   const route = useRoute();
   const router = useRouter();
   let commentListRef = ref();
   let postId = ref();
-  let postData = ref<PostInfoDTO>();
+  let postData = ref<PostInfoVO>();
   const { loading, toggle } = useLoading();
 
   /**
@@ -97,7 +100,7 @@
    */
   const generateComment = (data, id) => {
     // 评论成功后本地添加评论
-    let comment: CommentDTO = {
+    let comment: CommentVO = {
       content: data.content,
       createTime: dateFormat(new Date()),
       expansion: {
@@ -117,7 +120,7 @@
       toUserId: data.toUserId,
       type: commentTypeEnum.COMMENT,
       userId: userStore.userId as unknown as string,
-      userProfile: userStore.getUserProfile as unknown as UserProfileDTO,
+      userProfile: userStore.getUserProfile as unknown as UserProfileVO,
       id: id,
     };
     return comment;

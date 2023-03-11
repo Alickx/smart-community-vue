@@ -1,4 +1,4 @@
-import { CommentDTO, CommentForm, PostAbbreviationDTO, PostInfoDTO, PostViewRankDTO, PostVO } from './types';
+import { CommentVO, CommentForm, PostAbbreviationVO, PostInfoVO, PostViewRankDTO, PostVO } from './types';
 import { PageParam } from '/@/types/req';
 import { get, post } from '/@/utils/http/axios';
 import { PageResult, Result, SelectData } from '/@/types/result';
@@ -21,9 +21,9 @@ enum URL {
 
 const savePost = async (data: PostVO) => post<Result<string>>({ url: URL.save_post, data: data });
 const getCategorySelect = async () => get<Result<SelectData[]>>({ url: URL.get_category_select });
-const getPost = async (id: string) => get<Result<PostInfoDTO>>({ url: URL.get_post + id });
+const getPost = async (id: string) => get<Result<PostInfoVO>>({ url: URL.get_post + id });
 const pagePost = async (param: PageParam) =>
-  get<Result<PageResult<PostAbbreviationDTO>>>({
+  get<Result<PageResult<PostAbbreviationVO>>>({
     url: URL.page_post,
     params: param,
   });
@@ -38,20 +38,20 @@ const saveThumb = async (toId: string, type: number) =>
 const cancelThumb = async (toId: string, type: number) => post<Result<boolean>>({ url: URL.cancel_thumb, data: { toId, type } });
 const saveComment = async (data: CommentForm) => post<Result<boolean>>({ url: URL.save_comment, data: data });
 const pageComment = async (param: PageParam) =>
-  get<Result<PageResult<CommentDTO>>>({
+  get<Result<PageResult<CommentVO>>>({
     url: URL.page_get_comment,
     params: param,
   });
 const deleteComment = async (id: string) => post<Result<boolean>>({ url: URL.delete_comment, data: { id: id } });
 
 const queryMoreReply = async (postId: string, type: number, firstCommentId: string) =>
-  get<Result<CommentDTO[]>>({
+  get<Result<CommentVO[]>>({
     url: URL.query_more_reply,
     params: { postId: postId, type: type, firstCommentId: firstCommentId },
   });
 
 const queryByComment = async (params: PageParam) =>
-  get<Result<PageResult<PostAbbreviationDTO>>>({ url: URL.query_by_comment, params: params });
+  get<Result<PageResult<PostAbbreviationVO>>>({ url: URL.query_by_comment, params: params });
 
 const queryTodayViewRank = async () => get<Result<PostViewRankDTO[]>>({ url: URL.query_today_view_rank });
 

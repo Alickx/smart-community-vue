@@ -1,5 +1,5 @@
 <template>
-  <v-md-editor :model-value="content" mode="preview"></v-md-editor>
+  <v-md-editor :model-value="content" mode="preview" />
 </template>
 
 <script setup lang="ts">
@@ -8,4 +8,8 @@
   }>();
 </script>
 
-<style scoped></style>
+<style scoped>
+  ::v-deep(.vuepress-markdown-body) {
+    padding: 0;
+  }
+</style>

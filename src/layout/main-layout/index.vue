@@ -5,13 +5,13 @@
     </header>
     <main class="flex-1 mt-20 bg-[#f4f5f5]">
       <div class="flex w-100% h-100%">
-        <div class="lg:flex display-none h-100%" :style="leftComputed">
+        <div class="lg:flex display-none h-100% m-x-5" :style="leftComputed">
           <slot name="left"></slot>
         </div>
         <div class="flex-1 h-100%">
           <slot name="main"></slot>
         </div>
-        <div class="display-none h-100% lg:flex flex-col" :style="rightComputed">
+        <div class="display-none h-100% lg:flex flex-col mx-5" :style="rightComputed">
           <slot name="right"></slot>
         </div>
       </div>
@@ -29,8 +29,8 @@
       rightWidth?: number | string;
     }>(),
     {
-      leftWidth: 25,
-      rightWidth: 30,
+      leftWidth: 20,
+      rightWidth: 25,
     },
   );
 

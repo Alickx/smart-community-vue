@@ -1,5 +1,5 @@
 <template>
-  <MainLayout :right-width="30" :left-width="25">
+  <MainLayout :right-width="25" :left-width="15">
     <template #left>
       <div class="w-full mx-3 flex justify-center">
         <!--        <home-left-panel />-->
@@ -34,7 +34,7 @@
   import MainLayout from '/@/layout/main-layout/index.vue';
   import { pagePost } from '/@/api/post';
   import { useDebounceFn } from '@vueuse/core';
-  import { PostAbbreviationDTO } from '/@/api/post/types';
+  import { PostAbbreviationVO } from '/@/api/post/types';
   import LeftPanel from '/@/views/home/components/home-left-panel/index.vue';
   import categorySelect from '/@/views/home/components/home-category-select/index.vue';
   import useLoading from '/@/hooks/loading';
@@ -51,7 +51,7 @@
     tagName: route.params.tagName,
   });
 
-  let postList = ref<PostAbbreviationDTO[]>([]);
+  let postList = ref<PostAbbreviationVO[]>([]);
   let postTotal = ref();
 
   const getPosts = () => {

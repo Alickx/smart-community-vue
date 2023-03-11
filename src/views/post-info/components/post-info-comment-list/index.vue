@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
   import { pageComment } from '/@/api/post';
-  import { CommentDTO } from '/@/api/post/types';
+  import { CommentVO } from '/@/api/post/types';
   import { commentTypeEnum } from '/@/constant/comment-type-const';
   import Comment from '/@/components/comment/index.vue';
   import { thumbTypeEnum } from '/@/constant/thumb-type-const';
@@ -32,7 +32,7 @@
     sort: 'create_time,desc',
   };
 
-  let commentList = ref<CommentDTO[]>([]);
+  let commentList = ref<CommentVO[]>([]);
 
   const pageRequest = () => {
     pageComment(params).then((resp) => {

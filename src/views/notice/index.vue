@@ -44,6 +44,10 @@
       label: '评论',
       value: 1,
     },
+    {
+      label: '关注',
+      value: 2,
+    }
   ];
 
   const getNotices = async () => {

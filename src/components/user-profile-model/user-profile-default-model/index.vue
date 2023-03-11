@@ -1,13 +1,13 @@
 <template>
   <div ref="avatarRef" class="relative">
-    <el-avatar size="default" @click="clickShowModel" class="cursor-pointer" :src="userStore.getUserProfile.avatar" />
+    <avatar :size="40" @click="clickShowModel" class="cursor-pointer" :src="userStore.getUserProfile.avatar" />
     <div
       class="flex flex-col h-auto w-70 absolute space-y-8 right--32 top-13 bg-[white] rounded-2 shadow-xl border-1 border-[#E3E5E7] p-y-3 p-x-4"
       v-if="showModel"
     >
       <div class="flex flex-col items-center justify-center space-y-5 mt-2">
         <router-link :to="{ name: 'user-home', params: { id: userStore.userId } }">
-          <Avatar size="5" class="cursor-pointer" :src="userStore.getUserProfile.avatar" />
+          <Avatar :size="40" class="cursor-pointer" :src="userStore.getUserProfile.avatar" />
         </router-link>
         <!-- 用户昵称 -->
         <span class="text-xl font-medium">{{ userStore.getUserProfile.nickName }}</span>
@@ -93,7 +93,7 @@
   // 调用用户查询接口
   const queryUserInfo = () => {
     getUserProfile().then((resp) => {
-      console.log(resp);
+      userStore.setInfo(resp.data);
     });
   };
 

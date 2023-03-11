@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row p-4 justify-center space-x-10 bg-white min-h-30">
-    <Avatar :src="userProfile.avatar" size="6" />
+    <avatar :src="userProfile.avatar" :size="100" />
     <div class="flex-1 flex flex-col space-y-3">
       <span class="font-semibold text-xl">{{ userProfile.nickName }}</span>
       <p class="text-normal color-gray">{{ userProfile.intro }}</p>
@@ -12,13 +12,13 @@
 </template>
 
 <script setup lang="ts">
-  import { UserProfileDTO } from '/@/api/user/types';
+  import { UserProfileVO } from '/@/api/user/types';
   import { PropType } from 'vue';
   import Avatar from '/@/components/avatar/index.vue';
 
   const props = defineProps({
     userProfile: {
-      type: Object as PropType<UserProfileDTO>,
+      type: Object as PropType<UserProfileVO>,
       required: true,
     },
   });

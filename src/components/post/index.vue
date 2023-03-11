@@ -35,11 +35,11 @@
 <script setup lang="ts">
   import SplitLine from '/@/components/split-line/index.vue';
   import { dateFormatDay } from '../../utils/DateFormatUtil';
-  import { PostAbbreviationDTO } from '/@/api/post/types';
+  import { PostAbbreviationVO } from '/@/api/post/types';
   import PostToolList from './components/post-tool-list/index.vue';
 
   defineProps<{
-    post: PostAbbreviationDTO;
+    post: PostAbbreviationVO;
   }>();
   /**
    * 点击跳转到文章详情页

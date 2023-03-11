@@ -1,5 +1,5 @@
 <template>
-  <el-row :gutter="10" :class="navClass" align="middle" class="z-9999 bg-white border-b-1 border-b-[#e3e5e7] flex items-center p-x-2 p-y-3">
+  <el-row :gutter="10" align="middle" class="z-9999 nav bg-white border-b-1 border-b-[#e3e5e7] flex items-center p-x-2 p-y-2">
     <el-col :span="6">
       <el-row align="middle">
         <el-col :offset="3">
@@ -57,22 +57,6 @@
   const userStore = useUserStore();
   const noticeStore = useNoticeStore();
 
-  let navTop = ref(0);
-  let navShow = ref(true);
-
-  /**
-   * 监听滚动事件
-   */
-  watch(navTop, (newValue, oldValue) => {
-    if (newValue > 100) {
-      navShow.value = newValue <= oldValue;
-    }
-  });
-
-  const navClass = computed(() => {
-    return navShow.value ? 'navOn' : 'navOff';
-  });
-
   const getNoticeCount = () => {
     if (getIsLogin()) {
       queryNoticeCount().then((res) => {
@@ -85,34 +69,14 @@
 
   onMounted(() => {
     getNoticeCount();
-    window.addEventListener('scroll', () => {
-      navTop.value = window.scrollY;
-    });
-  });
-
-  onBeforeUnmount(() => {
-    window.removeEventListener('scroll', () => {
-      navTop.value = window.scrollY;
-    });
   });
 </script>
 
 <style lang="less" scoped>
-  .navOn {
+  .nav {
     position: fixed;
     left: 0;
     right: 0;
     top: 0;
-    transition: all 0.2s;
-    transform: translate3d(0, 0, 0);
-  }
-
-  .navOff {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    transition: all 0.2s;
-    transform: translate3d(0, -100%, 0);
   }
 </style>

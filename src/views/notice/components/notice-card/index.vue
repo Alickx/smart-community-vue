@@ -1,9 +1,9 @@
 <template>
-  <div class="flex flex-row">
+  <div class="flex flex-row items-center">
     <div class="flex flex-1 flex-row">
       <router-link custom v-slot="{ href }" :to="{ name: 'user-home', params: { id: notice.sender?.userId } }">
         <a target="_blank" :href="href">
-          <avatar :src="notice.sender?.avatar" :size="3" />
+          <avatar :src="notice.sender?.avatar" :size="45" />
         </a>
       </router-link>
       <div class="flex flex-1 flex-col ml-3">
@@ -22,7 +22,10 @@
             </router-link>
           </div>
           <div v-if="props.msgType === NoticeTypeEnum.FOLLOW">
-            <span>{{ notice.sender.nickName }}关注了你</span>
+            <router-link :to="{ name: 'user-home', params: { id: notice.sender.userId } }" class="color-[#007fff]">
+              {{ notice.sender.nickName }}
+            </router-link>
+            关注了你
           </div>
           <div v-if="props.msgType === NoticeTypeEnum.SYSTEM">
             <span>{{ notice.content }}</span>

@@ -93,7 +93,7 @@
 <script lang="ts" setup>
   import { onClickOutside, useDebounceFn } from '@vueuse/core';
   import { cancelThumb, deleteComment, queryMoreReply, saveThumb } from '/@/api/post';
-  import { CommentDTO } from '/@/api/post/types';
+  import { CommentVO } from '/@/api/post/types';
   import Avatar from '/@/components/avatar/index.vue';
   import { thumbTypeEnum } from '/@/constant/thumb-type-const';
   import SvgIcon from '/@/components/svg-icon/index.vue';
@@ -102,12 +102,12 @@
   import Reply from '/@/components/comment/index.vue';
   import { PropType } from 'vue';
   import { useUserStore } from '/@/store';
-  import { UserProfileDTO } from '/@/api/user/types';
-  import { dateFormat } from '/@/utils/DateFormatUtil';
+  import { UserProfileVO } from '/@/api/user/types';
+  import { dateFormat,dateFormatDay } from '/@/utils/DateFormatUtil';
 
   const props = defineProps({
     comment: {
-      type: Object as PropType<CommentDTO>,
+      type: Object as PropType<CommentVO>,
       required: true,
     },
     postId: {
@@ -134,7 +134,7 @@
   let showReplyInputId = ref<String>('');
   let isShowPopconfirm = ref(false);
   let isRemoving = ref(false);
-  const commentProps = ref<CommentDTO>(props.comment);
+  const commentProps = ref<CommentVO>(props.comment);
   let isShowMoreReply = ref(commentProps.value.expansion.isMoreReply);
 
   onClickOutside(commentInputRef, () => {
@@ -163,7 +163,7 @@
    * 一级评论收到二级评论的回复事件，本地新增评论
    * @param commentDTO
    */
-  const onReplySubmit = (commentDTO: CommentDTO) => {
+  const onReplySubmit = (commentDTO: CommentVO) => {
     if (!Array.isArray(replyList.value)) {
       replyList.value = [];
     }
@@ -194,7 +194,7 @@
    */
   const generateComment = (data, id) => {
     // 评论成功后本地添加评论
-    let comment: CommentDTO = {
+    let comment: CommentVO = {
       content: data.content,
       createTime: dateFormat(new Date()),
       expansion: {
@@ -214,7 +214,7 @@
       toUserId: data.toUserId,
       type: commentTypeEnum.COMMENT,
       userId: userStore.userId as unknown as string,
-      userProfile: userStore.getUserProfile as unknown as UserProfileDTO,
+      userProfile: userStore.getUserProfile as unknown as UserProfileVO,
       id: id,
     };
     return comment;
@@ -250,7 +250,7 @@
   const thumbHandle = (id: string, thumbState: boolean) => {
     if (!userStore.getIsLogin) {
       router.push({
-        name: 'Login',
+        name: 'login',
       });
       return;
     }
