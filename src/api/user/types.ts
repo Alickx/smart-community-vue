@@ -20,3 +20,9 @@ export interface UserSaveFollowForm {
   followTime: Date;
   type: number; // 1:关注 2:取消关注
 }
+
+export interface UserProfileForm {
+  nickName: string;
+  intro: string;
+  avatar: string;
+}

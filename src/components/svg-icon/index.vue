@@ -24,10 +24,11 @@
     },
   });
   const symbolId = computed(() => `#${props.prefix}-${props.name}`);
-  const fontSize = reactive({ default: '32px'});
+  const fontSize = reactive({ default: '32px' });
 </script>
 <style lang="less" scoped>
-.svg-icon-spin {    width: v-bind('props.size || fontSize.default');
+  .svg-icon-spin {
+    width: v-bind('props.size || fontSize.default');
     height: v-bind('props.size || fontSize.default');
     fill: currentColor;
     vertical-align: middle;

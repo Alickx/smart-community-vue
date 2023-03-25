@@ -48,7 +48,9 @@
   onMounted(() => {
     // 获取文章板块下拉列表及其标签
     getCategorySelect().then((resp) => {
-      categoryList.value = resp.data;
+      if (resp.code === 200 && resp.data) {
+        categoryList.value = resp.data;
+      }
       if (categoryList.value.length > 0) {
         params.categoryName = categoryList.value[0].name;
       }

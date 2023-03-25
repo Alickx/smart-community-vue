@@ -2,8 +2,8 @@
   <div class="flex flex-row" :class="{ removing: isRemoving }" ref="commentRef">
     <div class="mr-5">
       <!--   头像,发布时间-->
-      <Avatar v-if="type === commentTypeEnum.COMMENT" :src="commentProps.userProfile.avatar" size="2" />
-      <Avatar v-else :src="commentProps.userProfile.avatar" size="2" />
+      <Avatar v-if="type === commentTypeEnum.COMMENT" :src="commentProps.userProfile.avatar" :size="40" />
+      <Avatar v-else :src="commentProps.userProfile.avatar" :size="40" />
     </div>
     <div class="flex flex-col flex-1">
       <!-- 一级评论主体-->
@@ -97,13 +97,13 @@
   import Avatar from '/@/components/avatar/index.vue';
   import { thumbTypeEnum } from '/@/constant/thumb-type-const';
   import SvgIcon from '/@/components/svg-icon/index.vue';
-  import { commentTypeEnum } from '../../constant/comment-type-const';
+  import { commentTypeEnum } from '/@/constant/comment-type-const';
   import CommentInput from '/@/components/comment-input/index.vue';
   import Reply from '/@/components/comment/index.vue';
   import { PropType } from 'vue';
   import { useUserStore } from '/@/store';
   import { UserProfileVO } from '/@/api/user/types';
-  import { dateFormat,dateFormatDay } from '/@/utils/DateFormatUtil';
+  import { dateFormat, dateFormatDay } from '/@/utils/DateFormatUtil';
 
   const props = defineProps({
     comment: {
@@ -143,7 +143,7 @@
 
   const onQueryMoreReply = (commentId: string) => {
     queryMoreReply(props.postId, commentTypeEnum.REPLY, commentId).then((resp) => {
-      if (resp.code === 200) {
+      if (resp.code === 200 && resp.data) {
         replyList.value = resp.data;
         isShowMoreReply.value = false;
       }

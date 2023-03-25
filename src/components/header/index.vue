@@ -11,14 +11,7 @@
         </el-col>
       </el-row>
     </el-col>
-    <el-col :span="8">
-      <el-row :gutter="2" align="middle" justify="center">
-        <!-- 链接处 -->
-        <!--        <el-col :span="2" v-for="item in 3">-->
-        <!--          <a href="#" class="text-gray-500 hover:text-gray-900">问答</a>-->
-        <!--        </el-col>-->
-      </el-row>
-    </el-col>
+    <el-col :span="8" />
     <el-col :span="6">
       <Search />
     </el-col>
@@ -60,7 +53,7 @@
   const getNoticeCount = () => {
     if (getIsLogin()) {
       queryNoticeCount().then((res) => {
-        if (res.code === 200) {
+        if (res.code === 200 && res.data) {
           noticeStore.setNoticeCount(res.data);
         }
       });

@@ -1,8 +1,17 @@
 <template>
   <MainLayout :left-width="10" :right-width="25">
     <template #left>
-      <!-- 左侧栏,点赞、关注、收藏等按钮 -->
-      <PostViewHandleButtonList />
+      <ul class="flex flex-col space-y-5">
+        <li class="mt-20">
+          <PostViewHandleButtonList
+            @click:comment="slideToComment"
+            @update:thumb-count="updateThumbCount"
+            @update:thumb-state="updateThumbState"
+            @update:collect-state="updateCollectState"
+            :post-data="postData"
+          />
+        </li>
+      </ul>
     </template>
     <template #main>
       <div class="flex flex-col space-y-3 bg-white py-10 px-10">
@@ -21,8 +30,8 @@
       <div class="flex flex-col bg-white mt-5 py-5 px-5 space-y-5">
         <span class="font-bold text-xl">回复</span>
         <!-- 回复组件 -->
-        <div class="h-45">
-          <PostViewReply
+        <div class="h-45" ref="commentInputRef">
+          <CommentInput
             @comment:submit="onCommentSubmit"
             :type="commentTypeEnum.COMMENT"
             :post-id="postData?.id"
@@ -50,17 +59,17 @@
   import PostViewHandleButtonList from './components/post-info-handle-button-list/index.vue';
   import PostViewAuthorInfo from './components/post-info-author/index.vue';
   import PostViewContent from './components/post-info-content/index.vue';
-  import PostViewReply from '../../components/comment-input/index.vue';
+  import CommentInput from '../../components/comment-input/index.vue';
   import CommentList from '/@/views/post-info/components/post-info-comment-list/index.vue';
   import { getPost } from '/@/api/post';
   import { CommentVO, CommentForm, PostInfoVO } from '/@/api/post/types';
-  import { commentTypeEnum } from '../../constant/comment-type-const';
+  import { commentTypeEnum } from '/@/constant/comment-type-const';
   import { UserProfileVO } from '/@/api/user/types';
   import { useUserStore } from '/@/store';
-  import { dateFormat } from '../../utils/DateFormatUtil';
+  import { dateFormat } from '/@/utils/DateFormatUtil';
   import Skeleton from '/@/components/skeleton/index.vue';
   import useLoading from '/@/hooks/loading';
-  import postInfoRightAuthorCard from './components/post-info-right-author-card/index.vue';
+  import PostInfoRightAuthorCard from './components/post-info-right-author-card/index.vue';
 
   const userStore = useUserStore();
   const route = useRoute();
@@ -68,6 +77,7 @@
   let commentListRef = ref();
   let postId = ref();
   let postData = ref<PostInfoVO>();
+  let commentInputRef = ref();
   const { loading, toggle } = useLoading();
 
   /**
@@ -124,6 +134,22 @@
       id: id,
     };
     return comment;
+  };
+
+  const updateThumbCount = (count: number) => {
+    postData.value!.thumbCount = count;
+  };
+
+  const updateThumbState = (state: boolean) => {
+    postData.value!.expansion.isThumb = state;
+  };
+
+  const slideToComment = () => {
+    commentInputRef.value.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const updateCollectState = (state: boolean) => {
+    postData.value!.expansion.isCollect = state;
   };
 
   onMounted(() => {

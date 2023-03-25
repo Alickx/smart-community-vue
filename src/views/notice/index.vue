@@ -47,7 +47,7 @@
     {
       label: '关注',
       value: 2,
-    }
+    },
   ];
 
   const getNotices = async () => {
@@ -57,7 +57,7 @@
       toggle();
     }
     const { code, data } = await pageNotice(msgType.value, pageParams);
-    if (code === 200) {
+    if (code === 200 && data) {
       notices.value = data.records;
       total.value = data.total;
       if (loading.value) {

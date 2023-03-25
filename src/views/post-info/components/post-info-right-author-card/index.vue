@@ -8,8 +8,10 @@
         </div>
       </div>
       <div class="flex flex-row space-x-2 justify-center" v-if="isShowButtonHandleComputed">
-        <el-button type="primary" @click="clickFollowHandle" class="w-[122px] !h-[35px]">{{ isFollow ? '已关注' : '关注' }}</el-button>
-        <el-button type="default" class="w-[122px] !h-[35px]">私信</el-button>
+        <el-button :type="isFollow ? 'warn' : 'success'" @click="clickFollowHandle" class="w-[122px] !h-[35px]">{{
+          isFollow ? '已关注' : '关注'
+        }}</el-button>
+        <el-button class="w-[122px] !h-[35px]">私信</el-button>
       </div>
     </div>
     <el-divider />
@@ -30,11 +32,9 @@
 
 <script setup lang="ts">
   import { ElMessage } from 'element-plus';
-import { followUser, queryIsFollowUser } from '/@/api/user';
+  import { saveFollowUser, queryIsFollowUser } from '/@/api/user';
   import { UserProfileVO, UserSaveFollowForm } from '/@/api/user/types';
-  import avatar from '/@/components/avatar/index.vue';
-  import svgIcon from '/@/components/svg-icon/index.vue';
-import { useUserStore } from '/@/store/modules/user';
+  import { useUserStore } from '/@/store/modules/user';
 
   const props = defineProps<{
     user: UserProfileVO;
@@ -52,7 +52,6 @@ import { useUserStore } from '/@/store/modules/user';
    * 关注操作
    */
   const clickFollowHandle = () => {
-
     // 如果未登录，跳转到登录页面
     if (!userStore.getUserProfile.userId) {
       router.push({ name: 'login' });
@@ -66,13 +65,12 @@ import { useUserStore } from '/@/store/modules/user';
       type: isFollow.value ? 2 : 1,
     };
 
-    followUser(followForm).then((resp) => {
+    saveFollowUser(followForm).then((resp) => {
       if (resp.code === 200 && resp.data) {
         isFollow.value = !isFollow.value;
         ElMessage.success(isFollow.value ? '关注成功' : '取消关注成功');
       }
     });
-
   };
 
   /**
@@ -80,10 +78,11 @@ import { useUserStore } from '/@/store/modules/user';
    */
   const queryFollow = () => {
     queryIsFollowUser(props.user.userId).then((resp) => {
-      isFollow.value = resp.data;
+      if (resp.code === 200 && resp.data) {
+        isFollow.value = resp.data;
+      }
     });
-  }
-
+  };
 
   onMounted(() => {
     if (userStore.getIsLogin) {

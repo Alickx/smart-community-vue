@@ -23,7 +23,7 @@ export default [
     component: () => import('/@/views/post-info/index.vue'),
   },
   {
-    path: '/user/:id',
+    path: '/user/:id(//d+)',
     name: 'user-home',
     component: () => import('/@/views/user-home/index.vue'),
   },
@@ -41,14 +41,6 @@ export default [
     component: () => import('/@/views/notice/index.vue'),
   },
   {
-    path: '/post/manage',
-    name: 'post-manage',
-    meta: {
-      auth: true,
-    },
-    component: () => import('/@/views/post-manage/index.vue'),
-  },
-  {
     path: '/login',
     name: 'login',
     component: () => import('/@/views/login/index.vue'),
@@ -62,5 +54,39 @@ export default [
     path: '/auth/activate',
     name: 'user-activate',
     component: () => import('/@/views/user-activate/index.vue'),
-  }
+  },
+  {
+    path: '/user/setting',
+    name: 'user-setting',
+    meta: {
+      auth: true,
+    },
+    component: () => import('/@/views/user-setting/index.vue'),
+    children: [
+      {
+        path: 'post',
+        name: 'user-setting-post',
+        meta: {
+          auth: true,
+        },
+        component: () => import('/@/views/user-setting/components/post-manage/index.vue'),
+      },
+      {
+        path: 'profile',
+        name: 'user-setting-profile',
+        meta: {
+          auth: true,
+        },
+        component: () => import('/@/views/user-setting/components/user-profile/index.vue'),
+      },
+      {
+        path: 'follow',
+        name: 'user-setting-follow',
+        meta: {
+          auth: true,
+        },
+        component: () => import('/@/views/user-setting/components/follow-manage/index.vue'),
+      },
+    ],
+  },
 ];

@@ -37,7 +37,7 @@
   const pageRequest = () => {
     pageComment(params).then((resp) => {
       if (resp.code === 200) {
-        commentList.value = resp.data.records;
+        commentList.value = resp.data!.records;
       }
     });
   };

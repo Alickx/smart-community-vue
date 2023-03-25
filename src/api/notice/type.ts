@@ -1,4 +1,4 @@
-import { UserProfileDTO } from '/@/api/user/types';
+import { UserProfileVO } from '/@/api/user/types';
 
 export interface NoticeCountVO {
   noticeCount: number; // 通知数量
@@ -15,5 +15,5 @@ export interface NoticeMessageVO {
   sourceType: number; // 通知来源类型 0 文章 1 评论
   status: number; // 0 未读 1 已读
   title: string; // 通知标题
-  sender: UserProfileDTO; // 发送者
+  sender: UserProfileVO; // 发送者
 }

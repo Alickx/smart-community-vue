@@ -7,7 +7,6 @@
       </div>
       <el-dialog title="发布文章" v-model="dialogVisible" width="30%">
         <div class="bg-white flex flex-col space-y-6">
-          <span class="text-xl font-bold">发布文章</span>
           <post-form ref="postFormRef" />
           <el-button class="w-50" @click="submit" type="primary" size="large">确认发布</el-button>
         </div>

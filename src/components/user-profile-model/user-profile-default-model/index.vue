@@ -14,31 +14,39 @@
       </div>
       <div class="flex flex-row items-center justify-center space-x-15">
         <!-- 关注 -->
-        <div class="flex flex-col space-y-1 items-center justify-center">
-          <span class="text-base font-bold">{{ userStore.getUserProfile.followNum }}</span>
-          <span class="text-xs font-light color-[#9499A0]]">关注</span>
-        </div>
+        <router-link :to="{ name: 'user-home', params: { id: userStore.userId } }">
+          <div class="flex flex-col space-y-1 items-center justify-center">
+            <span class="text-base font-bold">{{ userStore.getUserProfile.followNum }}</span>
+            <span class="text-xs font-light color-[#9499A0]]">关注</span>
+          </div>
+        </router-link>
         <!-- 粉丝 -->
-        <div class="flex flex-col space-y-1 items-center justify-center">
-          <span class="text-base font-bold">{{ userStore.getUserProfile.fanNum }}</span>
-          <span class="text-xs font-light color-[#9499A0]]">粉丝</span>
-        </div>
+        <router-link :to="{ name: 'user-home', params: { id: userStore.userId } }">
+          <div class="flex flex-col space-y-1 items-center justify-center">
+            <span class="text-base font-bold">{{ userStore.getUserProfile.fanNum }}</span>
+            <span class="text-xs font-light color-[#9499A0]]">粉丝</span>
+          </div>
+        </router-link>
         <!-- 文章数量 -->
-        <div class="flex flex-col space-y-1 items-center justify-center">
-          <span class="text-base font-bold">{{ userStore.getUserProfile.articleNum }}</span>
-          <span class="text-xs font-light color-[#9499A0]]">文章</span>
-        </div>
+        <router-link :to="{ name: 'user-home', params: { id: userStore.userId } }">
+          <div class="flex flex-col space-y-1 items-center justify-center">
+            <span class="text-base font-bold">{{ userStore.getUserProfile.articleNum }}</span>
+            <span class="text-xs font-light color-[#9499A0]]">文章</span>
+          </div>
+        </router-link>
       </div>
       <div class="flex flex-col">
         <!-- 导航菜单 -->
-        <div class="flex flex-row p-y-3 cursor-pointer p-x-7 rounded-3 hover:bg-[#e3e5e7]">
-          <div class="flex flex-1 flex-row space-x-3">
-            <svg-icon name="svg-user-profile" size="20px" />
-            <span class="">个人中心</span>
+        <router-link :to="{ name: 'user-home', params: { id: userStore.userId } }">
+          <div class="flex flex-row p-y-3 cursor-pointer p-x-7 rounded-3 hover:bg-[#e3e5e7]">
+            <div class="flex flex-1 flex-row space-x-3">
+              <svg-icon name="svg-user-profile" size="20px" />
+              <span class="">个人中心</span>
+            </div>
+            <svg-icon name="svg-right" size="20px" />
           </div>
-          <svg-icon name="svg-right" size="20px" />
-        </div>
-        <router-link :to="{ name: 'post-manage' }">
+        </router-link>
+        <router-link :to="{ name: 'user-setting-post' }">
           <div class="flex flex-row p-y-3 cursor-pointer p-x-7 rounded-3 hover:bg-[#e3e5e7]">
             <div class="flex flex-1 flex-row space-x-3">
               <svg-icon name="svg-article" size="20px" />
@@ -50,7 +58,7 @@
         <div class="flex flex-row p-y-3 cursor-pointer p-x-7 rounded-3 hover:bg-[#e3e5e7]">
           <div class="flex flex-1 flex-row space-x-3">
             <svg-icon name="svg-safe" size="20px" />
-            <span class="">安全中心</span>
+            <span class="">修改密码</span>
           </div>
           <svg-icon name="svg-right" size="20px" />
         </div>

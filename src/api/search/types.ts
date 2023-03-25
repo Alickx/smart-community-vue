@@ -1,4 +1,4 @@
-import { UserProfileDTO } from '/@/api/user/types';
+import { UserProfileVO } from '/@/api/user/types';
 
 export interface searchPage {
   id: string;
@@ -9,7 +9,7 @@ export interface searchPage {
   commentCount: number;
   summary: string;
   createTime: string;
-  author: UserProfileDTO;
+  author: UserProfileVO;
   categoryId: string;
   tagId: string;
   categoryName: string;

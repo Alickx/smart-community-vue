@@ -30,12 +30,12 @@
 </template>
 
 <script setup lang="ts">
-  import { PostAbbreviationDTO } from '/@/api/post/types';
+  import { PostAbbreviationVO } from '/@/api/post/types';
   import { ElMessage, ElMessageBox } from 'element-plus';
   import { deletePost } from '/@/api/post';
 
   defineProps<{
-    post: PostAbbreviationDTO;
+    post: PostAbbreviationVO;
   }>();
 
   const emit = defineEmits<{

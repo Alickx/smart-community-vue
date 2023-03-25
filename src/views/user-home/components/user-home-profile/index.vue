@@ -6,7 +6,9 @@
       <p class="text-normal color-gray">{{ userProfile.intro }}</p>
     </div>
     <div class="items-end flex">
-      <el-button size="large" type="primary" plain>编辑资料</el-button>
+      <router-link :to="{ name: 'user-setting-profile' }">
+        <el-button size="large" type="primary" plain>编辑资料</el-button>
+      </router-link>
     </div>
   </div>
 </template>

@@ -44,7 +44,10 @@
 
   const handleLogin = () => {
     const loginFormInstance = loginFormRef.value!;
-    loginFormInstance.validate().then(() => captchaRef.value?.show()).catch(() => {});
+    loginFormInstance
+      .validate()
+      .then(() => captchaRef.value?.show())
+      .catch(() => {});
   };
 
   /**
@@ -67,7 +70,7 @@
     loginFormInstance
       .doLogin(captchaId)
       .then((res: Result<LoginResResultData>) => {
-        if (res.code === 200) {
+        if (res.code === 200 && res.data) {
           // 保存用户信息
           store(res.data);
           // 跳转到首页

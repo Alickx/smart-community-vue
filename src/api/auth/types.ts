@@ -1,4 +1,4 @@
-import { UserProfileDTO } from '/@/api/user/types';
+import { UserProfileVO } from '/@/api/user/types';
 export interface UserLoginForm {
   username: string; // 用户名 / 邮箱
   password: string; // 密码
@@ -7,7 +7,7 @@ export interface UserLoginForm {
 
 export interface LoginResResultData {
   accessToken: string; // 访问令牌
-  userProfile: UserProfileDTO; // 用户信息
+  userProfile: UserProfileVO; // 用户信息
 }
 
 export interface UserRegisterForm {
@@ -18,38 +18,38 @@ export interface UserRegisterForm {
 }
 
 export interface CaptchaConfig {
-  startX?: number
-  startY?: number
-  type?: string
-  startTime?: Date
-  stopTime?: Date
-  trackArr?: Track[]
-  end?: number
-  bgImageWidth?: number
-  bgImageHeight?: number
-  sliderImageWidth?: number
-  sliderImageHeight?: number
-  movePercent?: number
-  moveX?: number
-  t?: number
+  startX?: number;
+  startY?: number;
+  type?: string;
+  startTime?: Date;
+  stopTime?: Date;
+  trackArr?: Track[];
+  end?: number;
+  bgImageWidth?: number;
+  bgImageHeight?: number;
+  sliderImageWidth?: number;
+  sliderImageHeight?: number;
+  movePercent?: number;
+  moveX?: number;
+  t?: number;
 }
 
 export interface Track {
-  x: number
-  y: number
-  type: string
-  t: number
+  x: number;
+  y: number;
+  type: string;
+  t: number;
 }
 
 export interface CaptchaData {
-  id: string
+  id: string;
   captcha: {
-    backgroundImage: string
-    sliderImage: string
-    backgroundImageWidth: number
-    backgroundImageHeight: number
-    sliderImageWidth: number
-    sliderImageHeight: number
-    data: null
-  }
+    backgroundImage: string;
+    sliderImage: string;
+    backgroundImageWidth: number;
+    backgroundImageHeight: number;
+    sliderImageWidth: number;
+    sliderImageHeight: number;
+    data: null;
+  };
 }

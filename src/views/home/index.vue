@@ -30,13 +30,10 @@
 
 <script setup lang="ts">
   import Post from '/@/components/post/index.vue';
-  import HotPostList from '/@/components/hot-post-list/index.vue';
   import MainLayout from '/@/layout/main-layout/index.vue';
   import { pagePost } from '/@/api/post';
   import { useDebounceFn } from '@vueuse/core';
   import { PostAbbreviationVO } from '/@/api/post/types';
-  import LeftPanel from '/@/views/home/components/home-left-panel/index.vue';
-  import categorySelect from '/@/views/home/components/home-category-select/index.vue';
   import useLoading from '/@/hooks/loading';
 
   const { loading, toggle } = useLoading();
@@ -62,8 +59,8 @@
       if (loading) {
         toggle();
       }
-      postList.value.push(...resp.data.records);
-      postTotal.value = resp.data.total;
+      postList.value.push(...resp.data!.records);
+      postTotal.value = resp.data!.total;
     });
   };
 

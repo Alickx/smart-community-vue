@@ -1,5 +1,5 @@
 export interface Result<T> {
-  data: T;
+  data: T | undefined | null;
   message: string;
   code: number;
 }

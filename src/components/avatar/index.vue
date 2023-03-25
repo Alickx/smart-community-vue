@@ -16,7 +16,7 @@
   const props = withDefaults(
     defineProps<{
       src: string;
-      size?: number;
+      size?: number | 'large' | 'default' | 'small';
       text?: string;
       icon?: string;
       shape?: string | any;

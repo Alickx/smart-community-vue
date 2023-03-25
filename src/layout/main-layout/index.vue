@@ -5,7 +5,7 @@
     </header>
     <main class="flex-1 mt-20 bg-[#f4f5f5]">
       <div class="flex w-100% h-100%">
-        <div class="lg:flex display-none h-100% m-x-5" :style="leftComputed">
+        <div class="lg:flex display-none h-100% m-x-5 justify-center" :style="leftComputed">
           <slot name="left"></slot>
         </div>
         <div class="flex-1 h-100%">
@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-
   import Header from '/@/components/header/index.vue';
 
   const props = withDefaults(

@@ -15,14 +15,6 @@
         <p class="text-base color-[#86909c] line-clamp-2" v-html="highlightHandler(post.summary)"> </p>
       </div>
       <div class="flex flex-row flex-nowrap space-x-4 items-center">
-        <div class="flex flex-row flex-nowrap items-center space-x-1">
-          <SvgIcon name="svg-thumb" size="20px" />
-          <span>{{ post.thumbCount }}</span>
-        </div>
-        <div class="flex flex-row flex-nowrap items-center space-x-1">
-          <SvgIcon name="svg-comment" size="20px" />
-          <span>{{ post.commentCount }}</span>
-        </div>
         <span class="text-sm color-[#95a5a6]">{{ dateFormatDay(post.createTime) }}</span>
       </div>
     </div>
@@ -32,7 +24,6 @@
 
 <script setup lang="ts">
   import { dateFormatDay } from '../../../../utils/DateFormatUtil';
-  import SvgIcon from '/@/components/svg-icon/index.vue';
   import SplitLine from '/@/components/split-line/index.vue';
   import { searchPage } from '/@/api/search/types';
 

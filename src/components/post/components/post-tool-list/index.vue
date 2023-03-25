@@ -16,17 +16,17 @@
 
 <script setup lang="ts">
   import SvgIcon from '/@/components/svg-icon/index.vue';
-  import { PostAbbreviationDTO } from '/@/api/post/types';
+  import { PostAbbreviationVO } from '/@/api/post/types';
   import { useDebounceFn } from '@vueuse/core';
   import { cancelThumb, saveThumb } from '/@/api/post';
   import { useUserStore } from '/@/store';
-import { thumbTypeEnum } from '/@/constant/thumb-type-const';
+  import { thumbTypeEnum } from '/@/constant/thumb-type-const';
 
   const userStore = useUserStore();
   const router = useRouter();
 
   const props = defineProps<{
-    post: PostAbbreviationDTO;
+    post: PostAbbreviationVO;
   }>();
 
   const post = toRef(props, 'post');

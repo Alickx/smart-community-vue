@@ -41,8 +41,8 @@
         if (loading) {
           toggle();
         }
-        total.value = resp.data.total;
-        queryResult.value = resp.data.records;
+        total.value = resp.data!.total;
+        queryResult.value = resp.data!.records;
       }
     });
   };
