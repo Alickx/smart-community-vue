@@ -43,7 +43,7 @@
   const params = reactive({
     page: 1,
     size: 20,
-    sort: 'createTime,desc',
+    sort: 'updateTime,desc',
     categoryName: route.params.categoryName,
     tagName: route.params.tagName,
   });
