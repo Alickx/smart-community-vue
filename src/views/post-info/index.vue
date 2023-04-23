@@ -108,7 +108,7 @@
    * @param data 评论信息
    * @param id 评论id
    */
-  const generateComment = (data, id) => {
+  const generateComment = (data: CommentForm, id: string) => {
     // 评论成功后本地添加评论
     let comment: CommentVO = {
       content: data.content,

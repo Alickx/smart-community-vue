@@ -19,7 +19,7 @@
   let userId = ref();
 
   const getUserProfile = async () => {
-    userProfile.value = userStore.getUserProfile;
+    userProfile.value = await userStore.getUserProfile;
   };
 
   onMounted(() => {

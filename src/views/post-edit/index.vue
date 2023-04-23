@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-  import MainLayout from '../../layout/main-layout/index.vue';
+  import MainLayout from '/@/layout/main-layout/index.vue';
   import Editor from './components/post-edit-editor/index.vue';
   import PostForm from './components/post-edit-form/index.vue';
   import { savePost } from '/@/api/post';
