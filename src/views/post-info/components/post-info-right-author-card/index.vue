@@ -17,12 +17,12 @@
     <el-divider />
     <div class="flex flex-col space-y-3">
       <div class="flex flex-row space-x-5 items-center">
-        <svg-icon name="svg-thumb" size="20px" />
+        <svg-icon name="svg-fans" size="20px" />
         <span class="text-sm">它的粉丝</span>
         <span class="text-sm">{{ user.fanNum }}</span>
       </div>
       <div class="flex flex-row space-x-5 items-center">
-        <svg-icon name="svg-thumb" size="20px" />
+        <svg-icon name="svg-article" size="20px" />
         <span class="text-sm">它的文章</span>
         <span class="text-sm">{{ user.articleNum }}</span>
       </div>
