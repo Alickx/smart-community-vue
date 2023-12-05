@@ -37,14 +37,16 @@
       </div>
       <div class="flex flex-col">
         <!-- 导航菜单 -->
-        <router-link :to="{ name: 'user-home', params: { id: userStore.userId } }">
-          <div class="flex flex-row p-y-3 cursor-pointer p-x-7 rounded-3 hover:bg-[#e3e5e7]">
+        <router-link :to="{ name: 'user-home', params: { id: userStore.userId } }" custom v-slot="{ href }">
+          <a :href="href" target="_blank">
+            <div class="flex flex-row p-y-3 cursor-pointer p-x-7 rounded-3 hover:bg-[#e3e5e7]">
             <div class="flex flex-1 flex-row space-x-3">
               <svg-icon name="svg-user-profile" size="20px" />
               <span class="">个人中心</span>
             </div>
             <svg-icon name="svg-right" size="20px" />
           </div>
+          </a>
         </router-link>
         <router-link :to="{ name: 'user-setting-post' }">
           <div class="flex flex-row p-y-3 cursor-pointer p-x-7 rounded-3 hover:bg-[#e3e5e7]">
@@ -55,13 +57,6 @@
             <svg-icon name="svg-right" size="20px" />
           </div>
         </router-link>
-        <div class="flex flex-row p-y-3 cursor-pointer p-x-7 rounded-3 hover:bg-[#e3e5e7]">
-          <div class="flex flex-1 flex-row space-x-3">
-            <svg-icon name="svg-safe" size="20px" />
-            <span class="">修改密码</span>
-          </div>
-          <svg-icon name="svg-right" size="20px" />
-        </div>
         <splint-line class="p-y-3" />
         <!-- 注销 -->
         <div @click="logout" class="flex flex-row p-y-3 cursor-pointer p-x-7 rounded-3 hover:bg-[#e3e5e7]">

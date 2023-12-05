@@ -20,7 +20,7 @@
         </el-button>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>编辑</el-dropdown-item>
+            <!-- <el-dropdown-item>编辑</el-dropdown-item> -->
             <el-dropdown-item @click.stop="onClickDelete(post.id)">删除</el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -59,20 +59,12 @@
       deletePost(id)
         .then((res) => {
           if (res.data) {
-            ElMessage({
-              message: '删除成功!',
-              type: 'success',
-              duration: 1500,
-            });
+            ElMessage.success("删除成功");
             emit('delete:post', id);
           }
         })
         .catch(() => {
-          ElMessage({
-            message: '删除失败,请稍后重试!',
-            type: 'error',
-            duration: 1500,
-          });
+          ElMessage.error("删除失败,请稍后重试!");
         });
     });
   };

@@ -17,7 +17,7 @@ enum URL {
   query_user_fans = '/userApi/user/follow/queryFollowerByPage',
 }
 
-export const getUserProfile = async () => get<Result<UserProfileVO>>({ url: URL.query_profile });
+export const getUserProfile = async (userId?: string) => get<Result<UserProfileVO>>({ url: URL.query_profile, params: { userId } });
 
 export const updateUserProfile = async (data: UserProfileForm) =>
   post<Result<boolean>>({

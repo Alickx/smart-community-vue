@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li v-for="item in followList" :key="item.userProfile.userId">
-      <div class="flex flex-row justify-between items-center">
+      <div class="flex flex-row items-center" style="justify-content: space-between;">
         <div class="flex flex-row space-x-5 items-center">
           <avatar :src="item.userProfile.avatar" :size="50" />
           <span class="text-base font-bold">{{ item.userProfile.nickName }}</span>

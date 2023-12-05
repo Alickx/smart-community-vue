@@ -2,8 +2,12 @@
   <div class="flex flex-row" :class="{ removing: isRemoving }" ref="commentRef">
     <div class="mr-5">
       <!--   头像,发布时间-->
-      <Avatar v-if="type === commentTypeEnum.COMMENT" :src="commentProps.userProfile.avatar" :size="40" />
-      <Avatar v-else :src="commentProps.userProfile.avatar" :size="40" />
+      <router-link :to="{ name: 'user-home', params: { id: commentProps.userId } }" custom v-slot="{ href }">
+        <a :href="href" target="_blank">
+          <Avatar v-if="type === commentTypeEnum.COMMENT" :src="commentProps.userProfile.avatar" :size="40" />
+          <Avatar v-else :src="commentProps.userProfile.avatar" :size="40" />
+        </a>
+      </router-link>
     </div>
     <div class="flex flex-col flex-1">
       <!-- 一级评论主体-->
@@ -12,7 +16,6 @@
         <div class="flex flex-row items-center space-x-5">
           <div class="flex items-center space-x-2">
             <span class="cursor-pointer font-bold text-[18px] color-[000000]">{{ commentProps.userProfile.nickName }}</span>
-            <span class="font-normal text-sm color-gray" v-if="commentProps.expansion.isAuthor">(作者)</span>
           </div>
           <!-- 评论时间 -->
           <span class="color-gray-400 text-md font-normal">{{ dateFormatDay(commentProps.createTime) }}</span>

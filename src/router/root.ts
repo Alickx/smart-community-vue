@@ -23,7 +23,7 @@ export default [
     component: () => import('/@/views/post-info/index.vue'),
   },
   {
-    path: '/user/:id(//d+)',
+    path: '/user/:id',
     name: 'user-home',
     component: () => import('/@/views/user-home/index.vue'),
   },

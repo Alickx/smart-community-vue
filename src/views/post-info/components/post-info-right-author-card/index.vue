@@ -11,7 +11,6 @@
         <el-button :type="isFollow ? 'warn' : 'success'" @click="clickFollowHandle" class="w-[122px] !h-[35px]">{{
           isFollow ? '已关注' : '关注'
         }}</el-button>
-        <el-button class="w-[122px] !h-[35px]">私信</el-button>
       </div>
     </div>
     <el-divider />

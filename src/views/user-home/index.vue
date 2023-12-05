@@ -11,20 +11,21 @@
   import MainLayout from '/@/layout/main-layout/index.vue';
   import UserProfileView from '/@/views/user-home/components/user-home-profile/index.vue';
   import UserTabs from '/@/views/user-home/components/user-home-tabs/index.vue';
-  import { useUserStore } from '/@/store';
+import { getUserProfile } from '/@/api/user';
 
   const route = useRoute();
-  const userStore = useUserStore();
   let userProfile = ref();
   let userId = ref();
 
-  const getUserProfile = async () => {
-    userProfile.value = await userStore.getUserProfile;
+  const getProfile = async () => {
+    getUserProfile(userId.value).then((res) => {
+      userProfile.value = res.data;
+    })
   };
 
   onMounted(() => {
     userId.value = route.params.id;
-    getUserProfile();
+    getProfile();
   });
 </script>
 
